@@ -1,32 +1,43 @@
-var PDFDocument = require('pdfkit');
+const puppeteer = require("puppeteer")
 var express = require('express');
 var router = express.Router();
+const pug = require('pug')
 
-router.post("/", function(req, res) {
-  var doc = new PDFDocument;
+router.post("/", async (req, res) => {
   let filename = "Frigidare Order Form";
 
   filename = encodeURIComponent(filename) + '.pdf';
-
-  res.setHeader('Content-disposition', `attachment; filename="${filename}"`);
-  res.setHeader('Content-type', 'application/pdf');
-
   var bodyContent = req.body;
 
-  // Adjust the starting position of the content in the PDF
-  doc.y = 50;
-  
-  // Iterate through the body properties and add them to the PDF
-  Object.keys(bodyContent).forEach(function(key, index) {
-    const value = bodyContent[key];
-    doc.text(`${key}: ${value}`, 50, doc.y + (index * 5));  // Increase spacing between lines
+  const htmlContent = pug.renderFile('views/templates/pdf.pug', bodyContent)
+
+  console.log(htmlContent)
+
+  // Launch Puppeteer and generate the PDF
+  const browser = await puppeteer.launch({
+    headless: true, 
+    args: ['--no-sandbox', '--disable-setuid-sandbox'] // These args help in some environments
+  });
+  const [page] = await browser.pages();
+
+  // Set the content of the page to the HTML rendered from Pug
+  await page.setContent(htmlContent, {waitUntil: "load"});
+
+  // Generate the PDF from the page's content
+  const pdfBuffer = await page.pdf({
+    format: 'LETTER',
+    printBackground: true,
+    margin: {top: "50px", bottom: "50px", left: "50px", right: "50px"}
   });
 
-  // Pipe the document to the response
-  doc.pipe(res);
+  
+  await browser.close();
 
-  // Finalize the PDF and send it
-  doc.end();
+  // Set the headers to download the file
+  res.contentType("application/pdf")
+  res.setHeader('Content-Disposition', `attachment; filename=${filename}`);
+  // End the PDF buffer as the response
+  res.end(pdfBuffer);
 });
 
 module.exports = router;
