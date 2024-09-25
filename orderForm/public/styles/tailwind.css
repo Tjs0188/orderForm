@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  fieldset {
+    @apply border border-solid border-gray-300 p-3
+  }
+}
