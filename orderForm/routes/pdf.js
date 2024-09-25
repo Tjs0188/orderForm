@@ -11,8 +11,6 @@ router.post("/", async (req, res) => {
 
   const htmlContent = pug.renderFile('views/templates/pdf.pug', bodyContent)
 
-  console.log(htmlContent)
-
   // Launch Puppeteer and generate the PDF
   const browser = await puppeteer.launch({
     headless: true, 
@@ -22,6 +20,7 @@ router.post("/", async (req, res) => {
 
   // Set the content of the page to the HTML rendered from Pug
   await page.setContent(htmlContent, {waitUntil: "load"});
+  await page.addStyleTag({ path: 'public/styles/style.css' }) 
 
   // Generate the PDF from the page's content
   const pdfBuffer = await page.pdf({
