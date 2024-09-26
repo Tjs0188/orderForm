@@ -4,6 +4,30 @@
 
 @layer base {
   fieldset {
-    @apply border border-solid border-gray-300 p-3
+    @apply border border-solid border-gray-400 p-3 w-1/4
+  }
+
+  form {
+    @apply w-4/5 mx-auto
+  }
+
+  label {
+    @apply block font-bold mb-1
+  }
+
+  input {
+    @apply border border-solid border-gray-400 px-2 w-full focus:outline-blue focus:border-blue-500 placeholder-gray-300
+  }
+
+  legend {
+    @apply font-bold mb-3
+  }
+
+  button {
+    @apply bg-blue border border-solid border-blue-600 hover:bg-blue-600 text-blue-50 rounded 
+  }
+
+  .border {
+    @apply rounded
   }
 }

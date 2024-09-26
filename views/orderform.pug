@@ -2,9 +2,10 @@ extends layout
 
 block content
   form(action="/pdf" method="POST")
-    include orderForm/tradePartnerInfo
-    include orderForm/deliveryContactInfo
-    include orderForm/deliveryAddress
-    include orderForm/packageInfo
-    button(type="submit") Generate PDF
+    div(class="flex flex-wrap w-full justify-around gap-4")
+      include orderForm/tradePartnerInfo
+      include orderForm/deliveryContactInfo
+      include orderForm/deliveryAddress
+      include orderForm/packageInfo
+    button(type="submit" class="px-2 py-4") Generate PDF
   

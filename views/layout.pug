@@ -3,6 +3,9 @@ html
   head
     title= title
     link(rel='stylesheet', href='/styles/style.css')
+    link(rel="icon", type="image/png", href="/favicon.png")
   body
-    h1 Order Form
-    block content
+    div(class="bg-stone-300 h-screen")
+      div(class="flex px-20 p-2 bg-stone-400")
+        img(class="py-4" src="/images/BFH_FullColorLogo_NoTagline.png" alt="Bloomfield Homes" class="w-1/5")
+      block content

@@ -1,5 +1,7 @@
 extends layout
 
 block content
-  p Welcome to #{title}
-  a(href="/orderform") Order Form
+  div(class="flex justify-center py-24")
+    a(href="/orderform") 
+      button(class="bg-[#26457a] hover:bg-sky-700 ring-2 rounded-lg p-1")
+        span(class="text-white") Order Form
