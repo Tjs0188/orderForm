@@ -9,7 +9,7 @@ router.post("/", async (req, res) => {
   filename = encodeURIComponent(filename) + '.pdf';
   var bodyContent = req.body;
 
-  const htmlContent = pug.renderFile('views/templates/pdf.pug', bodyContent)
+  const htmlContent = pug.renderFile('views/templates/pdf.pug', {bodyContent})
 
   // Launch Puppeteer and generate the PDF
   const browser = await puppeteer.launch({

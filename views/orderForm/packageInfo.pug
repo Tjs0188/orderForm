@@ -1,8 +1,9 @@
-fieldset 
-  legend Packages
-  label(for="addPackage") Add a Package
-  input(name="addPackage" placeholder="Add a Package")
-  label(for="addRefridgerator") Add a Refridgerator
-  input(name="addRefridgerator" placeholder="Add a Refridgerator")
-  label(for="addWasherDryer") Add a Washer/Dryer
-  input(name="addWasherDryer" placeholder="Add a Washer/Dryer")
+mixin packageInfo(bodyContent)
+  fieldset 
+    legend Packages
+    label(for="addPackage") Add a Package
+    input(name="addPackage" placeholder="Add a Package" value=bodyContent ? bodyContent.addPackage : '')
+    label(for="addRefridgerator") Add a Refridgerator
+    input(name="addRefridgerator" placeholder="Add a Refridgerator" value=bodyContent ? bodyContent.addRefridgerator : '')
+    label(for="addWasherDryer") Add a Washer/Dryer
+    input(name="addWasherDryer" placeholder="Add a Washer/Dryer" value=bodyContent ? bodyContent.addWasherDryer : '')

@@ -1,10 +1,11 @@
-fieldset 
-  legend Delivery Contact
-  label(for="contactName") Contact Name 
-  input(name="contactName" placeholder="Contact Name" type="text")
-  label(for="deliveryPhone") Delivery Phone
-  input(name="deliveryPhone" placeholder="Delivery Phone" type="phone")
-  label(for="contactEmail") Contact Email
-  input(name="contactEmail" placeholder="Contact Email" type="email")
-  label(for="requestDeliveryDate") Request Delivery Date
-  input(name="requestDeliveryDate" placeholder="Request Delivery Date")
+mixin deliveryContact(bodyContent)
+  fieldset 
+    legend Delivery Contact
+    label(for="contactName") Contact Name 
+    input(name="contactName" placeholder="Contact Name" type="text" value=bodyContent ? bodyContent.contactName : '')
+    label(for="deliveryPhone") Delivery Phone
+    input(name="deliveryPhone" placeholder="Delivery Phone" type="phone" value=bodyContent ? bodyContent.deliveryPhone : '')
+    label(for="contactEmail") Contact Email
+    input(name="contactEmail" placeholder="Contact Email" type="email" value=bodyContent ? bodyContent.contactEmail : '')
+    label(for="requestDeliveryDate") Request Delivery Date
+    input(name="requestDeliveryDate" placeholder="Request Delivery Date" value=bodyContent ? bodyContent.requestDeliveryDate : '')

@@ -1,8 +1,9 @@
-fieldset 
-  legend Trade Partner Information
-  label(for="projectName") Project Name 
-  input(name="projectName" placeholder="Community Name")
-  label(for="accountNumber") Account Number 
-  input(name="accountNumber" placeholder="Account Number")
-  label(for="quoteNumber") Quote Number 
-  input(name="quoteNumber" placeholder="Quote Number")
+mixin tradePartners(bodyContent)
+  fieldset 
+    legend Trade Partner Information
+    label(for="projectName") Project Name 
+    input(name="projectName" placeholder="Community Name" value=bodyContent ? bodyContent.projectName : '')
+    label(for="accountNumber") Account Number 
+    input(name="accountNumber" placeholder="Account Number" value=bodyContent ? bodyContent.accountNumber: '')
+    label(for="quoteNumber") Quote Number 
+    input(name="quoteNumber" placeholder="Quote Number" value=bodyContent ? bodyContent.quoteNumber: '')

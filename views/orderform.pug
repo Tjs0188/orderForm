@@ -1,11 +1,15 @@
 extends layout
+include orderForm/deliveryAddress
+include orderForm/deliveryContactInfo
+include orderForm/packageInfo
+include orderForm/tradePartnerInfo
 
 block content
   form(action="/pdf" method="POST")
     div(class="flex flex-wrap w-full justify-around gap-4")
-      include orderForm/tradePartnerInfo
-      include orderForm/deliveryContactInfo
-      include orderForm/deliveryAddress
-      include orderForm/packageInfo
+      +deliveryContact
+      +deliveryAddress
+      +packageInfo
+      +tradePartners
     button(type="submit" class="px-2 py-4") Generate PDF
   

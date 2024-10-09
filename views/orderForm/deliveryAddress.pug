@@ -1,12 +1,13 @@
-fieldset
-  legend Delivery Address
-  label(for="address") Address
-  input(name="address" placeholder="Address" type="text")
-  label(for="lotBlock") Lot and Block
-  input(name="lotBlock" placeholder="Lot and Block" type="text")
-  label(for="city" type="text") City 
-  input(name="city" placeholder="City" type="text")
-  label(for="state") State
-  input(name="state" placeholder="State" type="text")
-  label(for="zip") Zip
-  input(name="zip" placeholder="Zip" type="text")
+mixin deliveryAddress(bodyContent)
+  fieldset
+    legend Delivery Address
+    label(for="address") Address
+    input(name="address" placeholder="Address" type="text" value=bodyContent ? bodyContent.address : '')
+    label(for="lotBlock") Lot and Block
+    input(name="lotBlock" placeholder="Lot and Block" type="text" value=bodyContent ? bodyContent.lotBlock : '')
+    label(for="city" type="text") City 
+    input(name="city" placeholder="City" type="text" value=bodyContent ? bodyContent.city : '')
+    label(for="state") State
+    input(name="state" placeholder="State" type="text" value=bodyContent ? bodyContent.state : '')
+    label(for="zip") Zip
+    input(name="zip" placeholder="Zip" type="text" value=bodyContent ? bodyContent.zip : '')
