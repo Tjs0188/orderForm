@@ -4,10 +4,12 @@
  * Module dependencies.
  */
 
-var app = require('../app');
-var debug = require('debug')('orderform:server');
-var http = require('http');
+import app from '../app.js';
+import http from 'http';
+import debugModule from 'debug'; // Import the debug module
 
+// Initialize debug with the namespace 'orderform:server'
+const debug = debugModule('orderform:server');
 /**
  * Get port from environment and store in Express.
  */
@@ -67,11 +69,9 @@ function onError(error) {
     case 'EACCES':
       console.error(bind + ' requires elevated privileges');
       process.exit(1);
-      break;
     case 'EADDRINUSE':
       console.error(bind + ' is already in use');
       process.exit(1);
-      break;
     default:
       throw error;
   }
@@ -87,4 +87,5 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
+    console.log('Listening on ' + bind);
 }

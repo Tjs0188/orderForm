@@ -1,102 +1,98 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const pkgSelect = document.querySelector('#addPackageSelect')
-  const frgSelect = document.querySelector('#addFridgeSelect')
-  const wdSelect = document.querySelector('#addWDSelect')
+  const pkgSelect = document.querySelector('#addPackageSelect');
+  const frgSelect = document.querySelector('#addFridgeSelect');
+  const wdSelect = document.querySelector('#addWDSelect');
 
-  pkgSelect.addEventListener('change', async (e) => {
-    const selectedOption = pkgSelect[pkgSelect.selectedIndex]
-    const packageItems = await axios.get("/orderform/packageItems", {params: {packageId: selectedOption.value}})
-    const packageTable = document.querySelector("#packageTable")
-    const existingPackageItems = packageTable.querySelectorAll(".packageItem")
+  const packageTable = document.querySelector("#packageTable");
 
-    existingPackageItems.forEach(pkgItems => {
-      pkgItems.parentNode.removeChild(pkgItems);
-    })
+  // Create dedicated sections for each group of items
+  const packageItemsSection = createTableSection('packageItemsSection');
+  const fridgeItemsSection = createTableSection('fridgeItemsSection');
+  const wdItemsSection = createTableSection('wdItemsSection');
 
-    Object.entries(packageItems.data.packageItems).forEach(pkgItem => {
-      const item = pkgItem[1].item
-      const tableBody = document.createElement("tbody")
-      const tableRow = document.createElement("tr")
-      const category = document.createElement("td")
-      const productNumber = document.createElement("td")
-      const description = document.createElement("td")
+  function createTableSection(className) {
+    const section = document.createElement("tbody");
+    section.classList.add(className);
+    packageTable.appendChild(section);
+    return section;
+  }
 
-      tableBody.classList.add("packageItems")
-      tableRow.classList.add("packageItem")
+  // General function to fetch data and update a section
+  async function updateTableSection(selectElement, section, itemClass, hiddenField) {
+    const selectedOption = selectElement[selectElement.selectedIndex];
+    const packageItems = await axios.get("/orderform/packageItems", { params: { packageId: selectedOption.value } });
 
-      category.innerHTML = item.category
-      productNumber.innerHTML = item.product_number
-      description.innerHTML = item.description
+    // Clear existing items in the section
+    clearSection(section);
 
-      tableRow.appendChild(category)
-      tableRow.appendChild(productNumber)
-      tableRow.appendChild(description)
-
-      tableBody.appendChild(tableRow)
-
-      packageTable.appendChild(tableBody)
+    // Add new items to the section
+    const itemsArray = Object.entries(packageItems.data.packageItems).map(pkgItem => {
+      const item = pkgItem[1].item;
+      const tableRow = createEditableTableRow(item, itemClass);
+      section.appendChild(tableRow);
+      return item; // Collect item data for the hidden field
     });
-  })
 
-  frgSelect.addEventListener('change', async (e) => {
-    const selectedOption = frgSelect[frgSelect.selectedIndex]
-    const packageItems = await axios.get("/orderform/packageItems", {params: {packageId: selectedOption.value}})
-    const packageTable = document.querySelector("#packageTable")
-    const existingPackageItems = packageTable.querySelectorAll(".frgItem")
+    // Store the serialized data in the hidden field
+    hiddenField.value = JSON.stringify(itemsArray);
+  }
 
-    existingPackageItems.forEach(pkgItem => {
-      pkgItem.parentNode.removeChild(pkgItem);
-    })
+  function clearSection(section) {
+    while (section.firstChild) {
+      section.removeChild(section.firstChild);
+    }
+  }
 
-    Object.entries(packageItems.data.packageItems).forEach(pkgItem => {
-      const item = pkgItem[1].item
-      const tableRow = document.createElement("tr")
-      const category = document.createElement("td")
-      const productNumber = document.createElement("td")
-      const description = document.createElement("td")
+  function createEditableTableRow(item, itemClass) {
+    const tableRow = document.createElement("tr");
+    tableRow.classList.add(itemClass);
 
-      tableRow.classList.add("frgItem")
+    const category = document.createElement("td");
+    const productNumber = document.createElement("td");
+    const description = document.createElement("td");
 
-      category.innerHTML = item.category
-      productNumber.innerHTML = item.product_number
-      description.innerHTML = item.description
+    // Create editable inputs for each property
+    const categoryInput = document.createElement("input");
+    categoryInput.type = "text";
+    categoryInput.value = item.category;
+    categoryInput.name = `${itemClass}[category][]`;
+    categoryInput.classList.add('editable-field');
 
-      tableRow.appendChild(category)
-      tableRow.appendChild(productNumber)
-      tableRow.appendChild(description)
+    const productNumberInput = document.createElement("input");
+    productNumberInput.type = "text";
+    productNumberInput.value = item.product_number;
+    productNumberInput.name = `${itemClass}[product_number][]`;
+    productNumberInput.classList.add('editable-field');
 
-      packageTable.appendChild(tableRow)
-    });
-  })
+    const descriptionInput = document.createElement("input");
+    descriptionInput.type = "text";
+    descriptionInput.value = item.description;
+    descriptionInput.name = `${itemClass}[description][]`;
+    descriptionInput.classList.add('editable-field');
 
-  wdSelect.addEventListener('change', async (e) => {
-    const selectedOption = wdSelect[wdSelect.selectedIndex]
-    const packageItems = await axios.get("/orderform/packageItems", {params: {packageId: selectedOption.value}})
-    const packageTable = document.querySelector("#packageTable")
-    const existingPackageItems = packageTable.querySelectorAll(".wdItem")
+    // Append inputs to table cells
+    category.appendChild(categoryInput);
+    productNumber.appendChild(productNumberInput);
+    description.appendChild(descriptionInput);
 
-    existingPackageItems.forEach(pkgItem => {
-      pkgItem.parentNode.removeChild(pkgItem);
-    })
+    tableRow.appendChild(category);
+    tableRow.appendChild(productNumber);
+    tableRow.appendChild(description);
 
-    Object.entries(packageItems.data.packageItems).forEach(pkgItem => {
-      const item = pkgItem[1].item
-      const tableRow = document.createElement("tr")
-      const category = document.createElement("td")
-      const productNumber = document.createElement("td")
-      const description = document.createElement("td")
+    return tableRow;
+  }
 
-      tableRow.classList.add("wdItem")
+  // Event listeners for each select element
+  pkgSelect.addEventListener('change', () => {
+    updateTableSection(pkgSelect, packageItemsSection, 'packageItem', document.querySelector('#packageItemsData'));
+  });
 
-      category.innerHTML = item.category
-      productNumber.innerHTML = item.product_number
-      description.innerHTML = item.description
+  frgSelect.addEventListener('change', () => {
+    updateTableSection(frgSelect, fridgeItemsSection, 'frgItem', document.querySelector('#fridgeItemsData'));
+  });
 
-      tableRow.appendChild(category)
-      tableRow.appendChild(productNumber)
-      tableRow.appendChild(description)
+  wdSelect.addEventListener('change', () => {
+    updateTableSection(wdSelect, wdItemsSection, 'wdItem', document.querySelector('#wdItemsData'));
+  });
+});
 
-      packageTable.appendChild(tableRow)
-    });
-  })
-})

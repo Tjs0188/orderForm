@@ -1,32 +1,51 @@
 mixin packageInfo(options)
   script(src='js/orderForm.js')
-  - const {bodyContent, packages, refrigerators, w_ds} = options
+  - const {bodyContent, packages, refrigerators, w_ds, w_dItems, packageItems, fridgeItems} = options
   fieldset
     legend Packages
-    label(for="addPackage") Add a Package
-    select(name="addPackage" placeholder="Add a Package" value=bodyContent ? bodyContent.addPackage : '' id="addPackageSelect")
-      if packages
-        option(value="") Select a package
-        each package in packages
-          option(value=package.id) 
-            = package.name
-    label(for="addRefridgerator") Add a Refridgerator
-    select(name="addRefridgerator" placeholder="Add a Refridgerator" value=bodyContent ? bodyContent.addRefridgerator : '' id="addFridgeSelect")
-      if refrigerators
-        option(value="") Select a fridge
-        each fridge in refrigerators
-          option(value=fridge.id) 
-            = fridge.name
-    label(for="addWasherDryer") Add a Washer/Dryer
-    select(name="addWasherDryer" placeholder="Add a Washer/Dryer" value=bodyContent ? bodyContent.addWasherDryer : '' id="addWDSelect")
-      if w_ds
-        option(value="") Select a washer and dryer
-        each w_d in w_ds
-          option(value=w_d.id) 
-            = w_d.name
+    if bodyContent
+      label(for="addPackage") Add a Package
+      select(name="addPackage" placeholder="Add a Package" value=bodyContent ? bodyContent.addPackage : '' id="addPackageSelect")
+        if packages
+          option(value="") Select a package
+          each package in packages
+            option(value=package.id) 
+              = package.name
+      label(for="addRefridgerator") Add a Refridgerator
+      select(name="addRefridgerator" placeholder="Add a Refridgerator" value=bodyContent ? bodyContent.addRefridgerator : '' id="addFridgeSelect")
+        if refrigerators
+          option(value="") Select a fridge
+          each fridge in refrigerators
+            option(value=fridge.id) 
+              = fridge.name
+      label(for="addWasherDryer") Add a Washer/Dryer
+      select(name="addWasherDryer" placeholder="Add a Washer/Dryer" value=bodyContent ? bodyContent.addWasherDryer : '' id="addWDSelect")
+        if w_ds
+          option(value="") Select a washer and dryer
+          each w_d in w_ds
+            option(value=w_d.id) 
+              = w_d.name
     table(id="packageTable")
       tr
         th Category
         th Product Number
         th Description
-
+      if packageItems
+        each pkgItem in packageItems
+          tr.packageItem
+            td= pkgItem.category
+            td= pkgItem.product_number
+            td= pkgItem.description
+      if fridgeItems
+        each fridgeItem in fridgeItems
+          tr.frgItem
+            td= fridgeItem.category
+            td= fridgeItem.product_number
+            td= fridgeItem.description
+      if w_dItems
+        each wdItem in w_dItems
+          tr.wdItem
+            td= wdItem.category
+            td= wdItem.product_number
+            td= wdItem.description
+      
