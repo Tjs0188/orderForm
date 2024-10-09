@@ -1,0 +1,33 @@
+id,name,meta,category
+1,STANDARD PACKAGE ELECTRIC RANGE,StandardElec,Package
+2,STANDARD PACKAGE GAS RANGE,StandardGas,Package
+3,MODERN SIGNATURE SERIES - ELECTRIC,ModernSigElec,Package
+4,MODERN SIGNATURE SERIES - GAS,ModernSigGas,Package
+5,MODERN SERIES - ELECTRIC,ModernElec,Package
+6,MODERN SERIES - GAS,ModernGas,Package
+7,ELEMENT (MODERN) SERIES - ELECTRIC,ElementElec,Package
+8,ELEMENT (MODERN) SERIES - GAS,ElementGas,Package
+9,TRADITIONAL SIGNATURE SERIES - ELECTRIC,TradElec,Package
+10,TRADITIONAL SIGNATURE SERIES - GAS,TradGas,Package
+12,FRFS2823AS,FRIGIDAIRE FRENCH DOOR STD DEPTH with Disp,Refrigerator
+14,ERFC2393AS,ELECTROLUX FRENCH DOOR COUNTER,Refrigerator
+16,FRSS2333AS,"FRIGIDAIRE SXS STD DEPTH 33"" WIDTH",Refrigerator
+17,GRMC2273CF,FRIGIDAIRE GALLERY FRENCH DOOR -2 DRW COUNTER DEPTH,Refrigerator
+18,FRSC2333AS,FRIGIDAIRE SXS COUNTER DEPTH,Refrigerator
+19,Top Load Washer and Dryer,TLF,Washer/Dryer
+20,Front Load White Washer and Dryer,FLWE,Washer/Dryer
+21,Front Load Titanium500 Series Washer and Dryer,FLTE,Washer/Dryer
+22,Front Load Titanium600 Series Washer and Dryer,FLTE2,Washer/Dryer
+23,Front Load White Pedestals -2,FLPWE,Washer/Dryer
+24,Front Load Titanium Pedestals -2,FLPTE,Washer/Dryer
+25,FRSS2623AS,FRIGIDAIRE SXS STD DEPTH,Refrigerator
+29,FRFN2823AS,FRIGIDAIRE FRENCH DOOR STD DEPTH - Non Disp,Refrigerator
+30,FRFC2323AS,FRIGIDAIRE FRENCH DOOR COUNTER DEPTH,Refrigerator
+31,Professional Electric Range,ProfessionalElectric,Package
+32,Professional Gas Range,ProfessionalGas,Package
+33,Professional Built-In (Electric),ProBuilt-InElectric,Package
+34,Professional Built-In (Gas),ProBuilt-InGas,Package
+35,PRMC2285AF,FRIGIDAIRE PROFESSIONAL FRENCH DOOR - 2 DRW COUNTER DEPTH,Refrigerator
+36,PRFS2883AF,FRIGIDAIRE PROFESSIONAL FRENCH DOOR STD DEPTH,Refrigerator
+37,PRFC2383AF,FRIGIDAIRE PROFESSIONAL FRENCH DOOR COUNTER DEPTH,Refrigerator
+38,PRSC2222AF,FRIGIDAIRE PROFESSIONAL SXS COUNTER DEPTH,Refrigerator

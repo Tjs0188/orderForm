@@ -1,0 +1,183 @@
+id,category,product_number,description
+1,Range,FFEF3056TS,"30"" Elec FS Range"
+2,Install,1.9CAEI,Range install
+3,Accessory,5308819008,Range Cord
+4,OTR,FFMV1745TS,"30"" Micro/Hood Combo"
+5,Install,1.9MAOI,OTR Install
+6,Dishwasher,FDPC4314AS,Dishwasher
+7,Install,1.9DAII,Dishwasher Install
+8,Accessory,DWBRACKIT1,Side Mount Kit
+9,Accessory,912000909,DW Install Kit
+10,REFRIGERATOR,FFHN2750TS,Non-Disp FD 27CF
+11,Install,1.9RBII,Install
+12,ACCESSORY,912001026,Water Line
+13,Washer,FFTW4120SW,Top Load Washer
+14,Install,1.9LAII,Washer Install
+15,Accessory,912000120,Wshr Fill Hose (2PK)
+16,Dryer,FFRE4120SW,Top Load Dryer
+17,Install,1.9LBEI,Elec Dryer Install
+18,Accessory,912000976,Dryer Cord
+19,Accessory,912000896,Dryer Vent
+20,Range,FFGF3056TS,"30"" Gas FS Range"
+21,Install,1.9CAGI,Range install
+22,Accessory,912000651,Gas Line
+23,REFRIGERATOR,FFHB2750TS,Disp FD 27CF
+24,Washer,EFLW427UIW,Front Load Washer
+25,Dryer,EFME427UIW,Front Load Dryer
+26,Cooktop,FFEC3025US,"30"" Elec Drop In Cooktop"
+27,Install,1.9CCEI,Elec Cooktop Install
+28,Single Oven,FFEW3026TS,"30"" Single Wall Oven"
+29,Install,1.9CCSI,Single Oven Install
+30,Microwave,FFMO1611LS,Built In Microwave
+31,Trim Kit,FFMOTK30LS,"30"" Trim Kit"
+32,Install,1.9MAII,Built In Micro Install
+33,Hood,FHWC3060LS,"30"" Range Hood"
+34,Accessory,912000212,Hood Cord/Whip
+35,Install,1.9CCYM,CMPLX Hood Install
+36,Dishwasher,1235672,asfdafs
+37,Washer,EFLS527UTT,Front Load Washer
+38,Dryer,EFME527UTT,Front Load Dryer
+39,Cooktop,FFGC3026SS,"30"" Gas Drop In Cooktop"
+40,Install,1.9CCGI,Gas Cooktop Install
+41,Range,FCFE3083AS,"30"" Elec FS Range"
+42,REFRIGERATOR,EW23BC87SS,Disp FD CD 22CF
+43,Washer,EFLS627UTT,Front Load Washer
+44,Dryer,EFME627UTT,Front Load Dryer
+45,Trim Kit,FFMOTK27LS,"27"" Trim Kit"
+46,REFRIGERATOR,EI23CS35KS,Disp SXS 26CF
+47,Pedestals,EPWD257UTT,Pedestal (X2)
+48,Install,1.9LDII,Pedestal Install
+49,Range,FFEF3054TS,"30"" Elec FS Range"
+50,REFRIGERATOR,FG4H2272UF,Disp FD CD 22CF
+51,Range,FFGF3054TS,"30"" Gas FS Range"
+52,REFRIGERATOR,FFSC2323TS,Disp SXS CD 23CF
+53,Vent Hood Liner,PM390,Hood Insert
+54,REFRIGERATOR,FFHD2250TS,Disp FD CD 22CF
+55,REFRIGERATOR,FFHX2325TS,"Disp SXS 23CF 33"" estar"
+56,Accessory,912000928,Range Cord
+57,Accessory,912000909,Range Cord
+63,REFRIGERATOR,FFSS2625TS,Disp SXS 26CF
+64,Accessory,912000924,Hood Cord/Whip
+65,OTR,FFMV1846VS,"30"" Micro/Hood Combo"
+66,Pedestals,EPWD257UIW,Pedestal (X2)
+67,Install,22123,Range Install
+68,Install,10439,Build In Micro Install
+69,Install,10429,CMPLX Hood Install
+70,Install,10445,Dishwasher Install
+71,Install,22141,Elec Cooktop Install
+72,Range,FFEH3054US,"30"" Elec FS Range"
+73,Install,22025,OTR Install
+74,Range,FFGH3054US,"30"" Gas FS Range"
+75,Install,22122,Range Install
+76,Install,22025,OTR Install
+77,Install,22078,Single Oven Install
+78,Install,22158,Gas Cooktop Install
+79,Hood,PM390SS,Hood Insert
+80,Install,22126,Double Oven Install
+81,Install,10397,Install
+82,Install,10454,Washer Install
+83,Install,22050,Elec Dryer Install
+84,Range,GCRE3038AF,"30"" Electric FS Range"
+85,Range,GCRG3038AF,"30"" Gas FS Range"
+86,OTR,FGMV17WNVF,"30"" Micro/Hood Combo"
+87,Dishwasher,FGID2466QF,Dishwasher
+90,Install,10469,Pedestal Install
+91,Cooktop,EW36GC55PS,"30"" Gas Drop In Cooktop"
+93,Double Oven,EI30EW48TS,"30"" Double Wall Oven"
+94,Microwave,EW30SO60QS,Built In Microwave
+95,Dishwasher,EI24ID81SS,Dishwasher
+96,Hood,UCVH2001AS,Hood Insert
+97,REFRIGERATOR,FFSS2615TS,Disp SXS 26CF
+98,Cooktop,ECCG3668AS,"30"" Gas Cooktop"
+99,Double Oven,ECWD3011AS,"30"" Double Wall Oven"
+100,Microwave,EMBD3010AS,Built In Microwave
+101,Dishwasher,EDSH4944AS,Dishwasher
+102,Install,22072,CMPLX Hood Install
+103,Accessory,912000204,Gas Line
+104,REFRIGERATOR,FRSS2623AS,Disp SXS 26CF
+105,REFRIGERATOR,FRSS2323AS,"Disp SXS 23CF 33"" estar"
+106,REFRIGERATOR,FRSC2323AS,Disp SXS CD 23CF
+107,Cooktop,ECCG3668AS,"36"" Gas Cooktop"
+108,Double Oven,ECWD3011AS,"30"" Double Wall Oven"
+109,Microwave,EMBD3010AS,Built In Microwave
+110,Dishwasher,EDSH4944AS,Dishwasher
+111,Single Oven,FCWS3027AS,"30"" Single Wall Oven"
+112,Microwave,FMBS2227BB,Built In Microwave
+113,Trim Kit,FMTK3027AS,"27"" Trim Kit"
+114,Dishwasher,GDPH4515AF,Dishwasher
+115,Washer,ELFW7337AW,Front Load Washer
+116,Dryer,ELFE7337AW,Front Load Dryer
+117,Washer,ELFW7537AT,Front Load Washer
+118,Dryer,ELFE7537AT,Front Load Dryer
+119,Washer,ELFW7637AT,Front Load Washer
+120,Dryer,ELFE7637AT,Front Load Dryer
+121,REFRIGERATOR,FRFN2823AS,Non-Disp FD 27CF
+122,REFRIGERATOR,FRFS2823AS,Disp FD 27CF
+123,REFRIGERATOR,FRFC2323AS,Disp FD CD 22CF
+124,Range,FCFG3083AS,"30""  Gas FS Range"
+125,Cooktop,FCCG3027AS,"30"" Gas Drop In Cooktop"
+126,REFRIGERATOR,GRMC2273CF,Disp FD CD 22CF
+127,REFRIGERATOR,ERFC2393AS,Disp FD CD 22CF
+128,OTR,FMOS1846BS,"30"" Micro/Hood Combo"
+129,OTR,GMOS1962AF,"30"" Micro/Hood Combo"
+130,Dishwasher,GDSH4715AF,"24"" Stainless Steel Tub Built-In Dishwasher with CleanBoost"
+131,Range,PCFE3080AF,"30"" Elec FS Range"
+132,Install,22123,Range Install
+133,Accessory,912000982,Range Cord
+134,OTR,PMOS1980AF,"30"" Micro/Hood Combo"
+135,Install,22025,OTR Install
+136,Dishwasher,PDSH4816AF,Dishwasher
+137,Install,10445,Dishwasher Install
+138,Accessory,DWBRACKIT1,Side Mount Kit
+139,Accessory,912000909,DW Install Kit
+140,Range,PCFG3080AF,"30"" Gas FS Range"
+141,Install,22122,Range Install
+142,Accessory,912000204,Gas Line
+143,OTR,PMOS1980AF,"30"" Micro/Hood Combo"
+144,Install,22025,OTR Install
+145,Dishwasher,PDSH4816AF,Dishwasher
+146,Install,10445,Dishwasher Install
+147,Accessory,DWBRACKIT1,Side Mount Kit
+148,Accessory,912000909,DW Install Kit
+149,Cooktop,FPEC3077RF,"30"" Elec Drop in Cooktop"
+150,Install,22141,Elec Cooktop Install
+151,Single Oven,PCWS3080AF,"30"" Single Wall Oven"
+152,Install,22078,Single Oven Install
+153,Microwave,PMBS3080BF,Biult In Microwave
+154,Trim Kit,PMTK3080AF,"30"" Trim Kit"
+155,Install,10439,Built In Micro Install
+156,Hood,UCVH2001AS,Hood Insert
+157,Install,22072,Hood Install
+158,Accessory,912000924,Hood cord/whip
+159,Dishwasher,PDSH4816AF,Dishwasher
+160,Install,10445,Dishwasher Install
+161,Accessory,DWBRACKIT1,Side Mount Kit
+162,Accessory,912000909,DW Install Kit
+163,Cooktop,FPGC3077RS,"30"" Gas Drop in Cooktop"
+164,Install,22158,Gas Cooktop Install
+165,Accessory,912000204,Gas Line
+166,Single Oven,PCWS3080AF,"30"" Single Wall Oven"
+167,Install,22078,Single Oven Install
+168,Microwave,PMBS3080BF,Built In Microwave
+169,Trim Kit,PMTK3080AF,"30"" Trim Kit"
+170,Hood,UCVH2001AS,Hood Insert
+171,Install,22072,Hood Install
+172,Accessory,912000924,Hood Cord/Whip
+173,Install,10439,Built In Micro Install
+174,Dishwasher,PDSH4816AF,Dishwasher
+175,Install,10445,Dishwasher Install
+176,Accessory,DWBRACKIT1,Side Mount Kit
+177,Accessory,912000909,DW Install Kit
+178,REFRIGERATOR,PRMC2285AF,Disp FD CD 22CF
+179,Install,10397,Install
+180,Accessory,912001026,Water Line
+181,REFRIGERATOR,PRFS2883AF,Disp FD 27CF
+182,Install,10397,Install
+183,Accessory,912001026,Water Line
+184,REFRIGERATOR,PRFC2383AF,Disp FD CD 22CF
+185,Install,10397,Install
+186,Accessory,912001026,Water Line
+187,REFRIGERATOR,PRSC2222AF,Disp SXS CD 23CF
+188,Install,10397,Install
+189,Accessory,912001026,Water Line
+190,,,
