@@ -5,11 +5,12 @@ include orderForm/packageInfo
 include orderForm/tradePartnerInfo
 
 block content
+  script(src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js")
   form(action="/pdf" method="POST")
     div(class="flex flex-wrap w-full justify-around gap-4")
       +deliveryContact
       +deliveryAddress
-      +packageInfo
       +tradePartners
+      +packageInfo({packages, refrigerators, w_ds})
     button(type="submit" class="px-2 py-4") Generate PDF
   

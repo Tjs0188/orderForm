@@ -1,9 +1,32 @@
-mixin packageInfo(bodyContent)
-  fieldset 
+mixin packageInfo(options)
+  script(src='js/orderForm.js')
+  - const {bodyContent, packages, refrigerators, w_ds} = options
+  fieldset
     legend Packages
     label(for="addPackage") Add a Package
-    input(name="addPackage" placeholder="Add a Package" value=bodyContent ? bodyContent.addPackage : '')
+    select(name="addPackage" placeholder="Add a Package" value=bodyContent ? bodyContent.addPackage : '' id="addPackageSelect")
+      if packages
+        option(value="") Select a package
+        each package in packages
+          option(value=package.id) 
+            = package.name
     label(for="addRefridgerator") Add a Refridgerator
-    input(name="addRefridgerator" placeholder="Add a Refridgerator" value=bodyContent ? bodyContent.addRefridgerator : '')
+    select(name="addRefridgerator" placeholder="Add a Refridgerator" value=bodyContent ? bodyContent.addRefridgerator : '' id="addFridgeSelect")
+      if refrigerators
+        option(value="") Select a fridge
+        each fridge in refrigerators
+          option(value=fridge.id) 
+            = fridge.name
     label(for="addWasherDryer") Add a Washer/Dryer
-    input(name="addWasherDryer" placeholder="Add a Washer/Dryer" value=bodyContent ? bodyContent.addWasherDryer : '')
+    select(name="addWasherDryer" placeholder="Add a Washer/Dryer" value=bodyContent ? bodyContent.addWasherDryer : '' id="addWDSelect")
+      if w_ds
+        option(value="") Select a washer and dryer
+        each w_d in w_ds
+          option(value=w_d.id) 
+            = w_d.name
+    table(id="packageTable")
+      tr
+        th Category
+        th Product Number
+        th Description
+
