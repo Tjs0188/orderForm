@@ -1,9 +1,5 @@
 #!/usr/bin/env node
 
-/**
- * Module dependencies.
- */
-
 import app from '../app.js';
 import http from 'http';
 import debugModule from 'debug'; // Import the debug module
@@ -87,5 +83,5 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
-    console.log('Listening on ' + bind);
+  console.log('Listening on ' + bind);
 }
