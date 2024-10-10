@@ -3,8 +3,6 @@ import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
-import livereload from 'livereload';
-import connectLivereload from 'connect-livereload';
 
 import indexRouter from './routes/index.js';
 import usersRouter from './routes/users.js';
@@ -16,16 +14,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Live reload
-const liveReloadServer = livereload.createServer({
-  exts: ['js', 'css', 'pug'], // Extensions to watch for changes
-  delay: 100 // Delay before refreshing, can help with saving changes
-});
-liveReloadServer.watch(path.join(__dirname, 'public'));
-liveReloadServer.watch(path.join(__dirname, 'views'));
 const app = express();
-
-app.use(connectLivereload());
 
 // view engine setup
 app.set('views', [
