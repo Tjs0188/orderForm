@@ -3,7 +3,7 @@ mixin packageInfo(options)
   - const {bodyContent, packages, refrigerators, w_ds, w_dItems, packageItems, fridgeItems} = options
   fieldset
     legend Packages
-    if bodyContent
+    if packages || refrigerators || w_ds
       label(for="addPackage") Add a Package
       select(name="addPackage" placeholder="Add a Package" value=bodyContent ? bodyContent.addPackage : '' id="addPackageSelect")
         if packages
