@@ -1,37 +1,47 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const pkgSelect = document.querySelector('#addPackageSelect');
-  const frgSelect = document.querySelector('#addFridgeSelect');
-  const wdSelect = document.querySelector('#addWDSelect');
+  const pkgSelect = document.querySelector("#addPackageSelect");
+  const frgSelect = document.querySelector("#addFridgeSelect");
+  const wdSelect = document.querySelector("#addWDSelect");
 
   const packageTable = document.querySelector("#packageTable");
 
   // Create dedicated sections for each group of items
-  const packageItemsSection = createTableSection('packageItemsSection');
-  const fridgeItemsSection = createTableSection('fridgeItemsSection');
-  const wdItemsSection = createTableSection('wdItemsSection');
+  const packageItemsSection = createTableSection("packageItemsSection");
+  const fridgeItemsSection = createTableSection("fridgeItemsSection");
+  const wdItemsSection = createTableSection("wdItemsSection");
 
   function createTableSection(className) {
     const section = document.createElement("tbody");
-    section.classList.add(className);
+    const tableBodyClassess = ["divide-y", "divide-gray-200", className];
+    section.classList.add(...tableBodyClassess);
     packageTable.appendChild(section);
     return section;
   }
 
   // General function to fetch data and update a section
-  async function updateTableSection(selectElement, section, itemClass, hiddenField) {
+  async function updateTableSection(
+    selectElement,
+    section,
+    itemClass,
+    hiddenField
+  ) {
     const selectedOption = selectElement[selectElement.selectedIndex];
-    const packageItems = await axios.get("/orderform/packageItems", { params: { packageId: selectedOption.value } });
+    const packageItems = await axios.get("/orderform/packageItems", {
+      params: { packageId: selectedOption.value },
+    });
 
     // Clear existing items in the section
     clearSection(section);
 
     // Add new items to the section
-    const itemsArray = Object.entries(packageItems.data.packageItems).map(pkgItem => {
-      const item = pkgItem[1].item;
-      const tableRow = createEditableTableRow(item, itemClass);
-      section.appendChild(tableRow);
-      return item; // Collect item data for the hidden field
-    });
+    const itemsArray = Object.entries(packageItems.data.packageItems).map(
+      (pkgItem) => {
+        const item = pkgItem[1].item;
+        const tableRow = createEditableTableRow(item, itemClass);
+        section.appendChild(tableRow);
+        return item; // Collect item data for the hidden field
+      }
+    );
 
     // Store the serialized data in the hidden field
     hiddenField.value = JSON.stringify(itemsArray);
@@ -45,7 +55,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function createEditableTableRow(item, itemClass) {
     const tableRow = document.createElement("tr");
-    tableRow.classList.add(itemClass);
+    const tableRowClasses = [
+      "px-6",
+      "py-4",
+      "whitespace-nowrap",
+      "text-sm",
+      "font-medium",
+      "text-gray-800",
+      itemClass,
+    ];
+    const inputClasses = [
+      "py-2",
+      "px-2",
+      "block",
+      "w-full",
+      "border",
+      "rounded-lg",
+      "text-sm",
+      "focus:border-blue-500",
+      "focus:ring-blue-500",
+      "disabled:opacity-50",
+      "disabled:pointer-events-none",
+      "editable-field",
+    ];
+    tableRow.classList.add(...tableRowClasses);
 
     const category = document.createElement("td");
     const productNumber = document.createElement("td");
@@ -56,19 +89,19 @@ document.addEventListener("DOMContentLoaded", () => {
     categoryInput.type = "text";
     categoryInput.value = item.category;
     categoryInput.name = `${itemClass}[category][]`;
-    categoryInput.classList.add('editable-field');
+    categoryInput.classList.add(...inputClasses);
 
     const productNumberInput = document.createElement("input");
     productNumberInput.type = "text";
     productNumberInput.value = item.product_number;
     productNumberInput.name = `${itemClass}[product_number][]`;
-    productNumberInput.classList.add('editable-field');
+    productNumberInput.classList.add(...inputClasses);
 
     const descriptionInput = document.createElement("input");
     descriptionInput.type = "text";
     descriptionInput.value = item.description;
     descriptionInput.name = `${itemClass}[description][]`;
-    descriptionInput.classList.add('editable-field');
+    descriptionInput.classList.add(...inputClasses);
 
     // Append inputs to table cells
     category.appendChild(categoryInput);
@@ -83,16 +116,30 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Event listeners for each select element
-  pkgSelect.addEventListener('change', () => {
-    updateTableSection(pkgSelect, packageItemsSection, 'packageItem', document.querySelector('#packageItemsData'));
+  pkgSelect.addEventListener("change", () => {
+    updateTableSection(
+      pkgSelect,
+      packageItemsSection,
+      "packageItem",
+      document.querySelector("#packageItemsData")
+    );
   });
 
-  frgSelect.addEventListener('change', () => {
-    updateTableSection(frgSelect, fridgeItemsSection, 'frgItem', document.querySelector('#fridgeItemsData'));
+  frgSelect.addEventListener("change", () => {
+    updateTableSection(
+      frgSelect,
+      fridgeItemsSection,
+      "frgItem",
+      document.querySelector("#fridgeItemsData")
+    );
   });
 
-  wdSelect.addEventListener('change', () => {
-    updateTableSection(wdSelect, wdItemsSection, 'wdItem', document.querySelector('#wdItemsData'));
+  wdSelect.addEventListener("change", () => {
+    updateTableSection(
+      wdSelect,
+      wdItemsSection,
+      "wdItem",
+      document.querySelector("#wdItemsData")
+    );
   });
 });
-
