@@ -1,14 +1,12 @@
-extends ../layout
 include ../orderForm/deliveryAddress
 include ../orderForm/deliveryContactInfo
 include ../orderForm/packageInfo  
 include ../orderForm/tradePartnerInfo
 
-
-block content
-  form
-    div(class="flex flex-wrap w-full justify-around gap-4")
-      +deliveryContact(bodyContent)
-      +deliveryAddress(bodyContent)
-      +tradePartners(bodyContent)
-      +packageInfo({packageItems, fridgeItems, w_dItems})
+form
+  div(class="flex flex-wrap w-full justify-around gap-4 print:gap-0")
+    +deliveryContact(bodyContent)
+    +deliveryAddress(bodyContent)
+    +tradePartners(bodyContent)
+  div.py-4.break-inside-avoid
+    +packageInfo({packageItems, fridgeItems, w_dItems})

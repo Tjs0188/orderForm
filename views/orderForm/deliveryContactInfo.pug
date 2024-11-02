@@ -1,11 +1,9 @@
+include ../mixins/card
+include ../mixins/inputs
+
 mixin deliveryContact(bodyContent)
-  fieldset 
-    legend Delivery Contact
-    label(for="contactName") Contact Name 
-    input(name="contactName" placeholder="Contact Name" type="text" value=bodyContent ? bodyContent.contactName : '')
-    label(for="deliveryPhone") Delivery Phone
-    input(name="deliveryPhone" placeholder="Delivery Phone" type="phone" value=bodyContent ? bodyContent.deliveryPhone : '')
-    label(for="contactEmail") Contact Email
-    input(name="contactEmail" placeholder="Contact Email" type="email" value=bodyContent ? bodyContent.contactEmail : '')
-    label(for="requestDeliveryDate") Request Delivery Date
-    input(name="requestDeliveryDate" placeholder="Request Delivery Date" value=bodyContent ? bodyContent.requestDeliveryDate : '')
+  +card({cardTitle: "Delivery Contact"})
+    +input({label: "Contact Name", name: "contactName", value: bodyContent ? bodyContent.contactName : ''})
+    +input({label: "Delivery Phone", name: "deliveryPhone", value: bodyContent ? bodyContent.deliveryPhone : '', type: "phone"})
+    +input({label: "Contact Email", name: "contactEmail", value: bodyContent ? bodyContent.contactEmail : '', type: "email"})
+    +input({label: "Request Delivery Date", name: "requestDeliveryDate", value: bodyContent ? bodyContent.requestDeliveryDate : ''})

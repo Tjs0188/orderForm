@@ -1,0 +1,17 @@
+mixin table({columns, rows, id})
+  div(class="flex flex-col")
+    div(class="-m-1.5 overflow-x-auto")
+      div(class="p-1.5 min-w-full inline-block align-middle")
+        div(class="overflow-hidden")
+          table(class="min-w-full divide-y divide-gray-200" id=id)
+            thead(class="break-inside-avoid break-before-avoid")
+              tr(class="")
+                each col in columns
+                  th(scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase")
+                    = col.name
+            tbody(class="divide-y divide-gray-200")
+              each row in rows
+                tr
+                  each col in columns
+                    td(class=`px-4 py-2 whitespace-nowrap text-sm font-medium text-gray-800 ${row.class}`)
+                      = row[col.selector]

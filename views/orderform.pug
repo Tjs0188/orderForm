@@ -5,12 +5,14 @@ include orderForm/packageInfo
 include orderForm/tradePartnerInfo
 
 block content
-  script(src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js")
-  form(action="/pdf" method="POST")
-    div(class="flex flex-wrap w-full justify-around gap-4")
-      +deliveryContact
-      +deliveryAddress
-      +tradePartners
-      +packageInfo({packages, refrigerators, w_ds})
-    button(type="submit" class="px-2 py-4") Generate PDF
+  div.container.py-4.mx-auto
+    script(src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js")
+    form(action="/pdf" method="POST")
+      div(class="flex flex-wrap w-full justify-around gap-4")
+        +deliveryContact
+        +deliveryAddress
+        +tradePartners
+      div.py-4.flex.flex-col.gap-4
+        +packageInfo({packages, refrigerators, w_ds})
+        button(type="submit" class="px-2 py-4") Generate PDF
   

@@ -5,7 +5,9 @@ html
     link(rel='stylesheet', href='/styles/style.css')
     link(rel="icon", type="image/png", href="/favicon.png")
   body
-    div(class="bg-stone-300 h-screen")
-      div(class="flex px-20 p-2 bg-stone-400")
-        img(class="py-4" src="/images/BFH_FullColorLogo_NoTagline.png" alt="Bloomfield Homes" class="w-1/5")
-      block content
+    div(class="h-screen")
+      div(class="flex px-20 p-2 bg-blue-200")
+        a(href="/")
+          img(class="py-4" src="/images/BFH_FullColorLogo_NoTagline.png" alt="Bloomfield Homes" class="w-1/5")
+      div
+        block content

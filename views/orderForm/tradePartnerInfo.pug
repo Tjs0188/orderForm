@@ -1,9 +1,8 @@
+include ../mixins/card
+include ../mixins/inputs
+
 mixin tradePartners(bodyContent)
-  fieldset 
-    legend Trade Partner Information
-    label(for="projectName") Project Name 
-    input(name="projectName" placeholder="Community Name" value=bodyContent ? bodyContent.projectName : '')
-    label(for="accountNumber") Account Number 
-    input(name="accountNumber" placeholder="Account Number" value=bodyContent ? bodyContent.accountNumber: '')
-    label(for="quoteNumber") Quote Number 
-    input(name="quoteNumber" placeholder="Quote Number" value=bodyContent ? bodyContent.quoteNumber: '')
+  +card({cardTitle: "Trade Partner Information"})
+    +input({label: "Project Name", name: "projectName", value: bodyContent ? bodyContent.projectName : '', placeholder: "Community Name"})
+    +input({label: "Account Number", name: "accountNumber", value: bodyContent ? bodyContent.accountNumber : ''})
+    +input({label: "Quote Number", name: "quoteNumber", value: bodyContent ? bodyContent.quoteNumber : ''})

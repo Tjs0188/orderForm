@@ -1,13 +1,10 @@
+include ../mixins/card
+include ../mixins/inputs
+
 mixin deliveryAddress(bodyContent)
-  fieldset
-    legend Delivery Address
-    label(for="address") Address
-    input(name="address" placeholder="Address" type="text" value=bodyContent ? bodyContent.address : '')
-    label(for="lotBlock") Lot and Block
-    input(name="lotBlock" placeholder="Lot and Block" type="text" value=bodyContent ? bodyContent.lotBlock : '')
-    label(for="city" type="text") City 
-    input(name="city" placeholder="City" type="text" value=bodyContent ? bodyContent.city : '')
-    label(for="state") State
-    input(name="state" placeholder="State" type="text" value=bodyContent ? bodyContent.state : '')
-    label(for="zip") Zip
-    input(name="zip" placeholder="Zip" type="text" value=bodyContent ? bodyContent.zip : '')
+ +card({cardTitle: "Delivery Address"})
+    +input({name: "address", label: "Address", value: bodyContent ? bodyContent.address : ''})
+    +input({name: "lotBlock", label: "Lot and Block", value: bodyContent ? bodyContent.lotBlock : ''})
+    +input({name: "city", label: "City", value: bodyContent ? bodyContent.city : ''})
+    +input({name: "state", label: "State", value: bodyContent ? bodyContent.state : ''})
+    +input({name: "zip", label: "Zip", value: bodyContent ? bodyContent.zip : ''})
