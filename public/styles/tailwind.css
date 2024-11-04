@@ -6,8 +6,4 @@
   form {
     @apply w-4/5 mx-auto;
   }
-
-  button {
-    @apply bg-blue border border-solid border-blue-600 hover:bg-blue-600 text-blue-50 rounded;
-  }
 }
