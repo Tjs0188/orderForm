@@ -1,3 +1,5 @@
+import axios from "axios";
+
 document.addEventListener("DOMContentLoaded", () => {
   const pkgSelect = document.querySelector("#addPackageSelect");
   const frgSelect = document.querySelector("#addFridgeSelect");
