@@ -2,15 +2,18 @@ import puppeteer from "puppeteer";
 import express from "express";
 import pug from "pug";
 import path from "path";
+import { PrismaClient } from "@prisma/client";
 
+const prisma = new PrismaClient();
 const router = express.Router();
 
 router.post("/", async (req, res) => {
   let filename = "Frigidare Order Form";
   filename = encodeURIComponent(filename) + ".pdf";
   const bodyContent = req.body;
-
+  createOrderHistory(bodyContent);
   // Format items for package, fridge, and washer/dryer
+  console.log(bodyContent);
   const packageItems = formatItems(bodyContent, "packageItem");
   const fridgeItems = formatItems(bodyContent, "frgItem");
   const w_dItems = formatItems(bodyContent, "wdItem");
@@ -52,9 +55,20 @@ router.post("/", async (req, res) => {
 
 // Helper function to format items into objects
 function formatItems(bodyContent, prefix) {
-  const categories = bodyContent[`${prefix}[category][]`] || [];
-  const productNumbers = bodyContent[`${prefix}[product_number][]`] || [];
-  const descriptions = bodyContent[`${prefix}[description][]`] || [];
+  const parseIfString = (value) => {
+    if (typeof value === "string") {
+      return JSON.parse(value);
+    }
+    return value;
+  };
+
+  const categories = parseIfString(bodyContent[`${prefix}[category][]`] || []);
+  const productNumbers = parseIfString(
+    bodyContent[`${prefix}[product_number][]`] || []
+  );
+  const descriptions = parseIfString(
+    bodyContent[`${prefix}[description][]`] || []
+  );
 
   // Create an array of objects from the parallel arrays
   return categories.map((category, index) => ({
@@ -63,5 +77,14 @@ function formatItems(bodyContent, prefix) {
     description: descriptions[index] || "",
   }));
 }
+
+const createOrderHistory = async (bodyContent) => {
+  const jsonOrderHistoryData = JSON.stringify(bodyContent);
+  const orderHistory = await prisma.orderHistory.create({
+    data: { orderData: jsonOrderHistoryData },
+  });
+
+  return orderHistory;
+};
 
 export default router;
