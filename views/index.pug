@@ -1,7 +1,11 @@
 extends layout
+include mixins/card
 
 block content
-  div(class="flex justify-center py-24")
-    a(href="/orderform") 
-      button(class="bg-[#26457a] hover:bg-sky-700 ring-2 rounded-lg p-1")
-        span(class="text-white") Order Form
+  div(class="text-center w-1/2 mx-auto")
+    h1.text-4xl.font-bold.py-10 Electrolux Order Management System
+    h2.text-2xl.py-6
+      | Streamline your Electrolux appliance orders with our digital form system. Generate and email order forms directly to our Electrolux partners.
+  div.flex.justify-center.py-24.gap-10
+    +card({cardTitle: "Order Form", cardSubTitle: "Generate a new Electrolux order form in minutes", cardLink: {linkText: "Create New Order", linkUrl: "/orderform"}})
+    +card({cardTitle: "Order History", cardSubTitle: "Access your previously created order forms", cardLink: {linkText: "View History", linkUrl: "/history"}})
