@@ -6,6 +6,9 @@ include orderForm/tradePartnerInfo
 
 block content
   div.container.py-4.mx-auto
+    div.py-10
+      a(href="/" class="btn-outline")
+        | Back to Home
     form(action="/pdf" method="POST")
       div(class="flex flex-wrap w-full justify-around gap-4")
         +deliveryContact
@@ -13,6 +16,6 @@ block content
         +tradePartners
       div.py-4.flex.flex-col.gap-4
         +packageInfo({packages, refrigerators, w_ds})
-        button(type="submit" class="px-2 py-4") Generate PDF
+        button(type="submit" class="btn-outline") Generate PDF
   script(src="/js/orderForm.bundle.js")
   
