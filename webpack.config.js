@@ -1,3 +1,4 @@
+import { watch } from "browser-sync";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -31,11 +32,6 @@ export default {
     ],
   },
   devtool: "inline-source-map", // Enable source maps for easier debugging
-  devServer: {
-    compress: true,
-    port: 9000,
-    hot: true, // Enable hot module replacement
-    open: false, // Automatically open the browser
-  },
+  watch: true, // Enable watch mode
   mode: "development", // Set the mode to development
 };

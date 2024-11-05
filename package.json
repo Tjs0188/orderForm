@@ -8,7 +8,8 @@
     "nodemon": "nodemon ./bin/www",
     "tailwind:css": "postcss public/styles/tailwind.css -o public/styles/style.css --watch",
     "start": "node ./bin/www",
-    "webpack:dev": "webpack serve --config webpack.config.js",
+
+    "webpack:dev": "webpack --watch",
     "dev": "npm-run-all -p tailwind:css nodemon webpack:dev"
   },
   "prisma": {
@@ -50,8 +51,7 @@
     "pug": "^3.0.3",
     "puppeteer": "^23.5.1",
     "webpack": "^5.96.1",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.1.0"
+    "webpack-cli": "^5.1.4"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.9",
