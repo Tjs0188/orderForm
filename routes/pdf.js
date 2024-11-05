@@ -11,9 +11,8 @@ router.post("/", async (req, res) => {
   let filename = "Frigidare Order Form";
   filename = encodeURIComponent(filename) + ".pdf";
   const bodyContent = req.body;
-  createOrderHistory(bodyContent);
+  createOrderHistory(bodyContent, req.user);
   // Format items for package, fridge, and washer/dryer
-  console.log(bodyContent);
   const packageItems = formatItems(bodyContent, "packageItem");
   const fridgeItems = formatItems(bodyContent, "frgItem");
   const w_dItems = formatItems(bodyContent, "wdItem");
@@ -78,10 +77,13 @@ function formatItems(bodyContent, prefix) {
   }));
 }
 
-const createOrderHistory = async (bodyContent) => {
+const createOrderHistory = async (bodyContent, user) => {
   const jsonOrderHistoryData = JSON.stringify(bodyContent);
   const orderHistory = await prisma.orderHistory.create({
-    data: { orderData: jsonOrderHistoryData },
+    data: {
+      orderData: jsonOrderHistoryData,
+      user: { connect: { id: user.id } },
+    },
   });
 
   return orderHistory;

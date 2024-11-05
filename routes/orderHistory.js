@@ -5,9 +5,11 @@ const router = express.Router();
 const prisma = new PrismaClient();
 
 /* GET order histories listings. */
-router.get("/", async (_req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
-    const orders = await prisma.orderHistory.findMany();
+    const orders = await prisma.orderHistory.findMany({
+      where: { userId: req.user.id },
+    });
 
     res.render("orderHistory", {
       title: "Order Form - History",
