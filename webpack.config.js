@@ -36,11 +36,6 @@ export default {
     port: 9000,
     hot: true, // Enable hot module replacement
     open: false, // Automatically open the browser
-    proxy: [
-      {
-        "/api": "http://localhost:3000", // Proxy API requests to the backend server
-      },
-    ],
   },
   mode: "development", // Set the mode to development
 };
