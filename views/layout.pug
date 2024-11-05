@@ -9,5 +9,14 @@ html
       div(class="flex px-20 p-2 bg-blue-200")
         a(href="/")
           img(class="py-4" src="/images/BFH_FullColorLogo_NoTagline.png" alt="Bloomfield Homes" class="w-1/5")
+        if user
+          div.w-full.flex.gap-2.items-center
+            span
+              | Welcome, #{user.name}
+            a(href="/auth/logout" class="btn-outline")
+              | Logout
+        else
+          a(href="/auth/login" class="btn-outline")
+            | Login
       div
         block content
