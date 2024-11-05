@@ -46,7 +46,9 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     // Store the serialized data in the hidden field
-    hiddenField.value = JSON.stringify(itemsArray);
+    if (hiddenField) {
+      hiddenField.value = JSON.stringify(itemsArray);
+    }
   }
 
   function clearSection(section) {
@@ -64,6 +66,8 @@ document.addEventListener("DOMContentLoaded", () => {
       "text-sm",
       "font-medium",
       "text-gray-800",
+      "odd:bg-white",
+      "even:bg-blue",
       itemClass,
     ];
     const inputClasses = [
@@ -71,14 +75,13 @@ document.addEventListener("DOMContentLoaded", () => {
       "px-2",
       "block",
       "w-full",
-      "border",
-      "rounded-lg",
+      "border-0",
+      "border-transparent",
       "text-sm",
       "focus:border-blue-500",
       "focus:ring-blue-500",
       "disabled:opacity-50",
       "disabled:pointer-events-none",
-      "editable-field",
     ];
     tableRow.classList.add(...tableRowClasses);
 
