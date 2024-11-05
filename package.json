@@ -17,6 +17,8 @@
   "dependencies": {
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
+    "@popperjs/core": "^2.11.8",
+    "@preline/tooltip": "^2.5.0",
     "@prisma/client": "^5.20.0",
     "@types/connect-livereload": "^0.6.3",
     "@types/livereload": "^0.9.5",
@@ -37,6 +39,7 @@
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.47",
     "postcss-cli": "^11.0.0",
+    "preline": "^2.5.1",
     "prisma": "^5.20.0",
     "pug": "^3.0.3",
     "puppeteer": "^23.5.1",
@@ -45,6 +48,7 @@
     "webpack-dev-server": "^5.1.0"
   },
   "devDependencies": {
+    "@tailwindcss/forms": "^0.5.9",
     "@types/cookie-parser": "^1.4.7",
     "@types/debug": "^4.1.12",
     "@types/express": "^5.0.0",

@@ -9,6 +9,7 @@ export default {
   entry: {
     orderForm: "./src/orderForm.js", // Entry point for orderForm.js
     string: "./src/string.js", // Entry point for another file
+    preline: "./src/preline.js", // Entry point for preline.js
   },
   output: {
     filename: "[name].bundle.js", // Output filename pattern
@@ -34,7 +35,7 @@ export default {
     compress: true,
     port: 9000,
     hot: true, // Enable hot module replacement
-    open: true, // Automatically open the browser
+    open: false, // Automatically open the browser
     proxy: [
       {
         "/api": "http://localhost:3000", // Proxy API requests to the backend server

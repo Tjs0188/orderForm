@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./views/**/*.{html,js,pug}"],
+  content: ["./views/**/*.{html,js,pug}", "node_modules/preline/dist/*.js"],
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
@@ -35,5 +36,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/forms"), require("preline/plugin")],
 };

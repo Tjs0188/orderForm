@@ -1,5 +1,6 @@
 mixin table({columns, rows, id, actions})
   script(src="/js/string.bundle.js")
+  script(src="/js/preline.bundle.js")
   div(class="flex flex-col")
     div(class="-m-1.5 overflow-x-auto")
       div(class="p-1.5 min-w-full inline-block align-middle")
@@ -17,12 +18,14 @@ mixin table({columns, rows, id, actions})
               each row in rows
                 tr
                   each col in columns
-                    td(class=[`px-4 py-2 whitespace-nowrap text-sm font-medium text-gray-800 hs-tooltip `, row.class].join(' '))
+                    td(class=[`px-4 py-2 text-sm font-medium text-gray-800`, row.class, col.truncated ? undefined : "whitespace-nowrap"].join(' '))
                       if col.truncated
-                        div(class="truncate hs-tooltip-toggle" data-truncateLength=col.truncateLength)
-                          = row[col.selector]
-                          span(class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm dark:bg-neutral-700" role="tooltip")
-                          | Tooltip on top
+                        div(class=" hs-tooltip inline-block")
+                          button(type="button" class="hs-tooltip-toggle")
+                            span(class="truncate" data-truncateLength=col.truncateLength)
+                              = row[col.selector]
+                            span(class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm dark:bg-neutral-700" role="tooltip")
+                              = row[col.selector]
                       else
                         = row[col.selector]
                   if actions
