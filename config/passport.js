@@ -18,7 +18,7 @@ passport.use(
       responseType: "code",
       responseMode: "query",
       scope: ["openid", "profile", "email"], // Specify the required scopes
-      loggingLevel: "info", // Adjust logging level as needed
+      //loggingLevel: "info", // Adjust logging level as needed
     },
     async function (iss, sub, profile, accessToken, refreshToken, done) {
       try {
