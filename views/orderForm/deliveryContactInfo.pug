@@ -4,6 +4,6 @@ include ../mixins/inputs
 mixin deliveryContact(bodyContent)
   +card({cardTitle: "Delivery Contact"})
     +input({label: "Contact Name", name: "contactName", value: bodyContent ? bodyContent.contactName : ''})
-    +input({label: "Delivery Phone", name: "deliveryPhone", value: bodyContent ? bodyContent.deliveryPhone : '', type: "phone"})
+    +input({label: "Delivery Phone", name: "deliveryPhone", value: bodyContent ? bodyContent.deliveryPhone : '', type: "tel"})
     +input({label: "Contact Email", name: "contactEmail", value: bodyContent ? bodyContent.contactEmail : '', type: "email"})
-    +input({label: "Request Delivery Date", name: "requestDeliveryDate", value: bodyContent ? bodyContent.requestDeliveryDate : ''})
+    +input({label: "Request Delivery Date", name: "requestDeliveryDate", value: bodyContent ? bodyContent.requestDeliveryDate : '', type: "date"})

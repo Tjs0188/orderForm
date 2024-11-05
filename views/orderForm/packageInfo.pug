@@ -4,9 +4,8 @@ include ../mixins/table
 
 
 mixin packageInfo(options)
-  script(src='js/orderForm.js')
   - const {bodyContent, packages, refrigerators, w_ds, w_dItems, packageItems, fridgeItems} = options
-
+  script(src="/js/orderForm.bundle.js")
   - const tableCols = [{name: "Category", selector: "category"}, {name: "Product Number", selector: "product_number"}, {name: "Description", selector: "description"}]
   - const tableRows = []
   if packageItems
@@ -36,6 +35,7 @@ mixin packageInfo(options)
           each w_d in w_ds
             option(value=w_d.id) 
               = w_d.name
+      p.p-6.text-sm Click on a field below to edit the value
     +table({columns: tableCols, rows: tableRows, id: "packageTable"})
 
       

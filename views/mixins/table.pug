@@ -1,12 +1,12 @@
 mixin table({columns, rows, id, actions})
   script(src="/js/string.bundle.js")
   script(src="/js/preline.bundle.js")
-  div(class="flex flex-col")
+  div(class="flex flex-col break-inside-auto")
     div(class="-m-1.5 overflow-x-auto")
       div(class="p-1.5 min-w-full inline-block align-middle")
         div(class="overflow-hidden")
           table(class="min-w-full divide-y divide-gray-200" id=id)
-            thead(class="break-inside-avoid break-before-avoid")
+            thead(class="")
               tr(class="")
                 each col in columns
                   th(scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase")
@@ -14,11 +14,11 @@ mixin table({columns, rows, id, actions})
                 if actions
                   th(scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase")
                     = "Actions"
-            tbody(class="divide-y divide-gray-200")
+            tbody(class="divide-y divide-gray-200 ")
               each row in rows
                 tr
                   each col in columns
-                    td(class=[`px-4 py-2 text-sm font-medium text-gray-800`, row.class, col.truncated ? undefined : "whitespace-nowrap"].join(' '))
+                    td(class=[`px-6 py-2 text-sm print:text-xs font-medium text-gray-800`, row.class, col.truncated ? undefined : "whitespace-nowrap"].join(' '))
                       if col.truncated
                         div(class=" hs-tooltip inline-block")
                           button(type="button" class="hs-tooltip-toggle")

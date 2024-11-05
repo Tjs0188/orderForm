@@ -40,7 +40,7 @@ router.post("/", async (req, res) => {
   const pdfBuffer = await page.pdf({
     format: "LETTER",
     printBackground: true,
-    margin: { top: "50px", bottom: "50px", left: "0px", right: "0px" },
+    margin: { top: "10px", bottom: "10px", left: "0px", right: "0px" },
   });
 
   await browser.close();
