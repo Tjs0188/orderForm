@@ -1,0 +1,34 @@
+extend ../layout
+
+block content
+  div.flex.flex-col
+    div.flex.container.mx-auto.justify-between.text-center
+      h2.text-2xl.font-bold.mb-4 User Form
+      div
+        a(href="/" class="btn-outline")
+          | Back to Home
+    div.px-10.w-full
+      .container.mx-auto
+        form(method="POST", action=`/users/${action == "edit" ? `edit/${id}` : null}`)
+          .mb-4
+            label(for="name" class="block text-sm font-medium text-gray-700") Name
+            input#name(type="text" name="name" placeholder="Enter full name" value=user.name required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm")
+
+          .mb-4
+            label(for="email" class="block text-sm font-medium text-gray-700") Email
+            input#email(type="email" name="email" disabled placeholder="Enter email"  value=user.email required class="mt-1 block w-full rounded-md bg-gray-200 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm")
+
+          .mb-4
+            label(for="role" class="block text-sm font-medium text-gray-700") Role
+            select#role(name="role" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm")
+              option(value="" disabled selected) Select Role
+              option(value="admin") Admin
+              option(value="user") User
+              option(value="guest") Guest
+
+          .mb-4
+            label(for="admin" class="flex items-center text-sm font-medium text-gray-700 hover:cursor-pointer")
+              input#admin(type="checkbox" name="admin"  checked=user.admin class="rounded mr-2 hover:cursor-pointer")
+              | Is Admin
+
+          button(type="submit" class="w-full py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2") Submit

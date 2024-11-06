@@ -8,8 +8,10 @@ block content
       | Streamline your Electrolux appliance orders with our digital form system. Generate and email order forms directly to our Electrolux partners.
   div(class="flex flex-wrap justify-center py-24 gap-10 w-1/2 mx-auto")
     if user
-        +card({cardTitle: "Order Form", cardSubTitle: "Generate a new Electrolux order form in minutes", cardLink: {linkText: "Create New Order", linkUrl: "/orderform"}})
-        +card({cardTitle: "Order History", cardSubTitle: "Access your previously created order forms", cardLink: {linkText: "View History", linkUrl: "/history"}})
-        +card({cardTitle: "Form Templates", cardSubTitle: "Manage your templates created", cardLink: {linkText: "View Templates", linkUrl: "/orderform/templates"}})
+        +card({cardTitle: "Order Form", cardSubTitle: "Generate a new Electrolux order form in minutes", cardLink: {linkText: "Create New Order", linkUrl: "/orderform"}, className: "basis-1/4"})
+        +card({cardTitle: "Order History", cardSubTitle: "Access your previously created order forms", cardLink: {linkText: "View History", linkUrl: "/history"}, className: "basis-1/4"})
+        +card({cardTitle: "Form Templates", cardSubTitle: "Manage your templates created", cardLink: {linkText: "View Templates", linkUrl: "/orderform/templates"}, className: "basis-1/4"})
+        if user.admin
+           +card({cardTitle: "Users", cardSubTitle: "Manage users", cardLink: {linkText: "View Users", linkUrl: "/users/"}, className: "basis-1/4"})
     else
         +card({cardTitle: "Login", cardSubTitle: "Login to access the Electrolux Order Management System", cardLink: {linkText: "Login", linkUrl: "/auth/login"}})
