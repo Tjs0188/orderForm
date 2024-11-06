@@ -17,39 +17,24 @@ passport.use(
       useCookieInsteadOfSession: false, // Use cookies for session management
       responseType: "code",
       responseMode: "query",
-      scope: ["openid", "profile", "email", "User.Read"], // Specify the required scopes
+      scope: [ "profile", "https://graph.microsoft.com/mail.read"], // Specify the required scopes
       //loggingLevel: "info", // Adjust logging level as needed
     },
-    async function (iss, sub, profile, accessToken, refreshToken, done) {
+    async function (profile, done) {
       try {
         const waadProfile = profile;
-        console.log(accessToken);
-        // Fetch additional user information from Microsoft Graph
-        const graphResponse = await fetch(
-          "https://graph.microsoft.com/v1.0/me",
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-
-        const additionalInfo = await graphResponse.json();
-
-        // Now you have more information about the user
-        console.log(additionalInfo);
-        console.log(profile);
         // Find or create user in the database
         let user = await prisma.user.findUnique({
           where: { email: waadProfile.upn },
         });
         if (!user) {
+          const userCount = await prisma.user.count()
           user = await prisma.user.create({
             data: {
               email: waadProfile.upn,
               name: waadProfile.displayName,
               password: randomUUID(),
+              admin: userCount == 0
             },
           });
         }

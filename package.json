@@ -53,14 +53,17 @@
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.9",
+    "@types/connect-livereload": "^0.6.3",
+    "@types/connect-sqlite3": "^0.9.5",
     "@types/cookie-parser": "^1.4.7",
     "@types/debug": "^4.1.12",
     "@types/express": "^5.0.0",
-    "@types/morgan": "^1.9.9",
-    "@types/pug": "^2.0.10",
-    "@types/connect-livereload": "^0.6.3",
+    "@types/express-session": "^1.18.0",
     "@types/livereload": "^0.9.5",
+    "@types/morgan": "^1.9.9",
     "@types/passport": "^1.0.17",
+    "@types/passport-azure-ad": "^4.3.6",
+    "@types/pug": "^2.0.10",
     "tailwindcss": "^3.4.13"
   }
 }
