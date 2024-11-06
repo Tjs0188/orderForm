@@ -34,18 +34,20 @@ model PackageItem{
 model Template{
   id    Int     @id @default(autoincrement())
   name String
-  proj_name  String
-  quote_num String
-  contact_name String
-  delivery_phone String
-  contact_email String
-  deliv_date String
-  acc_num String
-  address String
-  lot_block String
-  city String
-  state String
-  zip String
+  proj_name  String?
+  quote_num String?
+  contact_name String?
+  delivery_phone String?
+  contact_email String?
+  deliv_date String?
+  acc_num String?
+  address String?
+  lot_block String?
+  city String?
+  state String?
+  zip String?
+  userId Int
+  user User @relation(fields: [userId], references: [id])
 }
 
 model OrderHistory {
@@ -64,4 +66,5 @@ model User {
   role String?
   createdAt DateTime @default(now())
   orders OrderHistory[]
+  templates Template[]
 }
