@@ -71,8 +71,11 @@ router.post("/saveTemplate", upload.none(), async (req, res, next) => {
 
 router.get("/templates", async (req, res, next) => {
   try {
-    const templates = getTemplatesByUserId(req.user.id);
-    res.json({ templates });
+    const templates = await getTemplatesByUserId(req.user.id);
+    const totalCount = await prisma.template.count({
+      where: { userId: req.user.id },
+    });
+    res.render("userTemplates", { templates, totalCount });
   } catch (error) {
     next(error);
   }
@@ -85,6 +88,21 @@ router.get("/template", async (req, res, next) => {
       where: { id: templateId },
     });
     res.json({ template });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete("/templates/:id", async (req, res, next) => {
+  try {
+    const templateId = parseInt(req.params.id);
+    await prisma.template.delete({
+      where: {
+        id: templateId,
+        userId: req.user.id,
+      },
+    });
+    res.sendStatus(200);
   } catch (error) {
     next(error);
   }
