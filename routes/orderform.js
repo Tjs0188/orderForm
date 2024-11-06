@@ -1,11 +1,13 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
+import multer from "multer";
 
 const router = express.Router();
 const prisma = new PrismaClient();
+const upload = multer(); // Initialize multer
 
 /* GET users listing. */
-router.get("/", async (_req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     const packages = await prisma.package.findMany({
       where: {
@@ -23,16 +25,65 @@ router.get("/", async (_req, res, next) => {
       },
     });
 
+    const templates = getTemplatesByUserId(req.user.id);
+
     res.render("orderform", {
       title: "Order Form",
       packages,
       refrigerators,
       w_ds,
+      templates,
     });
   } catch (error) {
     next(error);
   }
 });
+
+router.post("/saveTemplate", upload.none(), async (req, res, next) => {
+  try {
+    const { name, ...data } = req.body;
+    console.log(req.body);
+    const template = await prisma.template.create({
+      data: {
+        name,
+        contact_name: data.contactName,
+        delivery_phone: data.deliveryPhone,
+        contact_email: data.contactEmail,
+        deliv_date: data.requestDeliveryDate,
+        quote_num: data.quoteNumber,
+        address: data.address,
+        lot_block: data.lotBlock,
+        city: data.city,
+        state: data.state,
+        zip: data.zip,
+        proj_name: data.projectName,
+        acc_num: data.accountNumber,
+        user: { connect: { id: req.user.id } },
+      },
+    });
+    res.json({ template });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/templates", async (req, res, next) => {
+  try {
+    const templates = getTemplatesByUserId(req.user.id);
+    res.json({ templates });
+  } catch (error) {
+    next(error);
+  }
+});
+
+const getTemplatesByUserId = async (userId) => {
+  const templates = await prisma.template.findMany({
+    where: {
+      userId: { equals: userId },
+    },
+  });
+  return templates;
+};
 
 router.get("/packageItems", async (req, res, next) => {
   try {
