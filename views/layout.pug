@@ -6,17 +6,17 @@ html
     link(rel="icon", type="image/png", href="/favicon.png")
   body
     div(class="h-screen")
-      div(class="flex px-20 p-2 bg-blue-200 justify-between")
+      div(class="flex px-20 p-2 bg-blue-200 justify-between shadow-sm")
         a(href="/" class="w-1/5")
           img(class="py-4" src="/images/BFH_FullColorLogo_NoTagline.png" alt="Bloomfield Homes")
-        if user
-          div(class="w-1/4 flex gap-2 items-center")
-            span.flex-1
-              | Welcome, #{user.name}
-            a(href="/auth/logout" class="btn-outline border-blue text-blue")
-              | Logout
-        else
-          a(href="/auth/login" class="btn-outline")
-            | Login
+        div(class="w-1/4 flex gap-2 items-center")
+          if user
+              span.flex-1
+                | Welcome, #{user.name}
+              a(href="/auth/logout" class="btn-outline border-blue text-blue")
+                | Logout
+          else
+            a(href="/auth/login" class="btn")
+              | Login
       div
         block content

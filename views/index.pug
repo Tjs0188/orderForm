@@ -6,10 +6,9 @@ block content
     h1.text-4xl.font-bold.py-10 Electrolux Order Management System
     h2.text-2xl.py-6
       | Streamline your Electrolux appliance orders with our digital form system. Generate and email order forms directly to our Electrolux partners.
-  if user
-    div(class="flex justify-center py-24 gap-10 w-1/2 mx-auto")
-      +card({cardTitle: "Order Form", cardSubTitle: "Generate a new Electrolux order form in minutes", cardLink: {linkText: "Create New Order", linkUrl: "/orderform"}})
-      +card({cardTitle: "Order History", cardSubTitle: "Access your previously created order forms", cardLink: {linkText: "View History", linkUrl: "/history"}})
-  else
-    div.flex.justify-center.py-24.gap-10
-      +card({cardTitle: "Login", cardSubTitle: "Login to access the Electrolux Order Management System", cardLink: {linkText: "Login", linkUrl: "/auth/login"}})
+  div(class="flex justify-center py-24 gap-10 w-1/2 mx-auto")
+    if user
+        +card({cardTitle: "Order Form", cardSubTitle: "Generate a new Electrolux order form in minutes", cardLink: {linkText: "Create New Order", linkUrl: "/orderform"}})
+        +card({cardTitle: "Order History", cardSubTitle: "Access your previously created order forms", cardLink: {linkText: "View History", linkUrl: "/history"}})
+    else
+        +card({cardTitle: "Login", cardSubTitle: "Login to access the Electrolux Order Management System", cardLink: {linkText: "Login", linkUrl: "/auth/login"}})
