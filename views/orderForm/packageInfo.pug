@@ -35,7 +35,10 @@ mixin packageInfo(options)
           each w_d in w_ds
             option(value=w_d.id) 
               = w_d.name
-      p.p-6.text-sm Click on a field below to edit the value
+      .flex.justify-between
+        p.p-6.text-sm Click on a field below to edit the value
+        .py-2
+          button(type="submit" class="btn w-full") Generate PDF
     +table({columns: tableCols, rows: tableRows, id: "packageTable"})
 
       

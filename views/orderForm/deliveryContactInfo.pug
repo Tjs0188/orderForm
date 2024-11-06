@@ -7,3 +7,6 @@ mixin deliveryContact(bodyContent)
     +input({label: "Delivery Phone", name: "deliveryPhone", value: bodyContent ? bodyContent.deliveryPhone : '', type: "tel"})
     +input({label: "Contact Email", name: "contactEmail", value: bodyContent ? bodyContent.contactEmail : '', type: "email"})
     +input({label: "Request Delivery Date", name: "requestDeliveryDate", value: bodyContent ? bodyContent.requestDeliveryDate : '', type: "date"})
+    .bg-slate-100.p-4.rounded-md
+      span.text-xs
+        | ** Please Provide minimum 10 business days lead time from date of order to delivery **

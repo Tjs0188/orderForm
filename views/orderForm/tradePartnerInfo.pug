@@ -4,5 +4,14 @@ include ../mixins/inputs
 mixin tradePartners(bodyContent)
   +card({cardTitle: "Trade Partner Information"})
     +input({label: "Project Name", name: "projectName", value: bodyContent ? bodyContent.projectName : '', placeholder: "Community Name"})
-    +input({label: "Account Number", name: "accountNumber", value: bodyContent ? bodyContent.accountNumber : ''})
-    +input({label: "Quote Number", name: "quoteNumber", value: bodyContent ? bodyContent.quoteNumber : ''})
+    +input({label: "Account Number", name: "accountNumber", value: bodyContent ? bodyContent.accountNumber : '90403'})
+    +input({label: "Quote Number", name: "quoteNumber", value: bodyContent ? bodyContent.quoteNumber : 'HYA1'})
+    .bg-slate-100.p-4.rounded-md
+      span.text-xs
+        | To complete your appliance order please attach this document to an email and send to the Contract Direct Team at 
+        a(href="mail:NA.Bloomfield@Electrolux.com" class="text-blue") NA.Bloomfield@Electrolux.com
+        |. Please copy your local rep(s) 
+        a(href="mail:Tonya.Riley@Electrolux.com" class="text-blue") Tonya.Riley@Electrolux.com 	
+        | on all orders until the interactive order form is completed
+        | For Questions:  Please contact the Contract Direct Team directly at 
+        a(href="tel:(800) 327-4308" class="text-blue") (800) 327-4308.	
