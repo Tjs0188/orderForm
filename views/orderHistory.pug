@@ -15,6 +15,7 @@ block content
           {name: "Order Data", selector: "orderData", truncated: true},
           {name: "Created At", selector: "createdAt"},
           ],
-        rows: orders, 
+        rows: orders,
+        currentPage,
         actions: [
-          {name: "Export to PDF", link: "/pdf", class: "text-blue", method: "POST", dataSelector: "orderData"}]})
+          {name: "Export to PDF", link: "/pdf", class: "text-blue", method: "POST", dataSelector: "orderData"}], totalRows: totalCount})
