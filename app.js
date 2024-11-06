@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import logger from "morgan";
 import session from "express-session";
 import connectSQLite3 from "connect-sqlite3";
+import 'dotenv/config'
 import passport from "./config/passport.js";
 import { ensureAuthenticated } from "./middlewares/auth.js";
 

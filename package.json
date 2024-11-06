@@ -20,8 +20,6 @@
     "@popperjs/core": "^2.11.8",
     "@preline/tooltip": "^2.5.0",
     "@prisma/client": "^5.20.0",
-    "@types/connect-livereload": "^0.6.3",
-    "@types/livereload": "^0.9.5",
     "autoprefixer": "^10.4.20",
     "axios": "^1.7.7",
     "babel-loader": "^9.2.1",
@@ -60,6 +58,9 @@
     "@types/express": "^5.0.0",
     "@types/morgan": "^1.9.9",
     "@types/pug": "^2.0.10",
+    "@types/connect-livereload": "^0.6.3",
+    "@types/livereload": "^0.9.5",
+    "@types/passport": "^1.0.17",
     "tailwindcss": "^3.4.13"
   }
 }
