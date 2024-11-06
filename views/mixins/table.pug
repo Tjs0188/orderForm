@@ -1,4 +1,6 @@
-mixin table({columns, rows, id, actions})
+mixin table({columns, rows, id, actions, currentPage = 1, rowsPerPage = 10, totalRows})
+  - const totalPages = Math.ceil(totalRows / rowsPerPage);
+  - const paginatedRows = rows;
   script(src="/js/string.bundle.js")
   script(src="/js/preline.bundle.js")
   div(class="flex flex-col break-inside-auto")
@@ -6,21 +8,21 @@ mixin table({columns, rows, id, actions})
       div(class="p-1.5 min-w-full inline-block align-middle")
         div(class="overflow-hidden")
           table(class="min-w-full divide-y divide-gray-200" id=id)
-            thead(class="")
-              tr(class="")
+            thead
+              tr
                 each col in columns
                   th(scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase")
                     = col.name
                 if actions
                   th(scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase")
-                    = "Actions"
-            tbody(class="divide-y divide-gray-200 ")
-              each row in rows
+                    | Actions
+            tbody(class="divide-y divide-gray-200")
+              each row in paginatedRows
                 tr
                   each col in columns
                     td(class=[`px-6 py-2 text-sm print:text-xs font-medium text-gray-800`, row.class, col.truncated ? undefined : "whitespace-nowrap"].join(' '))
                       if col.truncated
-                        div(class=" hs-tooltip inline-block")
+                        div(class="hs-tooltip inline-block")
                           button(type="button" class="hs-tooltip-toggle")
                             span(class="truncate" data-truncateLength=col.truncateLength)
                               = row[col.selector]
@@ -45,3 +47,24 @@ mixin table({columns, rows, id, actions})
                             = action.name
                             svg(class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round")
                               path(d="m9 18 6-6-6-6")
+        if totalRows && totalPages > 1
+          nav(class="flex justify-center mt-4")
+            ul(class="inline-flex -space-x-px")
+              if currentPage > 1
+                li
+                  a(href=`?page=${currentPage - 1}`, class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700") Previous
+              else
+                li
+                  span(class="px-3 py-2 ml-0 leading-tight text-gray-400 bg-white border border-gray-300 rounded-l-lg cursor-not-allowed") Previous
+              each page in [...Array(totalPages).keys()].map(n => n + 1)
+                li
+                  if page === currentPage
+                    span(class="px-3 py-2 leading-tight text-blue-600 bg-blue-50 border border-blue-300") #{page}
+                  else
+                    a(href=`?page=${page}`, class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700") #{page}
+              if currentPage < totalPages
+                li
+                  a(href=`?page=${currentPage + 1}`, class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700") Next
+              else
+                li
+                  span(class="px-3 py-2 leading-tight text-gray-400 bg-white border border-gray-300 rounded-r-lg cursor-not-allowed") Next
