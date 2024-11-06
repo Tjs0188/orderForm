@@ -15,13 +15,16 @@ model Item{
   product_number  String
   description String
   packages PackageItem[]
+
+  @@unique([product_number, category, description])
 }
 model Package{
   id    Int     @id @default(autoincrement())
-  name String
-  meta  String
-  category String
+  name String @unique
+  meta  String 
+  category String 
   items PackageItem[]
+  @@unique([name, meta, category])
 }
 model PackageItem{
   id    Int     @id @default(autoincrement())

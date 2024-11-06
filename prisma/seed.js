@@ -1,15 +1,15 @@
-import { PrismaClient } from '@prisma/client';
-import fs from 'fs';
-import csv from 'csv-parser';
+import { PrismaClient } from "@prisma/client";
+import fs from "fs";
+import csv from "csv-parser";
 
 const prisma = new PrismaClient();
 
 async function seedItems() {
   const items = [];
 
-  fs.createReadStream('prisma/csv/items.csv')
+  fs.createReadStream("prisma/csv/items.csv")
     .pipe(csv())
-    .on('data', (row) => {
+    .on("data", (row) => {
       items.push({
         id: Number(row.id),
         category: row.category,
@@ -17,25 +17,35 @@ async function seedItems() {
         description: row.description,
       });
     })
-    .on('end', async () => {
-      console.log('Seeding items...');
+    .on("end", async () => {
+      console.log("Seeding items...");
       for (const item of items) {
-        await prisma.item.upsert({
-          where: { id: item.id },
-          update: item,
-          create: item,
-        });
+        try {
+          await prisma.item.upsert({
+            where: { id: item.id },
+            update: item,
+            create: item,
+          });
+        } catch (error) {
+          if (error.code === "P2003") {
+            console.log(`Item has fk issue. Skipping...`);
+          } else if (error.code === "P2002") {
+            console.log(`Item is a duplicate. Skipping...`);
+          } else {
+            throw error;
+          }
+        }
       }
-      console.log('Items seeded successfully.');
+      console.log("Items seeded successfully.");
     });
 }
 
 async function seedPackages() {
   const packages = [];
 
-  fs.createReadStream('prisma/csv/packages.csv')
+  fs.createReadStream("prisma/csv/packages.csv")
     .pipe(csv())
-    .on('data', (row) => {
+    .on("data", (row) => {
       packages.push({
         id: Number(row.id),
         name: row.name,
@@ -43,8 +53,8 @@ async function seedPackages() {
         category: row.category,
       });
     })
-    .on('end', async () => {
-      console.log('Seeding packages...');
+    .on("end", async () => {
+      console.log("Seeding packages...");
       for (const pkg of packages) {
         await prisma.package.upsert({
           where: { id: pkg.id },
@@ -52,16 +62,16 @@ async function seedPackages() {
           create: pkg,
         });
       }
-      console.log('Packages seeded successfully.');
+      console.log("Packages seeded successfully.");
     });
 }
 
 async function seedPackageItems() {
   const packageItems = [];
 
-  fs.createReadStream('prisma/csv/package_items.csv')
+  fs.createReadStream("prisma/csv/package_items.csv")
     .pipe(csv())
-    .on('data', (row) => {
+    .on("data", (row) => {
       packageItems.push({
         id: Number(row.id),
         package_id: Number(row.package_id),
@@ -69,25 +79,24 @@ async function seedPackageItems() {
         priority: Number(row.priority),
       });
     })
-    .on('end', async () => {
-      console.log('Seeding package items...');
+    .on("end", async () => {
+      console.log("Seeding package items...");
       for (const packageItem of packageItems) {
         try {
-        await prisma.packageItem.upsert({
-          where: { id: packageItem.id },
-          update: packageItem,
-          create: packageItem,
-        });
+          await prisma.packageItem.upsert({
+            where: { id: packageItem.id },
+            update: packageItem,
+            create: packageItem,
+          });
         } catch (e) {
-            if (e.code === 'P2003') {
-                console.log(`Package item has fk issue. Skipping...`);
-            }
-            else {
-                throw e;
-            }
+          if (e.code === "P2003") {
+            console.log(`Package item has fk issue. Skipping...`);
+          } else {
+            throw e;
+          }
         }
       }
-      console.log('Package items seeded successfully.');
+      console.log("Package items seeded successfully.");
       await prisma.$disconnect();
     });
 }
@@ -103,4 +112,3 @@ main().catch((e) => {
   prisma.$disconnect();
   process.exit(1);
 });
-
