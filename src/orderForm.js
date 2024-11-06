@@ -1,9 +1,15 @@
 import axios from "axios";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const pkgSelect = document.querySelector("#addPackageSelect");
-  const frgSelect = document.querySelector("#addFridgeSelect");
-  const wdSelect = document.querySelector("#addWDSelect");
+  initializePackagesTable();
+
+  initializeTemplateApplicator();
+});
+
+const initializePackagesTable = () => {
+  const pkgSelect = document.querySelector("#addPackage-select");
+  const frgSelect = document.querySelector("#addFridge-select");
+  const wdSelect = document.querySelector("#addWD-select");
 
   const packageTable = document.querySelector("#packageTable");
 
@@ -147,4 +153,44 @@ document.addEventListener("DOMContentLoaded", () => {
       document.querySelector("#wdItemsData")
     );
   });
-});
+};
+
+const initializeTemplateApplicator = () => {
+  const templateSelect = document.querySelector("#template-select");
+  const applyTemplateButton = document.querySelector("#applyTemplateButton");
+
+  applyTemplateButton.addEventListener("click", async () => {
+    const selectedOption = templateSelect[templateSelect.selectedIndex];
+    const templateId = selectedOption.value;
+    const response = await axios.get("/orderform/template", {
+      params: { templateId },
+    });
+
+    const template = response.data.template;
+
+    // Mapping of response keys to form field IDs
+    const fieldMapping = {
+      contact_name: "contactName",
+      delivery_phone: "deliveryPhone",
+      contact_email: "contactEmail",
+      deliv_date: "requestDeliveryDate",
+      address: "address",
+      lot_block: "lotBlock",
+      city: "city",
+      state: "state",
+      zip: "zip",
+      proj_name: "projectName",
+      acc_num: "accountNumber",
+      quote_num: "quoteNumber",
+    };
+
+    // Update the form fields with the values from the response
+    Object.keys(fieldMapping).forEach((key) => {
+      const fieldId = fieldMapping[key];
+      const field = document.querySelector(`#${fieldId}-input`);
+      if (field) {
+        field.value = template[key] || "";
+      }
+    });
+  });
+};

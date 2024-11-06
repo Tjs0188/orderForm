@@ -78,6 +78,18 @@ router.get("/templates", async (req, res, next) => {
   }
 });
 
+router.get("/template", async (req, res, next) => {
+  try {
+    const templateId = parseInt(req.query.templateId);
+    const template = await prisma.template.findUnique({
+      where: { id: templateId },
+    });
+    res.json({ template });
+  } catch (error) {
+    next(error);
+  }
+});
+
 const getTemplatesByUserId = async (userId) => {
   const templates = await prisma.template.findMany({
     where: {

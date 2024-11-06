@@ -20,17 +20,17 @@ mixin packageInfo(options)
 
   +card({cardTitle: "Packages"})
     if packages || refrigerators || w_ds
-      +select({name: "addPackage", label: "Add a Package", value: bodyContent ? bodyContent.addPackage : '', id: "addPackageSelect"})
+      +select({name: "addPackage", label: "Add a Package", value: bodyContent ? bodyContent.addPackage : '', id: "addPackage"})
         if packages
           each package in packages
             option(value=package.id) 
               = package.name
-      +select({name: "addRefridgerator", label: "Add a Refridgerator", value: bodyContent ? bodyContent.addRefridgerator : '', id: "addFridgeSelect"})
+      +select({name: "addRefridgerator", label: "Add a Refridgerator", value: bodyContent ? bodyContent.addRefridgerator : '', id: "addFridge"})
         if refrigerators
           each fridge in refrigerators
             option(value=fridge.id) 
               = fridge.name
-      +select({name: "addWasherDryer", label: "Add a Washer/Dryer", value: bodyContent ? bodyContent.addWasherDryer : '', id: "addWDSelect"})
+      +select({name: "addWasherDryer", label: "Add a Washer/Dryer", value: bodyContent ? bodyContent.addWasherDryer : '', id: "addWD"})
         if w_ds
           each w_d in w_ds
             option(value=w_d.id) 
