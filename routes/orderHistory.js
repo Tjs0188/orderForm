@@ -6,14 +6,24 @@ const prisma = new PrismaClient();
 
 /* GET order histories listings. */
 router.get("/", async (req, res, next) => {
+  const currentPage = parseInt(req.query.page) || 1;
+  const rowsPerPage = 10;
+  const skip = (currentPage - 1) * rowsPerPage;
   try {
-    const orders = await prisma.orderHistory.findMany({
-      where: { userId: req.user.id },
-    });
+    const [orders, totalCount] = await prisma.$transaction([
+      prisma.orderHistory.findMany({
+        skip,
+        take: rowsPerPage,
+        where: { userId: req.user.id },
+      }),
+      prisma.orderHistory.count({ where: { userId: req.user.id } }),
+    ]);
 
     res.render("orderHistory", {
       title: "Order Form - History",
       orders,
+      totalCount,
+      currentPage,
     });
   } catch (error) {
     next(error);
