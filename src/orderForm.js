@@ -58,6 +58,11 @@ const initializePackagesTable = () => {
   }
 
   function clearSection(section) {
+    const emptyRow = document.querySelector(".empty-row");
+    if (emptyRow) {
+      emptyRow.remove();
+    }
+
     while (section.firstChild) {
       section.removeChild(section.firstChild);
     }
