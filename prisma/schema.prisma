@@ -48,6 +48,7 @@ model Template{
   zip String?
   userId Int
   user User @relation(fields: [userId], references: [id])
+  @@unique([name, userId])
 }
 
 model OrderHistory {
