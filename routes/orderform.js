@@ -25,7 +25,7 @@ router.get("/", async (req, res, next) => {
       },
     });
 
-    const templates = getTemplatesByUserId(req.user.id);
+    const templates = await getTemplatesByUserId(req.user.id);
 
     res.render("orderform", {
       title: "Order Form",
