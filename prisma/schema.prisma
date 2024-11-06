@@ -70,4 +70,5 @@ model User {
   createdAt DateTime @default(now())
   orders OrderHistory[]
   templates Template[]
+  admin Boolean @default(false) 
 }
