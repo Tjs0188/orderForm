@@ -1,4 +1,5 @@
 import { watch } from "browser-sync";
+import { table } from "console";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -12,6 +13,7 @@ export default {
     string: "./src/string.js", // Entry point for another file
     preline: "./src/preline.js", // Entry point for preline.js
     templateModal: "./src/templateModal.js", // Entry point for templateModal.js
+    tableActions: "./src/tableActions.js", // Entry point for tableActions.js
   },
   output: {
     filename: "[name].bundle.js", // Output filename pattern
