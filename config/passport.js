@@ -17,13 +17,29 @@ passport.use(
       useCookieInsteadOfSession: false, // Use cookies for session management
       responseType: "code",
       responseMode: "query",
-      scope: ["openid", "profile", "email"], // Specify the required scopes
+      scope: ["openid", "profile", "email", "User.Read"], // Specify the required scopes
       //loggingLevel: "info", // Adjust logging level as needed
     },
     async function (iss, sub, profile, accessToken, refreshToken, done) {
       try {
         const waadProfile = profile;
+        console.log(accessToken);
+        // Fetch additional user information from Microsoft Graph
+        const graphResponse = await fetch(
+          "https://graph.microsoft.com/v1.0/me",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
 
+        const additionalInfo = await graphResponse.json();
+
+        // Now you have more information about the user
+        console.log(additionalInfo);
+        console.log(profile);
         // Find or create user in the database
         let user = await prisma.user.findUnique({
           where: { email: waadProfile.upn },
@@ -51,12 +67,9 @@ passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-// Deserialize user from the sessions
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await prisma.user.findUnique({
-      where: { id },
-    });
+    const user = await prisma.user.findUnique({ where: { id } });
     done(null, user);
   } catch (err) {
     done(err);
