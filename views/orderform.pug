@@ -10,13 +10,20 @@ block content
   div.container.py-4.mx-auto
     div.py-10.justify-end.flex.gap-2
       +select({label: "Select Template", name: "template", id: "template", value: ""})
-        each template in templates
-          option(value=template.id)
-            = template.name
-      a(href="#" class="btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="templateModal" data-hs-overlay="#templateModal")
-        | Create template
-      a(href="/" class="btn-outline")
-        | Back to Home
+        if templates.length
+          each template in templates
+            option(value=template.id)
+              = template.name
+        else
+          option(value="")
+            | No templates found - create one
+      .flex.items-end.gap-2
+        a(href="#" class="btn py-2" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="templateModal" data-hs-overlay="#templateModal")
+          | Apply template
+        a(href="#" class="btn py-2" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="templateModal" data-hs-overlay="#templateModal")
+          | Create template
+        a(href="/" class="btn-outline py-2")
+          | Back to Home
     form(action="/pdf" method="POST" id="orderForm")
       div(class="flex flex-wrap w-full justify-around gap-4")
         +deliveryContact

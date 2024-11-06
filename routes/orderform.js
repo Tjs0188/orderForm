@@ -63,7 +63,9 @@ router.post("/saveTemplate", upload.none(), async (req, res, next) => {
     });
     res.json({ template });
   } catch (error) {
-    next(error);
+    if (error.code === "P2002") {
+      res.status(400).json({ error: "Template name already exists" });
+    }
   }
 });
 

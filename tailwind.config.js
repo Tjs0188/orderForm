@@ -2,6 +2,7 @@
 module.exports = {
   content: ["./views/**/*.{html,js,pug}", "node_modules/preline/dist/*.js"],
   darkMode: "class",
+  safelist: ["border-rose-500", "text-rose-500"],
   theme: {
     extend: {
       colors: {
