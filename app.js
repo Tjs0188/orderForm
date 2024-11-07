@@ -12,6 +12,7 @@ import { ensureAuthenticated } from "./middlewares/auth.js";
 import indexRouter from "./routes/index.js";
 import usersRouter from "./routes/users.js";
 import orderformRouter from "./routes/orderform.js";
+import packagesRouter from "./routes/packages.js";
 import orderHistoryRouter from "./routes/orderHistory.js";
 import pdfRouter from "./routes/pdf.js";
 import authRouter from "./routes/auth.js";
@@ -70,6 +71,7 @@ app.use("/users", ensureAuthenticated, usersRouter);
 app.use("/orderform", ensureAuthenticated, orderformRouter);
 app.use("/pdf", ensureAuthenticated, pdfRouter);
 app.use("/history", ensureAuthenticated, orderHistoryRouter);
+app.use("/packages", ensureAuthenticated, packagesRouter);
 app.use("/auth", authRouter);
 
 // catch 404 and forward to error handler
