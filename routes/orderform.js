@@ -28,7 +28,6 @@ router.get("/", async (req, res, next) => {
     const templates = await getTemplatesByUserId(req.user.id);
 
     res.render("orderform", {
-      title: "Order Form",
       packages,
       refrigerators,
       w_ds,
