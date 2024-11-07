@@ -11,7 +11,9 @@ block content
         +card({cardTitle: "Order Form", cardSubTitle: "Generate a new Electrolux order form in minutes", cardLink: {linkText: "Create New Order", linkUrl: "/orderform"}, className: "basis-1/4"})
         +card({cardTitle: "Order History", cardSubTitle: "Access your previously created order forms", cardLink: {linkText: "View History", linkUrl: "/history"}, className: "basis-1/4"})
         +card({cardTitle: "Form Templates", cardSubTitle: "Manage your templates created", cardLink: {linkText: "View Templates", linkUrl: "/orderform/templates"}, className: "basis-1/4"})
+        if user.superAdmin
+          +card({cardTitle: "Users", cardSubTitle: "Manage users", cardLink: {linkText: "View Users", linkUrl: "/users/"}, className: "basis-1/4"})
         if user.admin
-           +card({cardTitle: "Users", cardSubTitle: "Manage users", cardLink: {linkText: "View Users", linkUrl: "/users/"}, className: "basis-1/4"})
+          +card({cardTitle: "Packages", cardSubTitle: "Manage Packages and Items", cardLink: {linkText: "Manage Packages", linkUrl: "/packages/edit"}, className: "basis-1/4"})
     else
         +card({cardTitle: "Login", cardSubTitle: "Login to access the Electrolux Order Management System", cardLink: {linkText: "Login", linkUrl: "/auth/login"}})
