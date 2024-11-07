@@ -1,5 +1,5 @@
-mixin input({label, placeholder, type="text", name, value})
-  div(class="max-w-sm print:max-w-full")
+mixin input({label, placeholder, type="text", name, value, className})
+  div(class=`max-w-xl print:max-w-full ${className}`)
     label(
       for=name 
       class="block text-sm font-medium mb-2 print:mb-0 print:font-bold print:text-xs"
@@ -21,6 +21,19 @@ mixin select({label, placeholder, name, id, value})
     select(
       id=`${id || name}-select`
     class="py-2 px-4 pe-9 block bg-white w-full border rounded-lg text-sm text-slate-800 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+    name=name
+    )
+      option(value="" selected disabled hidden)
+        = placeholder || label
+      block
+
+mixin searchSelect({label, placeholder, name, id, value})
+  div(class="print:max-w-full")
+    label(for=name class="block text-sm font-medium mb-2 dark:text-white")
+      =label
+    select(
+      id=`${id || name}-select`
+    class="js-select py-2 px-4 pe-9 block bg-white w-full border rounded-lg text-sm text-slate-800 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
     name=name
     )
       option(value="" selected disabled hidden)
