@@ -34,7 +34,7 @@ const initializePackagesTable = () => {
     hiddenField
   ) {
     const selectedOption = selectElement[selectElement.selectedIndex];
-    const packageItems = await axios.get("/orderform/packageItems", {
+    const packageItems = await axios.get("/packages/packageItems", {
       params: { packageId: selectedOption.value },
     });
 
