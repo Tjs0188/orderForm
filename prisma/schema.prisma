@@ -71,4 +71,5 @@ model User {
   orders OrderHistory[]
   templates Template[]
   admin Boolean @default(false) 
+  superAdmin Boolean @default(false)
 }
