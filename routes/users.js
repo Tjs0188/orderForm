@@ -6,11 +6,16 @@ const prisma = new PrismaClient();
 
 /* GET users listing. */
 router.get("/", async (req, res) => {
-  res.render("users/index", await getUsers(req));
+  const users = await getUsers(req);
+  res.render("users/index", { title: "Users", ...users });
 });
 
 router.get("/edit/:id", (req, res, next) => {
-  res.render("users/form", { action: "edit", id: req.params.id });
+  res.render("users/form", {
+    title: "Users | Edit",
+    action: "edit",
+    id: req.params.id,
+  });
 });
 
 router.post("/edit/:id", async (req, res) => {
@@ -23,8 +28,9 @@ router.post("/edit/:id", async (req, res) => {
         email: data.email,
       },
     });
+    const users = await getUsers(req);
 
-    res.render("users/index", await getUsers(req));
+    res.render("users/index", { title: "Users", ...users });
   } catch (error) {
     console.error(error);
   }
