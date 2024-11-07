@@ -15,7 +15,7 @@ block content
             option(value=template.id)
               = template.name
         else
-          option(value="")
+          option(value="" class="no-templates")
             | No templates found - create one
       .flex.items-end.gap-2
         a(href="#" class="btn py-2" type="button" id="applyTemplateButton")
