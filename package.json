@@ -9,7 +9,9 @@
     "tailwind:css": "postcss public/styles/tailwind.css -o public/styles/style.css --watch",
     "start": "node ./bin/www",
     "webpack:dev": "webpack --watch",
-    "dev": "npm-run-all -p tailwind:css nodemon webpack:dev"
+    "dev": "npm-run-all -p tailwind:css nodemon webpack:dev",
+    "prisma:studio": "prisma studio",
+    "prisma:migrate:dev": "prisma migrate dev"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
