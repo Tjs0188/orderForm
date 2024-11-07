@@ -6,7 +6,7 @@ const router = express.Router();
 const prisma = new PrismaClient();
 const upload = multer(); // Initialize multer
 
-/* GET users listing. */
+/* GET orderform page. */
 router.get("/", async (req, res, next) => {
   try {
     const packages = await prisma.package.findMany({
@@ -71,11 +71,7 @@ router.post("/saveTemplate", upload.none(), async (req, res, next) => {
 
 router.get("/templates", async (req, res, next) => {
   try {
-    const templates = await getTemplatesByUserId(req.user.id);
-    const totalCount = await prisma.template.count({
-      where: { userId: req.user.id },
-    });
-    res.render("userTemplates", { templates, totalCount });
+    res.render("userTemplates", await getUserTemplates(req));
   } catch (error) {
     next(error);
   }
@@ -102,11 +98,21 @@ router.delete("/templates/:id", async (req, res, next) => {
         userId: req.user.id,
       },
     });
-    res.sendStatus(200);
+
+    res.json(await getUserTemplates(req), 200);
   } catch (error) {
     next(error);
   }
 });
+
+const getUserTemplates = async (req) => {
+  const templates = await getTemplatesByUserId(req.user.id);
+  const totalCount = await prisma.template.count({
+    where: { userId: req.user.id },
+  });
+
+  return { templates, totalCount };
+};
 
 const getTemplatesByUserId = async (userId) => {
   const templates = await prisma.template.findMany({
@@ -116,24 +122,5 @@ const getTemplatesByUserId = async (userId) => {
   });
   return templates;
 };
-
-router.get("/packageItems", async (req, res, next) => {
-  try {
-    const packageId = parseInt(req.query.packageId);
-    const packageItems = await prisma.packageItem.findMany({
-      where: {
-        package_id: { equals: packageId },
-      },
-      include: {
-        package: true,
-        item: true,
-      },
-      orderBy: { priority: "asc" },
-    });
-    res.json({ packageItems });
-  } catch (error) {
-    next(error);
-  }
-});
 
 export default router;
