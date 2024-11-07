@@ -43,6 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
       option.value = response.data.template.id;
       option.text = response.data.template.name;
       templateSelect.appendChild(option);
+      templateSelect.querySelector(".no-templates").remove();
       // Optionally, you can handle the response and update the UI accordingly
     } catch (error) {
       const nameInput = templateForm.querySelector("#name-input");
