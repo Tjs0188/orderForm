@@ -1,0 +1,20 @@
+extend ../layout
+include ../mixins/segments
+include mixins/itemsSegment
+include mixins/packagesSegment
+include mixins/packageItemsSegment
+
+block content
+  div.flex.flex-col
+    div.flex.container.mx-auto.justify-between.text-center
+      h2.text-2xl.font-bold.mb-4 Package and Items Forms
+      div
+        a(href="/" class="btn-outline")
+          | Back to Home
+    div.px-10.container.mx-auto
+      +segments({tabs: [
+        {id: "items", title: "Item"},
+        {id: "packages", title: "Package"},
+      ]})
+      +itemsSegment()
+      +packagesSegment()

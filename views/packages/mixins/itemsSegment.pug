@@ -1,0 +1,15 @@
+include ../../mixins/table
+include ../../mixins/inputs
+include itemForm
+
+mixin itemsSegment()
+  div(class="container mx-auto" id="items-segment" role="tabpanel" aria-labelledby="items-tab")
+    h1.text-2xl.font-bold.mb-4 Item Form
+    div(class="flex gap-2 justify-between")
+      +itemForm()
+      div(class="overflow-y-scroll max-h-[34rem] ms-6 w-full")
+        +table({columns: [
+            {name: "Category", selector: "category"},
+            {name: "Product Number", selector: "product_number"}, 
+            {name: 'Description', selector: "description"}
+          ], rows: items, stickyHeader: true})

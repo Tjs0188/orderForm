@@ -1,0 +1,23 @@
+include ../../mixins/table
+include ../../mixins/inputs
+
+mixin packagesSegment()
+  div(class="container mx-auto hidden" id="packages-segment" role="tabpanel" aria-labelledby="packages-tab")
+    script(src="/js/choices.bundle.js")
+    h1.text-2xl.font-bold.mb-4 Package Form
+    .flex
+      form(method="POST", action=`/users/${action == "edit" ? `edit/${id}` : null}` class="w-1/2 mx-0 py-4")
+        .mb-4.flex.gap-2
+          +input({label: "Name", name:"name", placeholder:"Enter the Product Name", className: "w-full"})
+          +input({label: "Meta", name:"meta", placeholder:"Enter the Product Meta", className: "w-full"})
+        .mb-4
+          +select({label: "Category", name: "category", placeholder: "Select a Category"})
+            each option in packageCategories
+              option(value=option) #{option}
+        button(type="submit" class="btn w-full")
+          | Create Package
+      .flex
+        +searchSelect({label: "Search Packages", name: "search", placeholder: "Search Packages"})
+      
+      div(class="overflow-y-scroll max-h-[34rem] ms-6 w-full")
+        +table({columns: [{name: 'Name', selector: "name", truncated: true}, {name: "Meta", selector: "meta", truncated: true}, {name: "Category", selector: "category"}], rows: packages, stickyHeader: true})
