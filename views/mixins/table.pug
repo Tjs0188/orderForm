@@ -56,7 +56,7 @@ mixin table({columns, rows, id, actions, currentPage = 1, rowsPerPage = 10, tota
                                 path(d="m9 18 6-6-6-6")
               else
                 tr.empty-row
-                  td(colspan=columns.length + (actions ? 1 : 0), class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500")
+                  td(colspan=columns.length + (actions ? 1 : 0), class="px-6 py-4 whitespace-nowrap text-lg font-medium text-gray-500 text-center")
                     | No data found
         if totalRows && totalPages > 1
           nav(class="flex justify-center mt-4")
