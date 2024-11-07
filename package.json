@@ -11,7 +11,8 @@
     "webpack:dev": "webpack --watch",
     "dev": "npm-run-all -p tailwind:css nodemon webpack:dev",
     "prisma:studio": "prisma studio",
-    "prisma:migrate:dev": "prisma migrate dev"
+    "prisma:migrate:dev": "prisma migrate dev",
+    "prisma:seed": "prisma db seed"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
