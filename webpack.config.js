@@ -14,6 +14,7 @@ export default {
     preline: "./src/preline.js", // Entry point for preline.js
     templateModal: "./src/templateModal.js", // Entry point for templateModal.js
     tableActions: "./src/tableActions.js", // Entry point for tableActions.js
+    packageForms: "./src/packageForms.js", // Entry point for packageForms.js
   },
   output: {
     filename: "[name].bundle.js", // Output filename pattern
