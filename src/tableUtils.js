@@ -50,6 +50,7 @@ const addNewRows = (tbody, data) => {
         const input = document.createElement("input");
         input.type = "number";
         input.value = fieldMap[field];
+        input.dataset.packageItemId = pkgItem.id;
         const inputClasses = [
           "py-2",
           "block",
@@ -61,6 +62,7 @@ const addNewRows = (tbody, data) => {
           "focus:ring-blue-500",
           "disabled:opacity-50",
           "disabled:pointer-events-none",
+          "priority-input",
         ];
         input.classList.add(...inputClasses);
         td.appendChild(input);

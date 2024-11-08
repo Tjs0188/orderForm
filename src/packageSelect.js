@@ -1,5 +1,6 @@
 import axios from "axios";
 import { deleteEmptyRows, updateTableData } from "./tableUtils.js";
+import { initializePriorityChange } from "./packageItemPriority.js";
 
 export const initializePackageSelect = () => {
   const el = HSSelect.getInstance("#package-select");
@@ -12,6 +13,7 @@ export const initializePackageSelect = () => {
         const table = document.querySelector("#packageItems-table");
         deleteEmptyRows(table);
         updateTableData(table, data);
+        initializePriorityChange();
       }
     });
   });
