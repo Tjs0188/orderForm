@@ -17,7 +17,7 @@ mixin table({columns, rows, id, actions, currentPage = 1, rowsPerPage = 10, tota
                   th(scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase")
                     | Actions
             tbody(class="divide-y divide-gray-200")
-              if paginatedRows.length
+              if paginatedRows && paginatedRows.length
                 each row in paginatedRows
                   tr
                     each col in columns
