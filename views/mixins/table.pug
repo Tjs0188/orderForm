@@ -11,10 +11,10 @@ mixin table({columns, rows, id, actions, currentPage = 1, rowsPerPage = 10, tota
             thead
               tr
                 each col in columns
-                  th(scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase")
+                  th(scope="col" class=`px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase ${col.class || ''}`)
                     = col.name
                 if actions
-                  th(scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase")
+                  th(scope="col" class=`px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase ${col.class || ''}`)
                     | Actions
             tbody(class="divide-y divide-gray-200")
               if paginatedRows && paginatedRows.length
