@@ -33,6 +33,8 @@ model PackageItem{
   priority Int
   package Package @relation(fields: [package_id], references: [id])
   item Item @relation(fields: [item_id], references: [id])
+
+  @@unique([package_id, item_id])
 }
 model Template{
   id    Int     @id @default(autoincrement())
