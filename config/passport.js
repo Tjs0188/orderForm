@@ -17,7 +17,7 @@ passport.use(
       useCookieInsteadOfSession: false, // Use cookies for session management
       responseType: "code",
       responseMode: "query",
-      scope: [ "profile", "https://graph.microsoft.com/mail.read"], // Specify the required scopes
+      scope: ["profile", "https://graph.microsoft.com/mail.read"], // Specify the required scopes
       //loggingLevel: "info", // Adjust logging level as needed
     },
     async function (profile, done) {
@@ -28,13 +28,14 @@ passport.use(
           where: { email: waadProfile.upn },
         });
         if (!user) {
-          const userCount = await prisma.user.count()
+          const userCount = await prisma.user.count();
           user = await prisma.user.create({
             data: {
               email: waadProfile.upn,
               name: waadProfile.displayName,
               password: randomUUID(),
-              admin: userCount == 0
+              admin: userCount == 0,
+              superAdmin: userCount == 0,
             },
           });
         }
