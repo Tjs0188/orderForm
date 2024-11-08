@@ -1,7 +1,8 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const el = HSSelect.getInstance("#package-select");
+import { initializePackageSelect } from "./packageSelect.js";
+import { initializeAddItemButton } from "./addItemToPackage.js";
 
-  el.on("change", (val) => {
-    console.log(val);
-  });
+window.addEventListener("load", () => {
+  initializePackageSelect();
+
+  initializeAddItemButton();
 });
