@@ -29,9 +29,10 @@ mixin select({label, placeholder, name, id, value})
 
 mixin searchSelect({label, placeholder, name, id, value})
   div(class="print:max-w-full w-full")
-    label(for=name class="block text-sm font-medium mb-2")
+    label(for=`${id || name}-select` class="block text-sm font-medium mb-2")
       =label
     select(
+      id=`${id || name}-select`
       data-hs-select=`{
         "hasSearch": true,
         "searchPlaceholder": "Search...",
