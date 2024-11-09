@@ -13,12 +13,12 @@ passport.use(
       clientSecret: process.env.AZUREAD_OAUTH2_CLIENT_SECRET,
       redirectUrl:
         process.env.AZUREAD_OAUTH2_REDIRECT_URI + "/auth/azuread/callback",
-      allowHttpForRedirectUrl: true,
+      allowHttpForRedirectUrl: !process.env.PRODUCTION,
       useCookieInsteadOfSession: false, // Use cookies for session management
       responseType: "code",
       responseMode: "query",
       scope: ["profile", "https://graph.microsoft.com/mail.read"], // Specify the required scopes
-      //loggingLevel: "info", // Adjust logging level as needed
+      loggingLevel: "info", // Adjust logging level as needed
     },
     async function (profile, done) {
       try {

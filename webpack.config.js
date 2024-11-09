@@ -1,11 +1,14 @@
-import { watch } from "browser-sync";
-import { table } from "console";
 import path from "path";
 import { fileURLToPath } from "url";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
 // Get __dirname equivalent in ES module scope
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Determine the mode based on the environment variable
+const isProduction = process.env.NODE_ENV === "production";
+const mode = isProduction ? "production" : "development";
 
 export default {
   entry: {
@@ -15,6 +18,7 @@ export default {
     templateModal: "./src/templateModal.js", // Entry point for templateModal.js
     tableActions: "./src/tableActions.js", // Entry point for tableActions.js
     packageForms: "./src/packageForms.js", // Entry point for packageForms.js
+    style: "./src/styles/tailwind.css", // Entry point for styles.css
   },
   output: {
     filename: "[name].bundle.js", // Output filename pattern
@@ -33,9 +37,17 @@ export default {
           },
         },
       },
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader"],
+      },
     ],
   },
-  devtool: "inline-source-map", // Enable source maps for easier debugging
-  watch: true, // Enable watch mode
-  mode: "development", // Set the mode to development
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "../css/[name].css", // Output CSS files to a different directory
+    }),
+  ],
+  devtool: isProduction ? false : "inline-source-map", // Conditionally enable source maps
+  mode,
 };

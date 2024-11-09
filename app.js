@@ -35,8 +35,9 @@ var sess = {
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: app.get("env") === "production", // serve secure cookies in production
+    secure: process.env.NODE_ENV === "production", // serve secure cookies in production
     maxAge: 24 * 60 * 60 * 1000, // 1 day
+    sameSite: "none",
   },
 };
 
@@ -46,6 +47,8 @@ app.set("views", [
   path.join(__dirname, "views/templates"),
 ]);
 app.set("view engine", "pug");
+
+app.set("trust proxy", true); // trust first proxy, fly.io needs this
 
 // middleware
 app.use(logger("dev"));
