@@ -26,12 +26,13 @@ router.get("/edit/:id", async (req, res, next) => {
 router.post("/edit/:id", async (req, res) => {
   try {
     const data = req.body;
+
     await prisma.user.update({
       where: { id: Number(req.params.id) },
       data: {
         name: data.name,
-        admin: data.admin,
-        superAdmin: data.superAdmin,
+        admin: data.admin === "on",
+        superAdmin: data.superAdmin === "on",
       },
     });
     const users = await getUsers(req);
