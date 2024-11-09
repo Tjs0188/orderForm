@@ -13,7 +13,7 @@ passport.use(
       clientSecret: process.env.AZUREAD_OAUTH2_CLIENT_SECRET,
       redirectUrl:
         process.env.AZUREAD_OAUTH2_REDIRECT_URI + "/auth/azuread/callback",
-      allowHttpForRedirectUrl: !process.env.PRODUCTION,
+      allowHttpForRedirectUrl: !(process.env.NODE_ENV === "production"),
       useCookieInsteadOfSession: false, // Use cookies for session management
       responseType: "code",
       responseMode: "query",

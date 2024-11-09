@@ -37,7 +37,7 @@ var sess = {
   cookie: {
     secure: process.env.NODE_ENV === "production", // serve secure cookies in production
     maxAge: 24 * 60 * 60 * 1000, // 1 day
-    sameSite: "none",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
   },
 };
 
@@ -48,12 +48,13 @@ app.set("views", [
 ]);
 app.set("view engine", "pug");
 
-app.set("trust proxy", true); // trust first proxy, fly.io needs this
-
+if (process.env.NODE_ENV === "production") {
+  app.set("trust proxy", true); // trust proxy, fly.io needs this
+}
 // middleware
 app.use(logger("dev"));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(session(sess));
