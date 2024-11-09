@@ -11,7 +11,7 @@ router.post("/", async (req, res) => {
   let filename = "Frigidare Order Form";
   filename = encodeURIComponent(filename) + ".pdf";
   const bodyContent = req.body;
-  createOrderHistory(bodyContent, req.user);
+  createOrderHistory(bodyContent, req.currentUser);
   // Format items for package, fridge, and washer/dryer
   const packageItems = formatItems(bodyContent, "packageItem");
   const fridgeItems = formatItems(bodyContent, "frgItem");

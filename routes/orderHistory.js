@@ -14,9 +14,9 @@ router.get("/", async (req, res, next) => {
       prisma.orderHistory.findMany({
         skip,
         take: rowsPerPage,
-        where: { userId: req.user.id },
+        where: { userId: req.currentUser.id },
       }),
-      prisma.orderHistory.count({ where: { userId: req.user.id } }),
+      prisma.orderHistory.count({ where: { userId: req.currentUser.id } }),
     ]);
 
     res.render("orderHistory", {

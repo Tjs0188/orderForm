@@ -25,7 +25,7 @@ router.get("/", async (req, res, next) => {
       },
     });
 
-    const templates = await getTemplatesByUserId(req.user.id);
+    const templates = await getTemplatesByUserId(req.currentUser.id);
 
     res.render("orderform", {
       packages,
@@ -57,7 +57,7 @@ router.post("/saveTemplate", upload.none(), async (req, res, next) => {
         zip: data.zip,
         proj_name: data.projectName,
         acc_num: data.accountNumber,
-        user: { connect: { id: req.user.id } },
+        user: { connect: { id: req.currentUser.id } },
       },
     });
     res.json({ template });
@@ -94,7 +94,7 @@ router.delete("/templates/:id", async (req, res, next) => {
     await prisma.template.delete({
       where: {
         id: templateId,
-        userId: req.user.id,
+        userId: req.currentUser.id,
       },
     });
 
@@ -105,9 +105,9 @@ router.delete("/templates/:id", async (req, res, next) => {
 });
 
 const getUserTemplates = async (req) => {
-  const templates = await getTemplatesByUserId(req.user.id);
+  const templates = await getTemplatesByUserId(req.currentUser.id);
   const totalCount = await prisma.template.count({
-    where: { userId: req.user.id },
+    where: { userId: req.currentUser.id },
   });
 
   return { templates, totalCount };
