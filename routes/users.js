@@ -10,11 +10,16 @@ router.get("/", async (req, res) => {
   res.render("users/index", { title: "Users", ...users });
 });
 
-router.get("/edit/:id", (req, res, next) => {
+router.get("/edit/:id", async (req, res, next) => {
+  const user = await prisma.user.findUnique({
+    where: { id: Number(req.params.id) },
+  });
+
   res.render("users/form", {
     title: "Users | Edit",
     action: "edit",
     id: req.params.id,
+    user,
   });
 });
 
