@@ -30,7 +30,8 @@ router.post("/edit/:id", async (req, res) => {
       where: { id: Number(req.params.id) },
       data: {
         name: data.name,
-        email: data.email,
+        admin: data.admin,
+        superAdmin: data.superAdmin,
       },
     });
     const users = await getUsers(req);

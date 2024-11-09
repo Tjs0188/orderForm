@@ -11,7 +11,6 @@ WORKDIR /app
 
 # Set production environment
 ENV NODE_ENV="production"
-ENV DATABASE_URL="file:///data/sqlite.db"
 ARG YARN_VERSION=1.22.22
 RUN npm install -g yarn@$YARN_VERSION --force
 
@@ -62,4 +61,5 @@ ENTRYPOINT [ "/app/docker-entrypoint.js" ]
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
 ENV PUPPETEER_EXECUTABLE_PATH="/usr/bin/chromium"
+ENV DATABASE_URL="file:///data/sqlite.db"
 CMD [ "yarn", "run", "start" ]
