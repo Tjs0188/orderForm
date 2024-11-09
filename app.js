@@ -65,7 +65,7 @@ app.use(passport.session());
 
 // Middleware to set user variable in res.locals
 app.use((req, res, next) => {
-  res.locals.user = req.user;
+  res.locals.currentUser = req.user;
   next();
 });
 

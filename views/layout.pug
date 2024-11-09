@@ -11,9 +11,9 @@ html
         a(href="/" class="w-1/5")
           img(class="py-4" src="/images/BFH_FullColorLogo_NoTagline.png" alt="Bloomfield Homes")
         div(class="w-1/4 flex gap-2 items-center")
-          if user
+          if currentUser
               span.flex-1
-                | Welcome, #{user.name}
+                | Welcome, #{currentUser.name}
               a(href="/auth/logout" class="btn-outline border-blue text-blue")
                 | Logout
           else
