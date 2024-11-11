@@ -2,12 +2,15 @@ doctype html
 html
   head
     title= `Order Form ${title ? `| ${title}` : ""}`
+    link( rel="preconnect" href="https://fonts.googleapis.com")
+    link( rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
+    link(href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet")
     link(rel='stylesheet', href='/css/style.css')
     link(rel="icon", type="image/png", href="/favicon.png")
     block head
   body
     div(class="h-screen")
-      div(class="flex px-20 p-2 bg-blue-200 justify-between shadow-sm")
+      div(class="flex px-20 p-2 justify-between shadow")
         a(href="/" class="w-1/5")
           img(class="py-4" src="/images/BFH_FullColorLogo_NoTagline.png" alt="Bloomfield Homes")
         div(class="w-1/4 flex gap-2 items-center")
@@ -19,7 +22,7 @@ html
           else
             a(href="/auth/login" class="btn")
               | Login
-      div.py-10
+      div.w-full
         script(src="/js/preline.bundle.js")
         block content
 

@@ -1,10 +1,19 @@
 /** @type {import('tailwindcss').Config} */
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 module.exports = {
   content: ["./views/**/*.{html,js,pug}", "node_modules/preline/dist/*.js"],
   darkMode: "class",
   safelist: ["border-rose-500", "text-rose-500", "bg-rose-500"],
   theme: {
     extend: {
+      fontFamily: {
+        playfairDisplay: [
+          '"Playfair Display"',
+          ...defaultTheme.fontFamily.sans,
+        ],
+        sourcePro: ["Source Code Pro", ...defaultTheme.fontFamily.sans],
+      },
       colors: {
         blue: {
           DEFAULT: "#274579",
@@ -33,6 +42,20 @@ module.exports = {
           800: "#324a2a",
           900: "#2d4027",
           950: "#152211",
+        },
+        gray: {
+          DEFAULT: "#6e7167",
+          50: "#333934",
+          100: "#414740",
+          200: "#4F554D",
+          300: "#5E635A",
+          400: "#6e7167",
+          500: "#83847B",
+          600: "#97978F",
+          700: "#AAA8A4",
+          800: "#BDBBB8",
+          900: "#D0CECC",
+          950: "#E3E1E0",
         },
       },
     },
