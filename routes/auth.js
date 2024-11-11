@@ -20,6 +20,7 @@ router.get(
   "/azuread/callback",
   passport.authenticate("azuread-openidconnect", {
     failureRedirect: "/",
+    state: process.env.AZUREAD_OAUTH2_REDIRECT_URI,
   }),
   (req, res) => {
     // Successful authentication, redirect home.

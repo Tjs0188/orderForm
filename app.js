@@ -31,14 +31,9 @@ var sess = {
     db: "sessions.sqlite",
     dir: "./",
   }),
-  secret: "keyboard cat",
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: {
-    secure: process.env.NODE_ENV === "production", // serve secure cookies in production
-    maxAge: 24 * 60 * 60 * 1000, // 1 day
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-  },
 };
 
 // view engine setup
