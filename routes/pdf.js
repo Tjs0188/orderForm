@@ -16,7 +16,10 @@ router.post("/", async (req, res) => {
   const packageItems = formatItems(bodyContent, "packageItem");
   const fridgeItems = formatItems(bodyContent, "frgItem");
   const w_dItems = formatItems(bodyContent, "wdItem");
-
+  console.log("bodyContent", bodyContent);
+  console.log("packageItems", packageItems);
+  console.log("fridgeItems", fridgeItems);
+  console.log("w_dItems", w_dItems);
   // Render HTML content using Pug template
   const htmlContent = pug.renderFile("views/templates/pdf.pug", {
     bodyContent,
@@ -34,7 +37,7 @@ router.post("/", async (req, res) => {
 
   // Set the content of the page to the HTML rendered from Pug
   await page.setContent(htmlContent, { waitUntil: "networkidle0" });
-  await page.addStyleTag({ path: path.resolve("public/styles/style.css") });
+  await page.addStyleTag({ path: path.resolve("public/css/style.css") });
 
   // Generate the PDF from the page's content
   const pdfBuffer = await page.pdf({
