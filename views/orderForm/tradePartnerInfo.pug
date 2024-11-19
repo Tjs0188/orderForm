@@ -4,8 +4,8 @@ include ../mixins/inputs
 mixin tradePartners(bodyContent)
   +card({cardTitle: "Trade Partner Information"})
     +input({label: "Project Name", name: "projectName", value: bodyContent ? bodyContent.projectName : '', placeholder: "Community Name"})
-    +input({label: "Account Number", name: "accountNumber", value: bodyContent ? bodyContent.accountNumber : '90403'})
-    +input({label: "Quote Number", name: "quoteNumber", value: bodyContent ? bodyContent.quoteNumber : 'HYA1'})
+    +input({label: "Account Number", name: "accountNumber", value: bodyContent ? bodyContent.accountNumber : '90403', disabled: true})
+    +input({label: "Quote Number", name: "quoteNumber", value: bodyContent ? bodyContent.quoteNumber : 'HYA1', disabled: true})
     .bg-slate-100.p-4.rounded-md
       span.text-xs
         | To complete your appliance order please attach this document to an email and send to the Contract Direct Team at 
