@@ -16,10 +16,6 @@ router.post("/", async (req, res) => {
   const packageItems = formatItems(bodyContent, "packageItem");
   const fridgeItems = formatItems(bodyContent, "frgItem");
   const w_dItems = formatItems(bodyContent, "wdItem");
-  console.log("bodyContent", bodyContent);
-  console.log("packageItems", packageItems);
-  console.log("fridgeItems", fridgeItems);
-  console.log("w_dItems", w_dItems);
   // Render HTML content using Pug template
   const htmlContent = pug.renderFile("views/templates/pdf.pug", {
     bodyContent,
@@ -64,12 +60,12 @@ function formatItems(bodyContent, prefix) {
     return value;
   };
 
-  const categories = parseIfString(bodyContent[`${prefix}[category][]`] || []);
+  const categories = parseIfString(bodyContent[`${prefix}`].category || []);
   const productNumbers = parseIfString(
-    bodyContent[`${prefix}[product_number][]`] || []
+    bodyContent[`${prefix}`].product_number || []
   );
   const descriptions = parseIfString(
-    bodyContent[`${prefix}[description][]`] || []
+    bodyContent[`${prefix}`].description || []
   );
 
   // Create an array of objects from the parallel arrays
