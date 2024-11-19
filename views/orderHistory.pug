@@ -12,10 +12,11 @@ block content
       +table({
         columns: [
           {name: "Id", selector: "id"},
-          {name: "Order Data", selector: "orderData", truncated: true},
+          {name: "Order Data", selector: "formattedOrderData", truncated: true, truncateLength: 20},
           {name: "Created At", selector: "createdAt"},
           ],
         rows: orders,
         currentPage,
         actions: [
-          {name: "Export to PDF", link: "/pdf", class: "text-blue", method: "POST", dataSelector: "orderData"}], totalRows: totalCount})
+          {name: "Export to PDF", link: "/pdf", class: "text-blue", method: "POST", dataSelector: "orderData"}], totalRows: totalCount,
+          rowsPerPage: 20})
