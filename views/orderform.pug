@@ -7,8 +7,8 @@ include mixins/modal
 include mixins/inputs
 
 block content
-  div.container.mx-auto
-    div.justify-end.flex.gap-2.pb-4
+  div.container.mx-auto.py-10
+    div.justify-end.flex.gap-2.pb-8
       +select({label: "Select Template", name: "template", id: "template", value: ""})
         if templates.length
           each template in templates
