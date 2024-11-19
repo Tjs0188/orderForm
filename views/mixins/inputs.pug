@@ -1,8 +1,8 @@
-mixin input({label, placeholder, type="text", name, value, className})
+mixin input({label, placeholder, type="text", name, value, className, disabled: inputDisabled})
   div(class=`max-w-xl print:max-w-full ${className}`)
     label(
       for=name 
-      class="block text-sm font-medium mb-2 print:mb-0 print:font-bold print:text-xs"
+      class="block text-sm font-medium mb-2 print:mb-0 print:font-bold print:text-xs text-gray-200"
     )
       = label
     input(
@@ -10,18 +10,21 @@ mixin input({label, placeholder, type="text", name, value, className})
       name=name
       value=value
       id=`${name}-input` 
-      class="py-2 px-4 block w-full border print:border-0 rounded-lg text-slate-800 text-sm print:text-xs focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" 
+      class="py-2 px-4 block w-full border print:border-0 rounded-lg text-slate-800 text-sm print:text-xs focus:border-blue-500 focus:ring-blue-500 read-only:opacity-50 read-only:pointer-events-none" 
       placeholder=placeholder || label
+      readonly=inputDisabled
     )
 
 mixin select({label, placeholder, name, id, value})
   div(class="print:max-w-full")
-    label(for=name class="block text-sm font-medium mb-2")
+    = inputDisabled
+    label(for=name class="block text-sm font-medium mb-2 text-gray-200")
       =label
     select(
       id=`${id || name}-select`
     class="py-2 px-4 pe-9 block bg-white w-full border rounded-lg text-sm text-slate-800 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
     name=name
+    disabled=inputDisabled
     )
       option(value="" selected disabled hidden)
         = placeholder || label
@@ -29,7 +32,7 @@ mixin select({label, placeholder, name, id, value})
 
 mixin searchSelect({label, placeholder, name, id, value})
   div(class="print:max-w-full w-full")
-    label(for=`${id || name}-select` class="block text-sm font-medium mb-2")
+    label(for=`${id || name}-select` class="block text-sm font-medium mb-2 text-gray-200")
       =label
     select(
       id=`${id || name}-select`
@@ -47,6 +50,7 @@ mixin searchSelect({label, placeholder, name, id, value})
         "extraMarkup": "<div class=\\"absolute top-1/2 end-3 -translate-y-1/2\\"><svg class=\\"shrink-0 size-3.5 text-gray-500\\" xmlns=\\"http://www.w3.org/2000/svg\\" width=\\"24\\" height=\\"24\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" stroke=\\"currentColor\\" stroke-width=\\"2\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"><path d=\\"m7 15 5 5 5-5\\"/><path d=\\"m7 9 5-5 5 5\\"/></svg></div>"
       }`
       class="hidden"
+      disabled=inputDisabled
     )
       option(value="")
         = placeholder || label
