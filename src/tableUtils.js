@@ -1,3 +1,29 @@
+export const inputClasses = [
+  "py-2",
+  "block",
+  "w-full",
+  "border-0",
+  "border-transparent",
+  "text-sm",
+  "text-black",
+  "focus:border-blue-500",
+  "focus:ring-blue-500",
+  "disabled:opacity-50",
+  "disabled:pointer-events-none",
+  "priority-input",
+];
+
+export const tableRowClasses = [
+  "px-6",
+  "py-4",
+  "whitespace-nowrap",
+  "text-sm",
+  "font-medium",
+  "text-gray-800",
+  "odd:bg-white",
+  "even:bg-blue",
+];
+
 export const deleteEmptyRows = (table) => {
   const emptyRow = table.querySelector(".empty-row");
   if (emptyRow) emptyRow.remove();
@@ -22,16 +48,6 @@ const deleteOldRows = (tbody) => {
 const addNewRows = (tbody, data) => {
   data.forEach((pkgItem) => {
     const tr = document.createElement("tr");
-    const tableRowClasses = [
-      "px-6",
-      "py-4",
-      "whitespace-nowrap",
-      "text-sm",
-      "font-medium",
-      "text-gray-800",
-      "odd:bg-white",
-      "even:bg-blue",
-    ];
     tr.classList.add(...tableRowClasses);
 
     tbody.appendChild(tr);
@@ -51,19 +67,7 @@ const addNewRows = (tbody, data) => {
         input.type = "number";
         input.value = fieldMap[field];
         input.dataset.packageItemId = pkgItem.id;
-        const inputClasses = [
-          "py-2",
-          "block",
-          "w-full",
-          "border-0",
-          "border-transparent",
-          "text-sm",
-          "focus:border-blue-500",
-          "focus:ring-blue-500",
-          "disabled:opacity-50",
-          "disabled:pointer-events-none",
-          "priority-input",
-        ];
+
         input.classList.add(...inputClasses);
         td.appendChild(input);
       } else {

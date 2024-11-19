@@ -1,4 +1,5 @@
 import axios from "axios";
+import { tableRowClasses, inputClasses } from "./tableUtils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   initializePackagesTable();
@@ -70,31 +71,9 @@ const initializePackagesTable = () => {
 
   function createEditableTableRow(item, itemClass) {
     const tableRow = document.createElement("tr");
-    const tableRowClasses = [
-      "px-6",
-      "py-4",
-      "whitespace-nowrap",
-      "text-sm",
-      "font-medium",
-      "text-gray-800",
-      "odd:bg-white",
-      "even:bg-blue",
-      itemClass,
-    ];
-    const inputClasses = [
-      "py-2",
-      "px-2",
-      "block",
-      "w-full",
-      "border-0",
-      "border-transparent",
-      "text-sm",
-      "focus:border-blue-500",
-      "focus:ring-blue-500",
-      "disabled:opacity-50",
-      "disabled:pointer-events-none",
-    ];
-    tableRow.classList.add(...tableRowClasses);
+    let tableRowClassList = [...tableRowClasses, itemClass];
+
+    tableRow.classList.add(...tableRowClassList);
 
     const category = document.createElement("td");
     const productNumber = document.createElement("td");
