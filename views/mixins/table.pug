@@ -26,9 +26,12 @@ mixin table({columns, rows, id, actions, currentPage = 1, rowsPerPage = 10, tota
                           div(class="hs-tooltip inline-block")
                             button(type="button" class="hs-tooltip-toggle")
                               span(class="truncate text-black" data-truncatelength=col.truncateLength)
-                                = row[col.selector]
-                              span(class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm dark:bg-neutral-700" role="tooltip")
-                                = row[col.selector]
+                                != row[col.selector]
+                              span(
+                                class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-300 text-xs font-medium text-white rounded shadow-sm max-w-xs"
+                                role="tooltip"
+                              )
+                                != row[col.selector]
                         else
                           span.text-black
                             = row[col.selector]
