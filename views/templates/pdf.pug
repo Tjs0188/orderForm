@@ -3,9 +3,11 @@ include ../orderForm/deliveryContactInfo
 include ../orderForm/packageInfo  
 include ../orderForm/tradePartnerInfo
 
-div.text-center.text-4xl.font-bold.py-10 Bloomfield Homes - Electrolux Order Form
+.flex.justify-around.px-10.gap-2.items-center
+  img(src=`${baseUrl}/images/logo.png` class="w-2/5 max-h-12 inline-block")
+  div.text-center.text-2xl.font-bold.py-10 Electrolux Order Form
 form
-  div(class="flex flex-wrap w-full justify-around gap-4 print:gap-0")
+  div(class="flex flex-wrap w-full justify-around gap-4 print:gap-1")
     +deliveryContact(bodyContent)
     +deliveryAddress(bodyContent)
     +tradePartners(bodyContent)
