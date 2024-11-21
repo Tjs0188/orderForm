@@ -2,12 +2,12 @@ include table/header
 include table/body
 include table/pagination
 
-mixin table({columns, rows, id, actions, currentPage = 1, rowsPerPage = 10, totalRows})
+mixin table({columns, rows, id, actions, currentPage = 1, rowsPerPage = 10, totalRows, height = "8"})
   - const totalPages = Math.ceil(totalRows / rowsPerPage);
   - const paginatedRows = rows;
   script(src="/js/string.bundle.js")
   script(src="/js/tableActions.bundle.js")
-  div(class="flex flex-col break-inside-auto")
+  div(class=`flex flex-col break-inside-auto overflow-y-scroll scrollbar max-h-${height}`)
     div(class="-m-1.5")
       div(class="p-1.5 min-w-full inline-block align-middle")
         div(class="overflow-hidden")
