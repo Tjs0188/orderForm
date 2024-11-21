@@ -8,7 +8,7 @@ include mixins/inputs
 
 block content
   div.container.mx-auto.py-10
-    div.justify-end.flex.gap-2.pb-8
+    div.justify-end.flex.gap-2.pb-8.px-40
       +select({label: "Select Template", name: "template", id: "template", value: ""})
         if templates.length
           each template in templates

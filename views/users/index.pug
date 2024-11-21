@@ -2,14 +2,13 @@ extend ../layout
 include ../mixins/table
 
 block content
-  div.flex.flex-col
+  div.flex.flex-col.container.mx-auto
     div.flex.px-10.justify-between.text-center
       h1.text-4xl.font-bold.py-10 Users
       div.py-10
         a(href="/" class="btn-outline")
           | Back to Home
     div.px-10.w-full
-    .container.mx-auto
-        +table({columns: [{name: "ID", selector: "id"}, {name: "Name", selector: "name"}, {name: "Is Admin", selector: "admin"}],
-        rows: users, totalRows: totalCount,
-        actions: [{name: "Edit", link: "/users/edit", class: "text-blue", dataSelector: "id"}]})    
+      +table({columns: [{name: "ID", selector: "id"}, {name: "Name", selector: "name"}, {name: "Is Admin", selector: "admin"}],
+      rows: users, totalRows: totalCount,
+      actions: [{name: "Edit", link: "/users/edit", class: "text-blue", dataSelector: "id"}]})    
