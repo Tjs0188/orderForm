@@ -8,6 +8,7 @@ router.get(
   "/login",
   passport.authenticate("azuread-openidconnect", {
     failureRedirect: "/",
+    prompt: "login",
   }),
   (req, res) => {
     // Successful authentication, redirect home.
