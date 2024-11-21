@@ -12,6 +12,9 @@ router.post("/", async (req, res) => {
   filename = encodeURIComponent(filename) + ".pdf";
   const bodyContent = req.body;
   createOrderHistory(bodyContent, req.currentUser);
+
+  const baseUrl = `${req.protocol}://${req.get("host")}`;
+
   // Format items for package, fridge, and washer/dryer
   const packageItems = formatItems(bodyContent, "packageItem");
   const fridgeItems = formatItems(bodyContent, "frgItem");
@@ -22,6 +25,7 @@ router.post("/", async (req, res) => {
     packageItems,
     fridgeItems,
     w_dItems,
+    baseUrl,
   });
 
   // Launch Puppeteer and generate the PDF
@@ -33,6 +37,7 @@ router.post("/", async (req, res) => {
 
   // Set the content of the page to the HTML rendered from Pug
   await page.setContent(htmlContent, { waitUntil: "networkidle0" });
+
   await page.addStyleTag({ path: path.resolve("public/css/style.css") });
 
   // Generate the PDF from the page's content
