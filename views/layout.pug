@@ -10,12 +10,12 @@ html
     block head
   body
     div(class="h-screen")
-      div(class="flex px-20 p-2 justify-between shadow")
+      div(class="flex px-20 p-2 justify-between shadow ")
         a(href="/" class="w-1/5")
           img(class="py-4" src="/images/logo.png" alt="Bloomfield Homes")
-        div(class="w-1/4 flex gap-2 items-center")
+        div(class="flex gap-10 items-center")
           if currentUser
-              span.flex-1.gap-2.flex.items-center
+              span.gap-2.flex.items-center
                 | Welcome, #{currentUser.name}
                 if currentUser.email.toLowerCase() === "avery@bloomfieldhomes.net"
                   img(class="py-4" src="/images/flower.svg" alt="Flower")
