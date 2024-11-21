@@ -60,6 +60,10 @@ function formatItems(bodyContent, prefix) {
     return value;
   };
 
+  if (!bodyContent[`${prefix}`]) {
+    return [];
+  }
+
   const categories = parseIfString(bodyContent[`${prefix}`].category || []);
   const productNumbers = parseIfString(
     bodyContent[`${prefix}`].product_number || []
