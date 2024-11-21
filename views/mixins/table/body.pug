@@ -1,4 +1,6 @@
 mixin tableBody(columns, rows, actions)
+  if columns.some( (col) => col.editable)
+    include ../inputs
   tbody(class="divide-y divide-gray-200")
     if rows && rows.length
       each row in rows
@@ -15,6 +17,8 @@ mixin tableBody(columns, rows, actions)
                       role="tooltip"
                     )
                       != row[col.selector]
+              else if col.editable
+                +input({class:"text-black", size: col.inputSize, value: row[col.selector], name:col.selector, "data-id":row.id})
               else
                 span.text-black
                   = row[col.selector]
