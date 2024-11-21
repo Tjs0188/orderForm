@@ -1,3 +1,7 @@
+include table/header
+include table/body
+include table/pagination
+
 mixin table({columns, rows, id, actions, currentPage = 1, rowsPerPage = 10, totalRows})
   - const totalPages = Math.ceil(totalRows / rowsPerPage);
   - const paginatedRows = rows;
@@ -8,77 +12,6 @@ mixin table({columns, rows, id, actions, currentPage = 1, rowsPerPage = 10, tota
       div(class="p-1.5 min-w-full inline-block align-middle")
         div(class="overflow-hidden")
           table(class="min-w-full divide-y divide-gray-200" id=id)
-            thead
-              tr
-                each col in columns
-                  th(scope="col" class=`px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase ${col.class || ''}`)
-                    = col.name
-                if actions
-                  th(scope="col" class=`px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase`)
-                    | Actions
-            tbody(class="divide-y divide-gray-200")
-              if paginatedRows && paginatedRows.length
-                each row in paginatedRows
-                  tr
-                    each col in columns
-                      td(class=[`px-6 py-2 text-sm print:text-xs font-medium text-gray-800`, row.class, col.truncated ? undefined : "whitespace-nowrap"].join(' '))
-                        if col.truncated
-                          div(class="hs-tooltip inline-block")
-                            button(type="button" class="hs-tooltip-toggle")
-                              span(class="truncate text-black" data-truncatelength=col.truncateLength)
-                                != row[col.selector]
-                              span(
-                                class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-300 text-xs font-medium text-white rounded shadow-sm max-w-xs"
-                                role="tooltip"
-                              )
-                                != row[col.selector]
-                        else
-                          span.text-black
-                            = row[col.selector]
-                    if actions
-                      td(class="px-4 py-2 whitespace-nowrap text-sm font-medium text-gray-800")
-                        each action in actions
-                          if action.method === 'POST'
-                            form(action=action.link, method="POST", class="inline")
-                              - const data = JSON.parse(row[action.dataSelector] || '{}')
-                              each entry in Object.entries(data)
-                                input(type="hidden", name=entry[0], value=entry[1])
-                              button(type="submit", class=`${action.class} flex px-2 py-1 gap-2 rounded-lg border border-transparent text-blue-600 decoration-2 hover:text-blue-700 hover:underline focus:underline focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none`)
-                                = action.name
-                                svg(class="shrink-0 size-4 self-center" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round")
-                                  path(d="m9 18 6-6-6-6")
-                          else if action.method === 'DELETE'
-                              a(href=`${action.link}/${row[action.dataSelector]}` class=`${action.class} flex px-2 gap-2 py-1 rounded-lg border border-transparent text-blue-600 decoration-2 hover:text-blue-700 hover:underline focus:underline focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none` data-method="delete")
-                                = action.name
-                                svg(class="shrink-0 size-4 self-center" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round")
-                                  path(d="m9 18 6-6-6-6")
-                          else
-                            a(href=`${action.link}/${row[action.dataSelector] || null}`, class=`${action.class} flex gap-2 px-2 py-1 rounded-lg border border-transparent text-blue-600 decoration-2 hover:text-blue-700 hover:underline focus:underline focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none`)
-                              = action.name
-                              svg(class="shrink-0 size-4 self-center" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round")
-                                path(d="m9 18 6-6-6-6")
-              else
-                tr.empty-row
-                  td(colspan=columns.length + (actions ? 1 : 0), class="px-6 py-4 whitespace-nowrap text-lg font-medium text-black text-center")
-                    | No data found
-        if totalRows && totalPages > 1
-          nav(class="flex justify-center mt-4")
-            ul(class="inline-flex -space-x-px")
-              if currentPage > 1
-                li
-                  a(href=`?page=${currentPage - 1}`, class="px-3 py-2 ml-0 leading-tight text-black bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700") Previous
-              else
-                li
-                  span(class="px-3 py-2 ml-0 leading-tight text-gray-400 bg-white border border-gray-300 rounded-l-lg cursor-not-allowed") Previous
-              each page in [...Array(totalPages).keys()].map(n => n + 1)
-                li
-                  if page === currentPage
-                    span(class="px-3 py-2 leading-tight text-blue-600 bg-blue-50 border border-blue-300") #{page}
-                  else
-                    a(href=`?page=${page}`, class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700") #{page}
-              if currentPage < totalPages
-                li
-                  a(href=`?page=${currentPage + 1}`, class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700") Next
-              else
-                li
-                  span(class="px-3 py-2 leading-tight text-gray-400 bg-white border border-gray-300 rounded-r-lg cursor-not-allowed") Next
+            +tableHeader(columns, actions)
+            +tableBody(columns, paginatedRows, actions)
+        +pagination(currentPage, totalPages)

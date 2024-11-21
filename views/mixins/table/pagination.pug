@@ -1,0 +1,22 @@
+mixin pagination(currentPage, totalPages)
+  if totalPages > 1
+    nav(class="flex justify-center py-8")
+      ul(class="inline-flex -space-x-px")
+        if currentPage > 1
+          li
+            a(href=`?page=${currentPage - 1}`, class="px-3 py-2 ml-0 leading-tight text-black bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700") Previous
+        else
+          li
+            span(class="px-3 py-2 ml-0 leading-tight text-gray-400 bg-white border border-gray-300 rounded-l-lg cursor-not-allowed") Previous
+        each page in [...Array(totalPages).keys()].map(n => n + 1)
+          li
+            if page === currentPage
+              span(class="px-3 py-2 leading-tight text-blue-600 bg-blue-50 border border-blue-300") #{page}
+            else
+              a(href=`?page=${page}`, class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700") #{page}
+        if currentPage < totalPages
+          li
+            a(href=`?page=${currentPage + 1}`, class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700") Next
+        else
+          li
+            span(class="px-3 py-2 leading-tight text-gray-400 bg-white border border-gray-300 rounded-r-lg cursor-not-allowed") Next
