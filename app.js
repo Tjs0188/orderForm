@@ -2,7 +2,7 @@ import createError from "http-errors";
 import express from "express";
 import path from "path";
 import cookieParser from "cookie-parser";
-import logger from "morgan";
+import logger, { requestLogger } from "./config/logger.js";
 import session from "express-session";
 import connectSQLite3 from "connect-sqlite3";
 import "dotenv/config";
@@ -47,7 +47,22 @@ if (process.env.NODE_ENV === "production") {
   app.set("trust proxy", true); // trust proxy, fly.io needs this
 }
 // middleware
-app.use(logger("dev"));
+app.use(requestLogger);
+
+// Update error handler
+app.use((err, req, res, _next) => {
+  logger.error({
+    requestId: req.requestId,
+    error: err.message,
+    stack: process.env.NODE_ENV === "development" ? err.stack : undefined,
+    userEmail: req.user?.email,
+  });
+
+  res.locals.message = err.message;
+  res.locals.error = req.app.get("env") === "development" ? err : {};
+  res.status(err.status || 500);
+  res.render("error");
+});
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
