@@ -1,4 +1,4 @@
-mixin input({label, placeholder, type="text", size="full", name, value, className, disabled: inputDisabled})
+mixin input({label, placeholder, type="text", size="full", name, value, className, disabled: inputDisabled, data, tabIndex})
   div(class=`${className} max-w-xl print:max-w-full`)
     label(
       for=name 
@@ -9,11 +9,12 @@ mixin input({label, placeholder, type="text", size="full", name, value, classNam
       type=type
       name=name
       value=value
-      id=`${name}-input` 
+      id=`${name}-input${data && data.rowId ? `-${data.rowId}` : ""}`
       class=`w-${size} py-2 px-4 block border print:border-0 rounded-lg text-slate-800 text-sm print:text-xs focus:border-blue-500 focus:ring-blue-500 print:read-only:opacity-100 read-only:opacity-50 read-only:pointer-events-none print:hidden` 
       placeholder=placeholder || label
       readonly=inputDisabled
-    )
+      tabIndex=tabIndex
+    )&attributes(data)
     p(class="py-1 px-2 w-full hidden print:block print:text-xs screen:p-0")
       = value
 
