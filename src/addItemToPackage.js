@@ -1,5 +1,9 @@
 import axios from "axios";
-import { deleteEmptyRows } from "./tableUtils.js";
+import {
+  deleteEmptyRows,
+  tableRowClasses,
+  inputClasses,
+} from "./tableUtils.js";
 import { handleErrorMessage, handleSuccessMessage } from "./messageHandlers.js";
 
 export const initializeAddItemButton = () => {
@@ -62,16 +66,7 @@ export const initializeAddItemButton = () => {
 
 const addNewRow = (tbody, newItem) => {
   const tr = document.createElement("tr");
-  const tableRowClasses = [
-    "px-6",
-    "py-4",
-    "whitespace-nowrap",
-    "text-sm",
-    "font-medium",
-    "text-gray-800",
-    "odd:bg-white",
-    "even:bg-blue",
-  ];
+
   tr.classList.add(...tableRowClasses);
 
   const fieldMap = {
@@ -89,18 +84,7 @@ const addNewRow = (tbody, newItem) => {
       const input = document.createElement("input");
       input.type = "number";
       input.value = fieldMap[field];
-      const inputClasses = [
-        "py-2",
-        "block",
-        "w-full",
-        "border-0",
-        "border-transparent",
-        "text-sm",
-        "focus:border-blue-500",
-        "focus:ring-blue-500",
-        "disabled:opacity-50",
-        "disabled:pointer-events-none",
-      ];
+
       input.classList.add(...inputClasses);
       td.appendChild(input);
     } else {

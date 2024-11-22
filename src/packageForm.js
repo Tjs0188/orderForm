@@ -2,6 +2,49 @@ import axios from "axios";
 import { handleErrorMessage, handleSuccessMessage } from "./messageHandlers.js";
 import { deleteEmptyRows } from "./tableUtils.js";
 
+export const initializePackageEdit = () => {
+  const nameEls = document.querySelectorAll("[name=name]");
+  const metaEls = document.querySelectorAll("[name=meta]");
+  nameEls.forEach((el) => {
+    el.addEventListener("focusout", updatePkg.bind(null, el));
+  });
+
+  metaEls.forEach((el) => {
+    el.addEventListener("focusout", updatePkg.bind(null, el));
+  });
+};
+
+const updatePkg = (el) => {
+  const errorMessageContainer = document.querySelector(
+    "#edit-pkg-error-message"
+  );
+  const successMessageContainer = document.querySelector(
+    "#edit-pkg-success-message"
+  );
+  const id = el.attributes["rowid"].value;
+  axios
+    .put(`/packages/${id}`, { [el.name]: el.value })
+    .then((response) => {
+      // Highlight the updated row
+      el.classList.add("bg-green-200");
+      el.value = response.data[el.name];
+
+      // Handle success message
+      handleSuccessMessage(
+        successMessageContainer,
+        "Package updated successfully."
+      );
+
+      setTimeout(() => {
+        el.classList.remove("bg-green-200");
+      }, 3000);
+    })
+    .catch((error) => {
+      console.log(error);
+      handleErrorMessage(errorMessageContainer, successMessageContainer, error);
+    });
+};
+
 export const initializePackageCreate = () => {
   const el = document.querySelector("#create-package-button");
   const table = document.querySelector("#packages-table");

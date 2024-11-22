@@ -19,7 +19,7 @@ export const tableRowClasses = [
   "whitespace-nowrap",
   "text-sm",
   "font-medium",
-  "text-gray-800",
+  "text-black",
   "odd:bg-white",
   "even:bg-blue",
 ];
