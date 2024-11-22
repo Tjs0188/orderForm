@@ -18,4 +18,8 @@ mixin itemsSegment()
             {name: "Category", selector: "category"},
             {name: "Product Number", selector: "product_number", editable: true, inputSize: "xs"}, 
             {name: 'Description', selector: "description", editable: true, inputSize: "xs"}
-          ], rows: items, id: "items-table" })
+          ],
+          actions: [
+            {name: "Delete", link: "/orderForm/templates", class: "text-rose-500", method: "DELETE", dataSelector: "id"}
+          ],  
+        rows: items, id: "items-table" })
