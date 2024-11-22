@@ -6,6 +6,7 @@ const router = express.Router();
 const prisma = new PrismaClient();
 const upload = multer(); // Initialize multer
 
+// add a package to the database
 router.post("/", upload.none(), async (req, res) => {
   try {
     const { name, meta, category } = req.body;
@@ -28,6 +29,7 @@ router.post("/", upload.none(), async (req, res) => {
   }
 });
 
+// add an item to the database
 router.post("/items", upload.none(), async (req, res) => {
   try {
     const { product_number, description, category } = req.body;
@@ -50,6 +52,7 @@ router.post("/items", upload.none(), async (req, res) => {
   }
 });
 
+// main packages page
 router.get("/edit", async (req, res) => {
   try {
     const items = await prisma.item.findMany();
@@ -71,6 +74,7 @@ router.get("/edit", async (req, res) => {
   }
 });
 
+// Get all packages and their items
 router.get("/packageItems", async (req, res, next) => {
   try {
     const packageId = parseInt(req.query.packageId);
@@ -91,6 +95,7 @@ router.get("/packageItems", async (req, res, next) => {
   }
 });
 
+// Update the attributes of a package item
 router.put("/packageItems/:id", async (req, res, next) => {
   try {
     const packageItemId = parseInt(req.params.id);
@@ -112,6 +117,54 @@ router.put("/packageItems/:id", async (req, res, next) => {
   }
 });
 
+router.put("/:id", async (req, res, next) => {
+  try {
+    const packageId = parseInt(req.params.id);
+    const name = req.body.name;
+    const meta = req.body.meta;
+
+    const pkg = await prisma.package.update({
+      where: {
+        id: packageId,
+      },
+      data: {
+        name,
+        meta,
+      },
+    });
+
+    res.json(pkg);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+// Update the attributes of a package item
+router.put("/items/:id", async (req, res, next) => {
+  try {
+    const itemId = parseInt(req.params.id);
+    const product_number = req.body.product_number;
+    const description = req.body.description;
+
+    const item = await prisma.item.update({
+      where: {
+        id: itemId,
+      },
+      data: {
+        product_number,
+        description,
+      },
+    });
+
+    res.json(item);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+// Add an Item to a package
 router.post("/addItem", async (req, res, next) => {
   const packageId = parseInt(req.body.package_id);
   const itemId = parseInt(req.body.item_id);
@@ -155,6 +208,8 @@ router.post("/addItem", async (req, res, next) => {
     }
   }
 });
+
+// Helper functions
 
 const getItemCategories = (items) => {
   if (!items) return [];
