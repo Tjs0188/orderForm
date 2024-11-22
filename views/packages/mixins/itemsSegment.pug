@@ -8,9 +8,12 @@ mixin itemsSegment()
     h4.font-bold.pb-4 Add an Item
     div(class="flex gap-8 justify-between")
       +itemForm()
-      div(class="w-full")
+      div(class="w-full  h-4")
         h4.font-bold.pb-4 Items
         span.text-xs.pb-8 Edit an item using the fields below
+        .py-2
+          div(id="edit-item-error-message" class="hidden text-rose-500")
+          div(id="edit-item-success-message" class="hidden text-green-500")
         +table({columns: [
             {name: "Category", selector: "category"},
             {name: "Product Number", selector: "product_number", editable: true, inputSize: "xs"}, 

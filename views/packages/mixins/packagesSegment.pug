@@ -20,7 +20,10 @@ mixin packagesSegment()
       div(class="w-full ms-6")
         h2.text-xl.font-bold Packages
         div(class="w-full")
-          +table({columns: [{name: 'Name', selector: "name", truncated: true}, {name: "Meta", selector: "meta", truncated: true}, {name: "Category", selector: "category"}], rows: packages, id: "packages-table"})
+          .py-2
+            div(id="edit-pkg-error-message" class="hidden text-rose-500")
+            div(id="edit-pkg-success-message" class="hidden text-green-500")
+          +table({columns: [{name: 'Name', selector: "name", editable: true}, {name: "Meta", selector: "meta", editable: true}, {name: "Category", selector: "category"}], rows: packages, id: "packages-table"})
     .flex.py-6
       div(class="flex flex-col gap-4 py-10 w-1/3 ")
         h1.text-2xl.font-bold.mb-4 Assign Items to Package
