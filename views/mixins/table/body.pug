@@ -3,9 +3,10 @@ mixin tableBody(columns, rows, actions)
     include ../inputs
   tbody(class="divide-y divide-gray-200")
     if rows && rows.length
-      each row in rows
+      - let tabIndex = 1
+      each row, rowIndex in rows
         tr
-          each col in columns
+          each col, colIndex in columns
             td(class=[`px-6 py-2 text-sm print:text-xs font-medium text-gray-800`, row.class, col.truncated ? undefined : "whitespace-nowrap"].join(' '))
               if col.truncated
                 div(class="hs-tooltip inline-block")
@@ -18,7 +19,8 @@ mixin tableBody(columns, rows, actions)
                     )
                       != row[col.selector]
               else if col.editable
-                +input({class:"text-black", size: col.inputSize, value: row[col.selector], name:col.selector, "data-id":row.id})
+                +input({class:"text-black", size: col.inputSize, value: row[col.selector], name:col.selector, data: {rowId: row.id}, tabIndex: tabIndex})
+                - tabIndex++
               else
                 span.text-black
                   = row[col.selector]
