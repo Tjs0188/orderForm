@@ -25,11 +25,11 @@ mixin select({label, placeholder, name, id, value})
       =label
     select(
       id=`${id || name}-select`
-    class="py-2 px-4 pe-9 block bg-white w-full border rounded-lg text-sm text-slate-800 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+    class="py-2 px-4 pe-9 block bg-white w-full border rounded-lg text-sm  focus:border-blue-500 focus:ring-blue-500 "
     name=name
     disabled=inputDisabled
     )
-      option(value="" selected disabled hidden)
+      option(value="" selected)
         = placeholder || label
       block
 
