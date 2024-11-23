@@ -25,8 +25,16 @@ const getStatusColor = (status) => {
   if (status < 200) return chalk.blue(status);
   if (status < 300) return chalk.green(status);
   if (status < 400) return chalk.cyan(status);
-  if (status < 500) return chalk.yellow(status);
+  if (status < 500) return chalk.yellowBright(status);
   return chalk.red(status);
+};
+
+const getStatusTextColor = (statusText, status) => {
+  if (status < 200) return chalk.blue(statusText);
+  if (status < 300) return chalk.green(statusText);
+  if (status < 400) return chalk.cyan(statusText);
+  if (status < 500) return chalk.yellowBright(statusText);
+  return chalk.red(statusText);
 };
 
 // Duration colors
@@ -53,6 +61,7 @@ const customFormat = format.combine(
         method,
         url,
         status,
+        statusText,
         duration,
         requestId,
         query,
@@ -65,12 +74,13 @@ const customFormat = format.combine(
       );
       const coloredStatus = getStatusColor(parseInt(status));
       const coloredDuration = getDurationColor(parseInt(duration));
+      const coloredStatusText = getStatusTextColor(statusText, status);
 
       return `${chalk.gray(
         timestamp
       )} ${levelEmoji} ${coloredMethod} ${chalk.cyan(
         url
-      )} ${coloredStatus} ${coloredDuration}\n${chalk.gray(
+      )} ${coloredStatus} ${coloredStatusText} ${coloredDuration}\n${chalk.gray(
         "├"
       )} RequestID: ${chalk.dim(requestId)}\n${chalk.gray(
         "├"
@@ -147,6 +157,7 @@ export const requestLogger = (req, res, next) => {
       method: req.method,
       url: req.url,
       status: res.statusCode,
+      statusText: res.statusMessage,
       duration: Math.round(duration),
       memoryUsed: Math.round(memoryUsed / 1024 / 1024) + "MB",
       query: Object.keys(req.query).length ? req.query : undefined,
