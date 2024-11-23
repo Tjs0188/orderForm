@@ -15,12 +15,12 @@ mixin itemsSegment()
           div(id="edit-item-error-message" class="hidden text-rose-500")
           div(id="edit-item-success-message" class="hidden text-green-500")
         +table({columns: [
-            {name: 'ID', selector: "id"},
-            {name: "Category", selector: "category"},
-            {name: "Product Number", selector: "product_number", editable: true, inputSize: "xs"}, 
-            {name: 'Description', selector: "description", editable: true, inputSize: "xs"}
+            {name: 'ID', selector: "id", class: "w-6", inputPadding: "px-1"},
+            {name: "Category", selector: "category", class: "w-1/6"},
+            {name: "Product Number", selector: "product_number", editable: true, inputSize: "xs", class: "w-1/6"}, 
+            {name: 'Description', selector: "description", editable: true, inputSize: "xs" , class: "w-1/6"}
           ],
           actions: [
             {name: "Delete", link: "/packages/items", class: "text-rose-500", method: "DELETE", dataSelector: "id"}
           ],  
-        rows: items, id: "items-table", height: "96" })
+        rows: items, id: "items-table", height: "96" , withSort: true, withFilter: true})

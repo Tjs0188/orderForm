@@ -24,7 +24,7 @@ mixin packagesSegment()
             div(id="edit-pkg-error-message" class="hidden text-rose-500")
             div(id="edit-pkg-success-message" class="hidden text-green-500")
           +table({columns: [
-              {name: 'ID', selector: "id"},
+              {name: 'ID', selector: "id", class: "w-6", inputPadding: "px-1"},
               {name: 'Name', selector: "name", editable: true},
               {name: "Meta", selector: "meta", editable: true},
               {name: "Category", selector: "category"}
@@ -32,7 +32,7 @@ mixin packagesSegment()
             actions: [
               {name: "Delete", link: "/packages", class: "text-rose-500", method: "DELETE", dataSelector: "id"}
             ],  
-             rows: packages, id: "packages-table", height: "96"})
+             rows: packages, id: "packages-table", height: "96", withSort: true, withFilter: true})
     h1.text-2xl.font-bold.py-10 Assign Items to Package
     .flex.py-6
       div(class="flex flex-col gap-4 py-16 w-1/3 ")

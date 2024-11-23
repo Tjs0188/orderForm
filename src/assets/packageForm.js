@@ -3,8 +3,9 @@ import { handleErrorMessage, handleSuccessMessage } from "./messageHandlers.js";
 import { deleteEmptyRows } from "./tableUtils.js";
 
 export const initializePackageEdit = () => {
-  const nameEls = document.querySelectorAll("[name=name]");
-  const metaEls = document.querySelectorAll("[name=meta]");
+  const pkgsTableBody = document.querySelector("#packages-table tbody");
+  const nameEls = pkgsTableBody.querySelectorAll("[name=name]");
+  const metaEls = pkgsTableBody.querySelectorAll("[name=meta]");
   nameEls.forEach((el) => {
     el.addEventListener("focusout", updatePkg.bind(null, el));
   });

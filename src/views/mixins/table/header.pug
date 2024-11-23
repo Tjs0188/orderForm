@@ -1,9 +1,27 @@
-mixin tableHeader(columns, actions)
+mixin tableHeader(columns, actions, withSort, withFilter, tableId)
   thead
     tr
-      each col in columns
-        th(scope="col" class=`px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase ${col.class || ''}`)
-          = col.name
+      each column in columns
+        - let thAttributes = {}
+        if withSort
+          - thAttributes = {...thAttributes, onclick: `sortTable('#${tableId}','${column.selector}')`, 'data-key': column.selector}
+        th(class=`${column.class || ''}`)
+          div(class=`text-left `)
+            span(class="hover:cursor-pointer text-xs text-left px-4 flex gap-2")&attributes(thAttributes)
+              = column.name
+              span.sort-icon
+            if withFilter
+              include ../inputs
+              +input({name: column.selector, 
+                placeholder: `Filter ${column.name}`, 
+                oninput: `filterTable(event)`, 
+                inputPadding: `py-0 ${column.inputPadding || ''}`,
+                className: "px-2 py-4"
+              })
       if actions
-        th(scope="col" class=`px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase`)
-          | Actions
+        th(scope="col")
+          span(class="text-xs text-left px-4")
+            | Actions
+          if withFilter
+            div.p-4
+              a(class="text-xs" href="#" onclick=`clearFilters('#${tableId}')`) Clear Filters
