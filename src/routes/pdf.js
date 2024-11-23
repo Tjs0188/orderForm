@@ -1,12 +1,54 @@
 import puppeteer from "puppeteer";
 import express from "express";
 import pug from "pug";
+import fs from "fs";
 import path from "path";
 import prisma from "../config/prisma.js";
-// Initialize a cache object
-const htmlCache = new Map();
+import crypto from "crypto";
+import logger from "../config/logger.js";
 
 const router = express.Router();
+const accessTimesPath = path.resolve("./pdf-cache/access-times.json");
+
+function generateCacheKey(obj) {
+  const sortedObj = sortObject(obj);
+  const jsonString = JSON.stringify(sortedObj);
+  return crypto.createHash("md5").update(jsonString).digest("hex");
+}
+
+function loadAccessTimes() {
+  if (fs.existsSync(accessTimesPath)) {
+    return JSON.parse(fs.readFileSync(accessTimesPath, "utf-8"));
+  }
+  return {};
+}
+
+function saveAccessTimes(accessTimes) {
+  fs.writeFileSync(accessTimesPath, JSON.stringify(accessTimes, null, 2));
+}
+
+function cleanupCache() {
+  const accessTimes = loadAccessTimes();
+  const files = Object.keys(accessTimes);
+
+  if (files.length > 600) {
+    // Sort files by access time
+    files.sort((a, b) => accessTimes[a] - accessTimes[b]);
+
+    // Remove the oldest files
+    const filesToRemove = files.slice(0, files.length - 600);
+    for (const file of filesToRemove) {
+      const filePath = path.resolve(`./pdf-cache/${file}`);
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+      }
+      delete accessTimes[file];
+    }
+
+    // Save updated access times
+    saveAccessTimes(accessTimes);
+  }
+}
 
 router.post("/", async (req, res) => {
   let filename = "Frigidare Order Form";
@@ -14,28 +56,44 @@ router.post("/", async (req, res) => {
   const bodyContent = req.body;
   createOrderHistory(bodyContent, req.currentUser);
 
+  const [packageCount, fridgeCount, washerDryerCount] = await Promise.all([
+    prisma.package.count({ where: { category: "Package" } }),
+    prisma.package.count({ where: { category: "Refrigerator" } }),
+    prisma.package.count({ where: { category: "Washer/dryer" } }),
+  ]);
+  const totalPDFs = packageCount * fridgeCount * washerDryerCount;
   const baseUrl = `${req.protocol}://${req.get("host")}`;
 
-  // Generate a cache key based on bodyContent
-  const cacheKey = JSON.stringify(bodyContent);
+  // Generate a hash-based cache key
+  const cacheKey = generateCacheKey(bodyContent);
+  const pdfPath = path.resolve(`./pdf-cache/${cacheKey}.pdf`);
 
-  console.log("Cache Key: ", cacheKey);
-  console.log("Cache Size: ", htmlCache.size);
-  console.log("Cache Keys: ", Array.from(htmlCache.keys()));
+  // Ensure the cache directory exists
+  if (!fs.existsSync(path.dirname(pdfPath))) {
+    fs.mkdirSync(path.dirname(pdfPath), { recursive: true });
+  }
 
-  let htmlContent;
+  const accessTimes = loadAccessTimes();
 
-  if (htmlCache.has(cacheKey)) {
-    // Use cached HTML
-    htmlContent = htmlCache.get(cacheKey);
+  if (fs.existsSync(pdfPath)) {
+    logger.info({ message: `Serving cached PDF for key: ${cacheKey}` });
+    // Update access time
+    accessTimes[cacheKey] = Date.now();
+    saveAccessTimes(accessTimes);
+    // Serve the PDF
+    res.contentType("application/pdf");
+    res.setHeader("Content-Disposition", `attachment; filename=${filename}`);
+    res.sendFile(pdfPath);
   } else {
-    // Format items for package, fridge, and washer/dryer
+    logger.info({ message: `Generating new PDF for key: ${cacheKey}` });
+
+    // Format items as needed
     const packageItems = formatItems(bodyContent, "packageItem");
     const fridgeItems = formatItems(bodyContent, "frgItem");
     const w_dItems = formatItems(bodyContent, "wdItem");
 
     // Render HTML content using Pug template
-    htmlContent = pug.renderFile("src/views/templates/pdf.pug", {
+    const htmlContent = pug.renderFile("src/views/templates/pdf.pug", {
       bodyContent,
       packageItems,
       fridgeItems,
@@ -43,37 +101,50 @@ router.post("/", async (req, res) => {
       baseUrl,
     });
 
-    // Store the rendered HTML in cache
-    htmlCache.set(cacheKey, htmlContent);
+    // Launch Puppeteer and generate the PDF
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
+    const page = await browser.newPage();
+
+    await page.setContent(htmlContent, { waitUntil: "networkidle0" });
+    await page.addStyleTag({ path: path.resolve("public/css/style.css") });
+
+    const pdfBuffer = await page.pdf({
+      format: "LETTER",
+      printBackground: true,
+      margin: { top: "10px", bottom: "10px", left: "0px", right: "0px" },
+    });
+
+    await page.close();
+    await browser.close();
+
+    // Save the PDF to disk
+    fs.writeFileSync(pdfPath, pdfBuffer);
+
+    // Serve the PDF
+    res.contentType("application/pdf");
+    res.setHeader("Content-Disposition", `attachment; filename=${filename}`);
+    res.end(pdfBuffer);
   }
-
-  // Launch Puppeteer and generate the PDF
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: ["--no-sandbox", "--disable-setuid-sandbox"], // These args help in some environments
-  });
-  const [page] = await browser.pages();
-
-  // Set the content of the page to the HTML rendered from Pug
-  await page.setContent(htmlContent, { waitUntil: "networkidle0" });
-
-  await page.addStyleTag({ path: path.resolve("public/css/style.css") });
-
-  // Generate the PDF from the page's content
-  const pdfBuffer = await page.pdf({
-    format: "LETTER",
-    printBackground: true,
-    margin: { top: "10px", bottom: "10px", left: "0px", right: "0px" },
-  });
-
-  await browser.close();
-
-  // Set the headers to download the file
-  res.contentType("application/pdf");
-  res.setHeader("Content-Disposition", `attachment; filename=${filename}`);
-  // End the PDF buffer as the response
-  res.end(pdfBuffer);
 });
+
+// Helper function to sort an object
+function sortObject(obj) {
+  if (Array.isArray(obj)) {
+    return obj.map(sortObject);
+  } else if (obj !== null && typeof obj === "object") {
+    return Object.keys(obj)
+      .sort()
+      .reduce((result, key) => {
+        result[key] = sortObject(obj[key]);
+        return result;
+      }, {});
+  } else {
+    return obj;
+  }
+}
 
 // Helper function to format items into objects
 function formatItems(bodyContent, prefix) {
