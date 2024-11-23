@@ -9,72 +9,77 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
-model Item{
-  id    Int     @id @default(autoincrement())
-  category String
-  product_number  String
-  description String
-  packages PackageItem[]
+
+model Item {
+  id             Int           @id @default(autoincrement())
+  category       String
+  product_number String
+  description    String
+  packages    PackageItem[]
 
   @@unique([product_number, category, description])
 }
-model Package{
-  id    Int     @id @default(autoincrement())
-  name String @unique
-  meta  String 
-  category String 
-  items PackageItem[]
+
+model Package {
+  id       Int           @id @default(autoincrement())
+  name     String        @unique
+  meta     String
+  category String
+  items    PackageItem[]
+
   @@unique([name, meta, category])
 }
-model PackageItem{
-  id    Int     @id @default(autoincrement())
+
+model PackageItem {
+  id         Int     @id @default(autoincrement())
   package_id Int
-  item_id Int
-  priority Int
-  package Package @relation(fields: [package_id], references: [id])
-  item Item @relation(fields: [item_id], references: [id])
+  item_id    Int
+  priority   Int
+  package    Package @relation(fields: [package_id], references: [id], onDelete: Cascade)
+  item       Item    @relation(fields: [item_id], references: [id], onDelete: Cascade)
 
   @@unique([package_id, item_id])
 }
-model Template{
-  id    Int     @id @default(autoincrement())
-  name String
-  proj_name  String?
-  quote_num String?
-  contact_name String?
+
+model Template {
+  id             Int      @id @default(autoincrement())
+  name           String
+  proj_name      String?
+  quote_num      String?
+  contact_name   String?
   delivery_phone String?
-  contact_email String?
-  deliv_date String?
-  acc_num String?
-  address String?
-  lot_block String?
-  city String?
-  state String?
-  zip String?
-  userId Int
-  createdAt DateTime @default(now())
-  user User @relation(fields: [userId], references: [id])
-  
+  contact_email  String?
+  deliv_date     String?
+  acc_num        String?
+  address        String?
+  lot_block      String?
+  city           String?
+  state          String?
+  zip            String?
+  userId         Int
+  createdAt      DateTime @default(now())
+  user           User     @relation(fields: [userId], references: [id])
+
   @@unique([name, userId])
 }
 
 model OrderHistory {
-  id Int @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   orderData String
   createdAt DateTime @default(now())
-  userId Int
-  user User @relation(fields: [userId], references: [id])
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  email String @unique
-  name String
-  password String
-  role String?
-  createdAt DateTime @default(now())
-  orders OrderHistory[]
-  templates Template[]
-  admin Boolean @default(false) 
-  superAdmin Boolean @default(false)
+  id         Int            @id @default(autoincrement())
+  email      String         @unique
+  name       String
+  password   String
+  role       String?
+  createdAt  DateTime       @default(now())
+  orders     OrderHistory[]
+  templates  Template[]
+  admin      Boolean        @default(false)
+  superAdmin Boolean        @default(false)
 }
