@@ -25,8 +25,7 @@ const __dirname = path.dirname(__filename);
 const app = express();
 
 const SQLiteStore = connectSQLite3(session);
-logger.info("Server Starting");
-logger.info(process.env.DATABASE_URL);
+logger.info("🚀 Server Starting... 🚀");
 
 var sess = {
   store: new SQLiteStore({
@@ -107,6 +106,6 @@ app.use((err, req, res, _next) => {
   res.render("error");
 });
 
-logger.info("Server Started");
+logger.info("🎇 Server Started! 🎇");
 
 export default app;
