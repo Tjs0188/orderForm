@@ -106,16 +106,21 @@ router.delete("/templates/:id", async (req, res, next) => {
 });
 
 const getUserTemplates = async (req) => {
-  const templates = await getTemplatesByUserId(req.currentUser.id);
+  const page = parseInt(req.query.page) || 1;
+
+  const templates = await getTemplatesByUserId(req.currentUser.id, page, 10);
   const totalCount = await prisma.template.count({
     where: { userId: req.currentUser.id },
   });
 
-  return { templates, totalCount };
+  return { templates, totalCount, currentPage: page };
 };
 
-const getTemplatesByUserId = async (userId) => {
+const getTemplatesByUserId = async (userId, page, offset = 10) => {
+  const skip = page ? (page - 1) * offset : 0;
   const templates = await prisma.template.findMany({
+    take: offset,
+    skip,
     where: {
       userId: { equals: userId },
     },
