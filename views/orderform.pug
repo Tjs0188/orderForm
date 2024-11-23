@@ -34,5 +34,10 @@ block content
   +modal({title: "Create Template", isForm: true, form: "templateModalForm", id: "templateModal"})
     form(id="templateModalForm")
       div(class="flex flex-col gap-4")
+        p.text-xs.text-gray-400
+          | Enter a name for the template and all of the data from the current order form will be saved.
+          | Create a template to save the current order form for future use. 
+          | Templates can be applied to new order forms to quickly populate the form with the saved information.
+        <div id="template_name_error" className="hidden"></div>
         +input({name:"name", id:"name", class:"input", label:"Template Name"})
     script(src="js/templateModal.bundle.js")
