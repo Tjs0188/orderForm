@@ -1,120 +1,187 @@
-// logger.js
 import winston from "winston";
 import { v4 as uuidv4 } from "uuid";
 import { format } from "winston";
 import { inspect } from "util";
 import chalk from "chalk";
-// Add performance monitoring
 import { performance } from "perf_hooks";
+import { type } from "os";
 
-// Configure thresholds
-const SLOW_REQUEST_THRESHOLD = 1000; // 1 second
-const MEMORY_WARNING_THRESHOLD = 1024 * 1024 * 100; // 100MB
+const SLOW_REQUEST_THRESHOLD = 1000;
+const MEMORY_WARNING_THRESHOLD = 1024 * 1024 * 100;
 
-// Custom colors for different methods
-const methodColors = {
-  GET: chalk.green,
-  POST: chalk.yellow,
-  PUT: chalk.blue,
-  DELETE: chalk.red,
-  PATCH: chalk.magenta,
-};
-
-// Status code colors
-const getStatusColor = (status) => {
-  if (status < 200) return chalk.blue(status);
-  if (status < 300) return chalk.green(status);
-  if (status < 400) return chalk.cyan(status);
-  if (status < 500) return chalk.yellowBright(status);
-  return chalk.red(status);
-};
-
-const getStatusTextColor = (statusText, status) => {
-  if (status < 200) return chalk.blue(statusText);
-  if (status < 300) return chalk.green(statusText);
-  if (status < 400) return chalk.cyan(statusText);
-  if (status < 500) return chalk.yellowBright(statusText);
-  return chalk.red(statusText);
-};
-
-// Duration colors
-const getDurationColor = (duration) => {
-  if (duration < 100) return chalk.green(`${duration}ms`);
-  if (duration < 500) return chalk.yellow(`${duration}ms`);
-  return chalk.red(`${duration}ms`);
-};
-
+// Remove format.colorize() and handle colors manually
 const customFormat = format.combine(
   format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
-  format.colorize(),
   format.printf(({ level, message, timestamp, ...meta }) => {
+    const levelColors = {
+      error: chalk.red,
+      warn: chalk.yellow,
+      info: chalk.blue,
+      debug: chalk.gray,
+      query: chalk.cyan,
+    };
+
     const levelEmoji =
       {
         error: "❌",
         warn: "⚠️ ",
         info: "ℹ️ ",
         debug: "🔍",
+        query: "🛢️ ",
       }[level] || "📝";
 
     if (typeof message === "object" && message.method) {
-      const {
-        method,
+      const { method, url, status, statusText, duration } = message;
+
+      const coloredMethod =
+        {
+          GET: chalk.green(method.padEnd(6)),
+          POST: chalk.yellow(method.padEnd(6)),
+          PUT: chalk.blue(method.padEnd(6)),
+          DELETE: chalk.red(method.padEnd(6)),
+          PATCH: chalk.magenta(method.padEnd(6)),
+        }[method] || chalk.white(method.padEnd(6));
+
+      const statusColor =
+        status >= 500
+          ? chalk.red
+          : status >= 400
+          ? chalk.yellow
+          : status >= 300
+          ? chalk.cyan
+          : status >= 200
+          ? chalk.green
+          : chalk.blue;
+
+      const durationColor =
+        duration > 1000
+          ? chalk.red
+          : duration > 500
+          ? chalk.yellow
+          : chalk.green;
+
+      return formatLogMessage({
+        timestamp,
+        levelEmoji,
+        coloredMethod,
         url,
         status,
         statusText,
         duration,
-        requestId,
-        query,
-        body,
-        userEmail,
-      } = message;
+        message,
+        statusColor,
+        durationColor,
+      });
+    } else if (typeof message === "object" && level === "query") {
+      const { type, query, params, duration } = message;
+      const formattedQuery = formatSqlQuery(query, params);
 
-      const coloredMethod = (methodColors[method] || chalk.white)(
-        method.padEnd(6)
-      );
-      const coloredStatus = getStatusColor(parseInt(status));
-      const coloredDuration = getDurationColor(parseInt(duration));
-      const coloredStatusText = getStatusTextColor(statusText, status);
+      const durationColor =
+        duration > SLOW_REQUEST_THRESHOLD ? chalk.red : chalk.green;
 
-      return `${chalk.gray(
-        timestamp
-      )} ${levelEmoji} ${coloredMethod} ${chalk.cyan(
-        url
-      )} ${coloredStatus} ${coloredStatusText} ${coloredDuration}\n${chalk.gray(
-        "├"
-      )} RequestID: ${chalk.dim(requestId)}\n${chalk.gray(
-        "├"
-      )} User: ${chalk.blue(userEmail || "anonymous")}\n${
-        query
-          ? `${chalk.gray("├")} Query: ${inspect(query, {
-              colors: true,
-              depth: 3,
-            })}\n`
-          : ""
-      }${
-        body
-          ? `${chalk.gray("└")} Body: ${inspect(body, {
-              colors: true,
-              depth: 3,
-            })}`
-          : chalk.gray("└")
-      }`;
+      const coloredMethod =
+        {
+          SELECT: chalk.cyan(type.padEnd(6)),
+          INSERT: chalk.green(type.padEnd(6)),
+          CREATE: chalk.green(type.padEnd(6)),
+          UPDATE: chalk.yellow(type.padEnd(6)),
+          DELETE: chalk.red(type.padEnd(6)),
+        }[type] || chalk.white(type.padEnd(6));
+
+      return formatLogMessage({
+        timestamp,
+        levelEmoji,
+        coloredMethod,
+        url: chalk.dim(formattedQuery),
+        status: "",
+        statusText: "",
+        duration: duration.replace("ms", ""),
+        message: {
+          ...message,
+          query: formattedQuery, // Replace original query with formatted one
+        },
+        statusColor: chalk.dim,
+        durationColor,
+      });
     }
 
-    const metaStr = Object.keys(meta).length
-      ? `\n${inspect(meta, { colors: true, depth: 5 })}`
-      : "";
-
-    return `${timestamp} ${levelEmoji} ${level}: ${
+    return `${timestamp} ${levelEmoji} ${levelColors[level](level)}: ${
       typeof message === "object"
         ? inspect(message, { colors: true, depth: 5 })
         : message
-    }${metaStr}`;
+    }${
+      Object.keys(meta).length
+        ? `\n${inspect(meta, { colors: true, depth: 5 })}`
+        : ""
+    }`;
   })
 );
 
+const formatSqlQuery = (query, params) => {
+  try {
+    const paramArray = JSON.parse(JSON.parse(params));
+    let formattedQuery = query;
+    // Replace ? placeholders with actual values
+    paramArray.forEach((param) => {
+      formattedQuery = formattedQuery.replace(
+        "?",
+        typeof param === "string" ? `'${param}'` : param
+      );
+    });
+
+    return formattedQuery;
+  } catch (e) {
+    return query; // Return original if parsing fails
+  }
+};
+
+function formatLogMessage({
+  timestamp,
+  levelEmoji,
+  coloredMethod,
+  url,
+  status,
+  statusText,
+  duration,
+  message,
+  statusColor,
+  durationColor,
+}) {
+  const parts = [
+    chalk.gray(timestamp),
+    levelEmoji,
+    coloredMethod,
+    chalk.cyan(url),
+    statusColor(`${status} ${statusText}`),
+    durationColor(`${duration}ms`),
+  ];
+
+  if (message.requestId) {
+    parts.push(
+      `\n${chalk.gray("├")} RequestID: ${chalk.dim(message.requestId)}`
+    );
+  }
+
+  if (message.userEmail) {
+    parts.push(
+      `\n${chalk.gray("├")} User: ${chalk.blue(
+        message.userEmail || "anonymous"
+      )}`
+    );
+  }
+
+  return parts.join(" ");
+}
+
 const logger = winston.createLogger({
-  level: process.env.LOG_LEVEL || "info",
+  levels: {
+    error: 0,
+    warn: 1,
+    query: 2,
+    info: 3,
+    debug: 4,
+  },
+  // level: process.env.LOG_LEVEL || "info",
   format: customFormat,
   transports: [
     new winston.transports.Console(),
