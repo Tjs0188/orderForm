@@ -1,6 +1,7 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
 import multer from "multer";
+import logger from "../config/logger.js";
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -41,7 +42,7 @@ router.get("/", async (req, res, next) => {
 router.post("/saveTemplate", upload.none(), async (req, res, next) => {
   try {
     const { name, ...data } = req.body;
-    console.log(req.body);
+    logger.info(req.body);
     const template = await prisma.template.create({
       data: {
         name,
@@ -62,6 +63,7 @@ router.post("/saveTemplate", upload.none(), async (req, res, next) => {
     });
     res.json({ template });
   } catch (error) {
+    logger.error(error);
     if (error.code === "P2002") {
       res.status(400).json({ error: "Template name already exists" });
     }

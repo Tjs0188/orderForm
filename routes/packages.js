@@ -1,6 +1,7 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
 import multer from "multer";
+import logger from "../config/logger.js";
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -20,7 +21,7 @@ router.post("/", upload.none(), async (req, res) => {
 
     res.json(pkg);
   } catch (error) {
-    console.log(error);
+    logger.error(error);
     if (error.code === "P2002") {
       res.status(400).send({ message: "Package already exists" });
     } else {
@@ -43,7 +44,7 @@ router.post("/items", upload.none(), async (req, res) => {
 
     res.json(item);
   } catch (error) {
-    console.log(error);
+    logger.error(error);
     if (error.code === "P2002") {
       res.status(400).send({ message: "Item already exists" });
     } else {
@@ -69,7 +70,7 @@ router.get("/edit", async (req, res) => {
       packageCategories,
     });
   } catch (error) {
-    console.log(error);
+    logger.error(error);
     res.status(400).send({ message: "An error occurred. Please try again." });
   }
 });
@@ -112,7 +113,7 @@ router.put("/packageItems/:id", async (req, res, next) => {
 
     res.json(packageItem);
   } catch (error) {
-    console.log(error);
+    logger.error(error);
     next(error);
   }
 });
@@ -135,7 +136,7 @@ router.put("/:id", async (req, res, next) => {
 
     res.json(pkg);
   } catch (error) {
-    console.log(error);
+    logger.error(error);
     next(error);
   }
 });
@@ -159,7 +160,25 @@ router.put("/items/:id", async (req, res, next) => {
 
     res.json(item);
   } catch (error) {
-    console.log(error);
+    logger.error(error);
+    next(error);
+  }
+});
+
+// Delete an item
+router.delete("/items/:id", async (req, res, next) => {
+  try {
+    const itemId = parseInt(req.params.id);
+
+    await prisma.item.delete({
+      where: {
+        id: itemId,
+      },
+    });
+
+    res.status(200);
+  } catch (error) {
+    logger.error(error);
     next(error);
   }
 });
@@ -198,7 +217,7 @@ router.post("/addItem", async (req, res, next) => {
 
     res.json(packageItem);
   } catch (error) {
-    console.log(error);
+    logger.error(error);
     if (error.code === "P2002") {
       res.status(400).send({ message: "Item already exists in package" });
     } else if (!itemId) {
