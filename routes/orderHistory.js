@@ -1,8 +1,7 @@
 import express from "express";
-import { PrismaClient } from "@prisma/client";
+import prisma from "../config/prisma.js";
 
 const router = express.Router();
-const prisma = new PrismaClient();
 
 /* GET order histories listings. */
 router.get("/", async (req, res, next) => {

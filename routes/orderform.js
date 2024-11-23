@@ -1,10 +1,9 @@
 import express from "express";
-import { PrismaClient } from "@prisma/client";
+import prisma from "../config/prisma.js";
 import multer from "multer";
 import logger from "../config/logger.js";
 
 const router = express.Router();
-const prisma = new PrismaClient();
 const upload = multer(); // Initialize multer
 
 /* GET orderform page. */
@@ -100,7 +99,7 @@ router.delete("/templates/:id", async (req, res, next) => {
       },
     });
 
-    res.json(await getUserTemplates(req), 200);
+    res.status(200).json(await getUserTemplates(req));
   } catch (error) {
     next(error);
   }

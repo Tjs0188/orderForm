@@ -1,10 +1,9 @@
 import express from "express";
-import { PrismaClient } from "@prisma/client";
+import prisma from "../config/prisma.js";
 import multer from "multer";
 import logger from "../config/logger.js";
 
 const router = express.Router();
-const prisma = new PrismaClient();
 const upload = multer(); // Initialize multer
 
 // add a package to the database
@@ -141,6 +140,23 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
+router.delete("/:id", async (req, res, next) => {
+  try {
+    const packageId = parseInt(req.params.id);
+
+    await prisma.package.delete({
+      where: {
+        id: packageId,
+      },
+    });
+
+    res.status(200).json({ message: "Package was deleted" });
+  } catch (error) {
+    logger.error(error);
+    next(error);
+  }
+});
+
 // Update the attributes of a package item
 router.put("/items/:id", async (req, res, next) => {
   try {
@@ -176,7 +192,7 @@ router.delete("/items/:id", async (req, res, next) => {
       },
     });
 
-    res.status(200);
+    res.status(200).json({ message: "Item was deleted" });
   } catch (error) {
     logger.error(error);
     next(error);

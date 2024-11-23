@@ -2,9 +2,8 @@ import puppeteer from "puppeteer";
 import express from "express";
 import pug from "pug";
 import path from "path";
-import { PrismaClient } from "@prisma/client";
+import prisma from "../config/prisma.js";
 
-const prisma = new PrismaClient();
 const router = express.Router();
 
 router.post("/", async (req, res) => {
