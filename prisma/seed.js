@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import fs from "fs";
 import csv from "csv-parser";
+import logger from "./config/logger.js";
 
 const prisma = new PrismaClient();
 
@@ -18,7 +19,7 @@ async function seedItems() {
       });
     })
     .on("end", async () => {
-      console.log("Seeding items...");
+      logger.info("Seeding items...");
       for (const item of items) {
         try {
           await prisma.item.upsert({
@@ -28,15 +29,15 @@ async function seedItems() {
           });
         } catch (error) {
           if (error.code === "P2003") {
-            console.log(`Item has fk issue. Skipping...`);
+            logger.info(`Item has fk issue. Skipping...`);
           } else if (error.code === "P2002") {
-            console.log(`Item is a duplicate. Skipping...`);
+            logger.info(`Item is a duplicate. Skipping...`);
           } else {
             throw error;
           }
         }
       }
-      console.log("Items seeded successfully.");
+      logger.info("Items seeded successfully.");
     });
 }
 
@@ -54,7 +55,7 @@ async function seedPackages() {
       });
     })
     .on("end", async () => {
-      console.log("Seeding packages...");
+      logger.info("Seeding packages...");
       for (const pkg of packages) {
         await prisma.package.upsert({
           where: { id: pkg.id },
@@ -62,7 +63,7 @@ async function seedPackages() {
           create: pkg,
         });
       }
-      console.log("Packages seeded successfully.");
+      logger.info("Packages seeded successfully.");
     });
 }
 
@@ -80,7 +81,7 @@ async function seedPackageItems() {
       });
     })
     .on("end", async () => {
-      console.log("Seeding package items...");
+      logger.info("Seeding package items...");
       for (const packageItem of packageItems) {
         try {
           await prisma.packageItem.upsert({
@@ -90,13 +91,13 @@ async function seedPackageItems() {
           });
         } catch (e) {
           if (e.code === "P2003") {
-            console.log(`Package item has fk issue. Skipping...`);
+            logger.info(`Package item has fk issue. Skipping...`);
           } else {
             throw e;
           }
         }
       }
-      console.log("Package items seeded successfully.");
+      logger.info("Package items seeded successfully.");
       await prisma.$disconnect();
     });
 }
