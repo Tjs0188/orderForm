@@ -105,6 +105,6 @@ app.use((err, req, res, _next) => {
   res.render("error");
 });
 
-console.log("Server Started");
+logger.info("Server Started");
 
 export default app;
