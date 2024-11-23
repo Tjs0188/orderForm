@@ -2,7 +2,7 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
-  content: ["./views/**/*.{html,js,pug}", "node_modules/preline/dist/*.js"],
+  content: ["src/views/**/*.{html,js,pug}", "node_modules/preline/dist/*.js"],
   darkMode: "class",
   safelist: [
     "border-rose-500",

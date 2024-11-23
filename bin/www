@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-import app from "../app.js";
+import app from "../src/app.js";
 import http from "http";
 import debugModule from "debug"; // Import the debug module
-import logger from "../config/logger.js";
+import logger from "../src/config/logger.js";
 // Initialize debug with the namespace 'orderform:server'
 const debug = debugModule("orderform:server");
 /**

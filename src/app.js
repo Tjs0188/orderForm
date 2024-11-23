@@ -25,6 +25,8 @@ const __dirname = path.dirname(__filename);
 const app = express();
 
 const SQLiteStore = connectSQLite3(session);
+logger.info("Server Starting");
+logger.info(process.env.DATABASE_URL);
 
 var sess = {
   store: new SQLiteStore({
@@ -66,7 +68,7 @@ app.use((err, req, res, _next) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "../public")));
 app.use(session(sess));
 
 // Initialize Passport and restore authentication state, if any, from the session

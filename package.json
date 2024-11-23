@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "nodemon": "nodemon ./bin/www",
-    "tailwind:css": "postcss src/styles/tailwind.css -o public/css/style.css --watch",
+    "tailwind:css": "postcss src/assets/styles/tailwind.css -o public/css/style.css --watch",
     "start": "node ./bin/www",
     "webpack:dev": "webpack --watch",
     "dev": "npm-run-all -p tailwind:css nodemon webpack:dev",
@@ -15,7 +15,8 @@
     "prisma:seed": "prisma db seed"
   },
   "prisma": {
-    "seed": "node prisma/seed.js"
+    "seed": "node prisma/seed.js",
+    "schema": "src/prisma/schema.prisma"
   },
   "dependencies": {
     "@babel/core": "^7.26.0",
