@@ -9,6 +9,14 @@ import { type } from "os";
 const SLOW_REQUEST_THRESHOLD = 1000;
 const MEMORY_WARNING_THRESHOLD = 1024 * 1024 * 100;
 
+const getDurationColor = (duration) => {
+  return duration > 1000
+    ? chalk.red
+    : duration > 500
+    ? chalk.yellow
+    : chalk.green;
+};
+
 // Remove format.colorize() and handle colors manually
 const customFormat = format.combine(
   format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
@@ -29,9 +37,11 @@ const customFormat = format.combine(
         debug: "🔍",
         query: "🛢️ ",
       }[level] || "📝";
+    const duration = message.duration || 0;
+    const durationColor = getDurationColor(duration);
 
     if (typeof message === "object" && message.method) {
-      const { method, url, status, statusText, duration } = message;
+      const { method, url, status, statusText } = message;
 
       const coloredMethod =
         {
@@ -53,13 +63,6 @@ const customFormat = format.combine(
           ? chalk.green
           : chalk.blue;
 
-      const durationColor =
-        duration > 1000
-          ? chalk.red
-          : duration > 500
-          ? chalk.yellow
-          : chalk.green;
-
       return formatLogMessage({
         timestamp,
         levelEmoji,
@@ -75,9 +78,6 @@ const customFormat = format.combine(
     } else if (typeof message === "object" && level === "query") {
       const { type, query, params, duration } = message;
       const formattedQuery = formatSqlQuery(query, params);
-
-      const durationColor =
-        duration > SLOW_REQUEST_THRESHOLD ? chalk.red : chalk.green;
 
       const coloredMethod =
         {
@@ -244,7 +244,11 @@ export const requestLogger = (req, res, next) => {
     if (res.statusCode >= 500) {
       logger.error(logData);
     } else if (duration > SLOW_REQUEST_THRESHOLD) {
-      logger.warn({ ...logData, message: "Slow request detected" });
+      const durationColor = getDurationColor(duration);
+      logger.warn({
+        ...logData,
+        message: `Slow request detected - ${durationColor(`${duration}ms`)}`,
+      });
     } else if (memoryUsed > MEMORY_WARNING_THRESHOLD) {
       logger.warn({ ...logData, message: "High memory usage detected" });
     } else {

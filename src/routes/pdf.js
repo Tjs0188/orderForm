@@ -3,6 +3,8 @@ import express from "express";
 import pug from "pug";
 import path from "path";
 import prisma from "../config/prisma.js";
+// Initialize a cache object
+const htmlCache = new Map();
 
 const router = express.Router();
 
@@ -14,18 +16,36 @@ router.post("/", async (req, res) => {
 
   const baseUrl = `${req.protocol}://${req.get("host")}`;
 
-  // Format items for package, fridge, and washer/dryer
-  const packageItems = formatItems(bodyContent, "packageItem");
-  const fridgeItems = formatItems(bodyContent, "frgItem");
-  const w_dItems = formatItems(bodyContent, "wdItem");
-  // Render HTML content using Pug template
-  const htmlContent = pug.renderFile("views/templates/pdf.pug", {
-    bodyContent,
-    packageItems,
-    fridgeItems,
-    w_dItems,
-    baseUrl,
-  });
+  // Generate a cache key based on bodyContent
+  const cacheKey = JSON.stringify(bodyContent);
+
+  console.log("Cache Key: ", cacheKey);
+  console.log("Cache Size: ", htmlCache.size);
+  console.log("Cache Keys: ", Array.from(htmlCache.keys()));
+
+  let htmlContent;
+
+  if (htmlCache.has(cacheKey)) {
+    // Use cached HTML
+    htmlContent = htmlCache.get(cacheKey);
+  } else {
+    // Format items for package, fridge, and washer/dryer
+    const packageItems = formatItems(bodyContent, "packageItem");
+    const fridgeItems = formatItems(bodyContent, "frgItem");
+    const w_dItems = formatItems(bodyContent, "wdItem");
+
+    // Render HTML content using Pug template
+    htmlContent = pug.renderFile("src/views/templates/pdf.pug", {
+      bodyContent,
+      packageItems,
+      fridgeItems,
+      w_dItems,
+      baseUrl,
+    });
+
+    // Store the rendered HTML in cache
+    htmlCache.set(cacheKey, htmlContent);
+  }
 
   // Launch Puppeteer and generate the PDF
   const browser = await puppeteer.launch({
