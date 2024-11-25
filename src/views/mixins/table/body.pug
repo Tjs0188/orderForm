@@ -30,7 +30,7 @@ mixin tableBody(columns, rows, actions)
             td(class="px-4 py-2 whitespace-nowrap text-sm font-medium text-gray-800 items-center")
               each action in actions
                 if action.method === 'POST'
-                  form(action=action.link, method="POST", class="inline")
+                  form(action=action.link, method="POST", class="flex justify-center")
                     - const data = JSON.parse(row[action.dataSelector] || '{}')
                     each entry in Object.entries(data)
                       input(type="hidden", name=entry[0], value=entry[1])
