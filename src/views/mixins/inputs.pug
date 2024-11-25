@@ -60,3 +60,8 @@ mixin searchSelect({label, placeholder, name, id, value})
       option(value="")
         = placeholder || label
       block
+
+mixin singleFile({name, id, accept})
+  label(for=id class="sr-only")
+    | Choose file
+  input(type="file" name=id id=id class="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none file:bg-blue file:text-white file:border-0 file:me-4 file:py-2 file:px-4 file:cursor-pointer" accept=accept)
