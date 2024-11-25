@@ -16,6 +16,7 @@ import packagesRouter from "./routes/packages.js";
 import orderHistoryRouter from "./routes/orderHistory.js";
 import pdfRouter from "./routes/pdf.js";
 import authRouter from "./routes/auth.js";
+import templatesRouter from "./routes/templates.js";
 
 // Get `__dirname` with `path.dirname` in ES modules
 import { fileURLToPath } from "url";
@@ -88,6 +89,7 @@ app.use("/orderform", ensureAuthenticated, orderformRouter);
 app.use("/pdf", ensureAuthenticated, pdfRouter);
 app.use("/history", ensureAuthenticated, orderHistoryRouter);
 app.use("/packages", ensureAuthenticated, packagesRouter);
+app.use("/templates", ensureAuthenticated, templatesRouter);
 app.use("/auth", authRouter);
 
 // catch 404 and forward to error handler

@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       // Send the form data using Axios
-      const response = await axios.post("/orderform/saveTemplate", formData);
+      const response = await axios.post("/templates/", formData);
       const successClasses = [
         "border-green-400",
         "text-green-400",

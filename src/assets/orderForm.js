@@ -146,9 +146,7 @@ const initializeTemplateApplicator = () => {
   applyTemplateButton.addEventListener("click", async () => {
     const selectedOption = templateSelect[templateSelect.selectedIndex];
     const templateId = selectedOption.value;
-    const response = await axios.get("/orderform/template", {
-      params: { templateId },
-    });
+    const response = await axios.get(`/templates/${templateId}`);
 
     const template = response.data.template;
 
