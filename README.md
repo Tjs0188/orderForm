@@ -22,7 +22,7 @@ cd orderForm
 2. Install the dependencies:
 
 ```bash
-npm install
+yarn
 ```
 
 ## Usage
@@ -30,7 +30,7 @@ npm install
 To run the application in development mode:
 
 ```bash
-npm run dev
+yarn dev
 ```
 
 This will start the development server and watch for changes in your styles.
@@ -38,17 +38,19 @@ This will start the development server and watch for changes in your styles.
 To start the application in production mode:
 
 ```bash
-npm start
+yarn start
 ```
 
 ## Scripts
 
-The project includes the following npm scripts:
+The project includes the following yarn scripts:
 
-* `start`: Start the application.
-* `dev`: Run both the Tailwind CSS watcher and Nodemon for development.
-* `tailwind:css`: Compile Tailwind CSS.
-* `nodemon`: Start the application with Nodemon.
+* `start`: Start the application
+* `dev`: Run both the Tailwind CSS watcher and Nodemon for development
+* `tailwind:css`: Compile Tailwind CSS
+* `nodemon`: Start the application with Nodemon
+* `build`: Build the project assets using webpack
+* `deploy`: Deploy the application to Fly.io
   
 ## Dependencies
 
@@ -57,8 +59,7 @@ The project relies on several key dependencies:
 * `express`: Web framework for Node.js
 * `prisma`: Database toolkit
 * `pug`: Template engine
-* `pdfkit`: PDF document generation library
-* `puppeteer`: Headless browser for automation
+* `puppeteer`: Headless browser for automation of pdf generation
 * `tailwindcss`: CSS framework
   
 For a complete list of dependencies, refer to the [package.json](package.json) file.
