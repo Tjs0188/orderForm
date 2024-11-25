@@ -1,0 +1,43 @@
+extends layout
+include orderForm/deliveryAddress
+include orderForm/deliveryContactInfo
+include orderForm/packageInfo
+include orderForm/tradePartnerInfo
+include mixins/modal
+include mixins/inputs
+
+block content
+  div.container.mx-auto.py-10
+    div.justify-end.flex.gap-2.pb-8.px-40
+      +select({label: "Select Template", name: "template", id: "template", value: ""})
+        if templates.length
+          each template in templates
+            option(value=template.id)
+              = template.name
+        else
+          option(value="" class="no-templates")
+            | No templates found - create one
+      .flex.items-end.gap-2
+        a(href="#" class="btn py-2" type="button" id="applyTemplateButton")
+          | Apply template
+        a(href="#" class="btn py-2" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="templateModal" data-hs-overlay="#templateModal")
+          | Create template
+        a(href="/" class="btn-outline py-2")
+          | Back to Home
+    form(action="/pdf" method="POST" id="orderForm")
+      div(class="flex flex-wrap w-full justify-around gap-4")
+        +deliveryContact
+        +deliveryAddress
+        +tradePartners
+      div.py-4.flex.flex-col.gap-4
+        +packageInfo({packages, refrigerators, w_ds})
+  +modal({title: "Create Template", isForm: true, form: "templateModalForm", id: "templateModal"})
+    form(id="templateModalForm")
+      div(class="flex flex-col gap-4")
+        p.text-xs.text-gray-400
+          | Enter a name for the template and all of the data from the current order form will be saved.
+          | Create a template to save the current order form for future use. 
+          | Templates can be applied to new order forms to quickly populate the form with the saved information.
+        <div id="template_name_error" className="hidden"></div>
+        +input({name:"name", id:"name", class:"input", label:"Template Name"})
+    script(src="js/templateModal.bundle.js")

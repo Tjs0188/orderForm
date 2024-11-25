@@ -12,13 +12,13 @@ const mode = isProduction ? "production" : "development";
 
 export default {
   entry: {
-    orderForm: "./src/orderForm.js", // Entry point for orderForm.js
-    string: "./src/string.js", // Entry point for another file
-    preline: "./src/preline.js", // Entry point for preline.js
-    templateModal: "./src/templateModal.js", // Entry point for templateModal.js
-    tableActions: "./src/tableActions.js", // Entry point for tableActions.js
-    packageForms: "./src/packageForms.js", // Entry point for packageForms.js
-    style: "./src/styles/tailwind.css", // Entry point for styles.css
+    orderForm: "./src/assets/orderForm.js", // Entry point for orderForm.js
+    string: "./src/assets/string.js", // Entry point for another file
+    preline: "./src/assets/preline.js", // Entry point for preline.js
+    templateModal: "./src/assets/templateModal.js", // Entry point for templateModal.js
+    tableActions: "./src/assets/tableActions.js", // Entry point for tableActions.js
+    packageForms: "./src/assets/packageForms.js", // Entry point for packageForms.js
+    style: "./src/assets/styles/tailwind.css", // Entry point for styles.css
   },
   output: {
     filename: "[name].bundle.js", // Output filename pattern

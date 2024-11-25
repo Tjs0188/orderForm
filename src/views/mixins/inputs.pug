@@ -1,0 +1,73 @@
+mixin hoverClasses()
+  - hoverClasses = " shadow transition-shadow duration-500 ease-in-out hover:shadow-xl"
+mixin input({label, placeholder, type="text", size="full", name, value, className, disabled: inputDisabled, data, tabIndex, oninput, inputPadding="px-4"})
+  +hoverClasses()
+  div(class=`${className} max-w-xl print:max-w-full`)
+    if label
+      label(
+        for=name 
+        class="block text-sm font-medium mb-2 print:mb-0 print:font-bold print:text-xs text-gray-200"
+      )
+        = label
+    input(
+      type=type
+      name=name
+      value=value
+      id=`${name}-input${data && data.rowId ? `-${data.rowId}` : ""}`
+      class=`w-${size} ${inputPadding} block border print:border-0 rounded-lg text-slate-800 text-sm print:text-xs focus:border-blue-500 focus:ring-blue-500 print:read-only:opacity-100 read-only:opacity-50 read-only:pointer-events-none print:hidden ${hoverClasses}` 
+      placeholder=placeholder || label
+      readonly=inputDisabled
+      tabIndex=tabIndex
+      oninput=oninput
+    )&attributes(data)
+    p(class="py-1 px-2 w-full hidden print:block print:text-xs screen:p-0")
+      = value
+
+mixin select({label, placeholder, name, id, value})
+  +hoverClasses()
+  div(class="print:max-w-full")
+    = inputDisabled
+    label(for=name class="block text-sm font-medium mb-2 text-gray-200")
+      =label
+    select(
+      id=`${id || name}-select`
+    class=`py-2 px-4 pe-9 block bg-white w-full border rounded-lg text-sm  focus:border-blue-500 focus:ring-blue-500 ${hoverClasses}`
+    name=name
+    disabled=inputDisabled
+    )
+      option(value="" selected)
+        = placeholder || label
+      block
+
+mixin searchSelect({label, placeholder, name, id, value})
+  +hoverClasses()
+  div(class="print:max-w-full w-full")
+    label(for=`${id || name}-select` class="block text-sm font-medium mb-2 text-gray-200")
+      =label
+    select(
+      id=`${id || name}-select`
+      data-hs-select=`{
+        "hasSearch": true,
+        "searchPlaceholder": "Search...",
+        "searchClasses": "block w-full text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 before:absolute before:inset-0 before:z-[1] py-2 px-3",
+        "searchWrapperClasses": "bg-white p-2 -mx-1 sticky top-0",
+        "placeholder": "${placeholder || label}...",
+        "toggleTag": "<button type=\\"button\\" aria-expanded=\\"false\\"><span class=\\"me-2\\" data-icon></span><span class=\\"text-gray-800\\" data-title></span></button>",
+        "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-2 ps-2 pe-9 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white border border-slate-500 rounded-lg text-start text-sm focus:outline-none focus:ring-2 focus:ring-blue-500",
+        "dropdownClasses": "mt-2 max-h-72 pb-1 px-1 space-y-0.5 z-20 w-full bg-white border rounded-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500",
+        "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100",
+        "optionTemplate": "<div><div class=\\"flex items-center\\"><div class=\\"me-2\\" data-icon></div><div class=\\"text-gray-800\\" data-title></div></div></div>",
+        "extraMarkup": "<div class=\\"absolute top-1/2 end-3 -translate-y-1/2\\"><svg class=\\"shrink-0 size-3.5 text-gray-500\\" xmlns=\\"http://www.w3.org/2000/svg\\" width=\\"24\\" height=\\"24\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" stroke=\\"currentColor\\" stroke-width=\\"2\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"><path d=\\"m7 15 5 5 5-5\\"/><path d=\\"m7 9 5-5 5 5\\"/></svg></div>"
+      }`
+      class="hidden"
+      disabled=inputDisabled
+    )
+      option(value="")
+        = placeholder || label
+      block
+
+mixin singleFile({name, id, accept})
+  +hoverClasses()
+  label(for=id class="sr-only")
+    | Choose file
+  input(type="file" name=id id=id class="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none file:bg-blue file:text-white file:border-0 file:me-4 file:py-2 file:px-4 file:cursor-pointer" accept=accept)

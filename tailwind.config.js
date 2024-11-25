@@ -2,9 +2,18 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
-  content: ["./views/**/*.{html,js,pug}", "node_modules/preline/dist/*.js"],
+  content: ["src/views/**/*.{html,js,pug}", "node_modules/preline/dist/*.js"],
   darkMode: "class",
-  safelist: ["border-rose-500", "text-rose-500", "bg-rose-500"],
+  safelist: [
+    "border-rose-500",
+    "text-rose-500",
+    "bg-rose-500",
+    "h-96",
+    "border-green-600",
+    "text-green-600",
+    "selected:text-green-600",
+    "animate-pulse",
+  ],
   theme: {
     extend: {
       fontFamily: {
