@@ -1,3 +1,4 @@
+import { deleteEventHandler } from "./tableActions.js";
 export const inputClasses = [
   "py-2",
   "block",
@@ -22,6 +23,26 @@ export const tableRowClasses = [
   "text-black",
   "odd:bg-white",
   "even:bg-blue",
+];
+
+export const deleteActionClasses = [
+  "flex",
+  "justify-center",
+  "px-2",
+  "gap-2",
+  "py-1",
+  "rounded-lg",
+  "border",
+  "border-transparent",
+  "text-rose-500",
+  "decoration-2",
+  "hover:text-blue-700",
+  "hover:underline",
+  "focus:underline",
+  "focus:outline-none",
+  "focus:text-blue-700",
+  "disabled:opacity-50",
+  "disabled:pointer-events-none",
 ];
 
 export const deleteEmptyRows = (table) => {
@@ -82,4 +103,36 @@ const addNewRows = (tbody, data) => {
 const updateTableTitle = (titleSelector, title) => {
   const tableTitle = document.querySelector(titleSelector);
   tableTitle.textContent = title;
+};
+
+export const generateDeleteAction = (url) => {
+  // Create anchor and SVG elements
+  const a = document.createElement("a");
+  a.href = `${url}`; // Will be handled by event listener
+  a.classList.add(...deleteActionClasses);
+  a.setAttribute("data-method", "delete");
+  a.textContent = "Delete";
+
+  // Create SVG icon
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("class", "shrink-0 size-4 self-center");
+  svg.setAttribute("width", "24");
+  svg.setAttribute("height", "24");
+  svg.setAttribute("viewBox", "0 0 24 24");
+  svg.setAttribute("fill", "none");
+  svg.setAttribute("stroke", "currentColor");
+  svg.setAttribute("stroke-width", "2");
+  svg.setAttribute("stroke-linecap", "round");
+  svg.setAttribute("stroke-linejoin", "round");
+
+  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  path.setAttribute("d", "m9 18 6-6-6-6");
+  svg.appendChild(path);
+
+  // Add to container
+  a.appendChild(svg);
+
+  a.addEventListener("click", deleteEventHandler);
+
+  return a;
 };

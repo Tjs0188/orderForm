@@ -1,13 +1,13 @@
 import axios from "axios";
+
 const initializeTableActions = () => {
-  const deleteLinks = document.querySelectorAll('a[data-method="delete"]');
-
-  // Use event delegation on parent element
-  deleteLinks.forEach((link) => {
-    link.addEventListener("click", deleteEventHandler);
-  });
-
   document.querySelectorAll("table").forEach((table) => {
+    const deleteLinks = table.querySelectorAll('a[data-method="delete"]');
+
+    // Use event delegation on parent element
+    deleteLinks.forEach((link) => {
+      link.addEventListener("click", deleteEventHandler);
+    });
     updateSortIcons(
       table,
       JSON.parse(table.getAttribute("data-sort-order") || "[]")
@@ -15,10 +15,15 @@ const initializeTableActions = () => {
   });
 };
 
-const deleteEventHandler = async (event) => {
+export const deleteEventHandler = async (event) => {
   event.preventDefault();
   const deleteLink = event.target;
   const url = deleteLink.getAttribute("href");
+  const confirmDelete = confirm("Are you sure you want to delete?");
+
+  if (!confirmDelete) {
+    return;
+  }
 
   try {
     const response = await axios.delete(url);
@@ -161,7 +166,11 @@ function updateSortIcons(table, sortOrderArray) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  if (window.tableActionsInitialized) {
+    return;
+  }
   initializeTableActions();
+  window.tableActionsInitialized = true;
 });
 
 // Ensure the functions are accessible globally

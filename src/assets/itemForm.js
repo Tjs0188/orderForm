@@ -1,6 +1,10 @@
 import axios from "axios";
 import { handleErrorMessage, handleSuccessMessage } from "./messageHandlers.js";
-import { deleteEmptyRows, tableRowClasses } from "./tableUtils.js";
+import {
+  deleteEmptyRows,
+  tableRowClasses,
+  generateDeleteAction,
+} from "./tableUtils.js";
 
 export const initializeItemEdit = () => {
   const productNumberEls = document.querySelectorAll("[name=product_number]");
@@ -113,7 +117,7 @@ const addNewRow = (tbody, newItem) => {
   });
 
   const td = document.createElement("td");
-  const deleteAction = generateDeleteAction(newItem.id);
+  const deleteAction = generateDeleteAction(`/packages/items/${newItem.id}`);
   td.appendChild(deleteAction);
   td.classList.add("px-6");
   tr.appendChild(td);
@@ -121,51 +125,4 @@ const addNewRow = (tbody, newItem) => {
   tbody.appendChild(tr);
 
   return tr;
-};
-
-const generateDeleteAction = (id) => {
-  // Create anchor and SVG elements
-  const a = document.createElement("a");
-  a.href = `#`; // Will be handled by event listener
-  a.classList.add(
-    "flex",
-    "px-2",
-    "gap-2",
-    "py-1",
-    "rounded-lg",
-    "border",
-    "border-transparent",
-    "text-rose-600",
-    "decoration-2",
-    "hover:text-blue-700",
-    "hover:underline",
-    "focus:underline",
-    "focus:outline-none",
-    "focus:text-blue-700",
-    "disabled:opacity-50",
-    "disabled:pointer-events-none"
-  );
-  a.setAttribute("data-method", "delete");
-  a.textContent = "Delete";
-
-  // Create SVG icon
-  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  svg.setAttribute("class", "shrink-0 size-4 self-center");
-  svg.setAttribute("width", "24");
-  svg.setAttribute("height", "24");
-  svg.setAttribute("viewBox", "0 0 24 24");
-  svg.setAttribute("fill", "none");
-  svg.setAttribute("stroke", "currentColor");
-  svg.setAttribute("stroke-width", "2");
-  svg.setAttribute("stroke-linecap", "round");
-  svg.setAttribute("stroke-linejoin", "round");
-
-  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  path.setAttribute("d", "m9 18 6-6-6-6");
-  svg.appendChild(path);
-
-  // Add to container
-  a.appendChild(svg);
-
-  return a;
 };

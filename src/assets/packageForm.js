@@ -1,6 +1,10 @@
 import axios from "axios";
 import { handleErrorMessage, handleSuccessMessage } from "./messageHandlers.js";
-import { deleteEmptyRows } from "./tableUtils.js";
+import {
+  deleteEmptyRows,
+  generateDeleteAction,
+  tableRowClasses,
+} from "./tableUtils.js";
 
 export const initializePackageEdit = () => {
   const pkgsTableBody = document.querySelector("#packages-table tbody");
@@ -96,19 +100,10 @@ export const initializePackageCreate = () => {
 
 const addNewRow = (tbody, newItem) => {
   const tr = document.createElement("tr");
-  const tableRowClasses = [
-    "px-6",
-    "py-4",
-    "whitespace-nowrap",
-    "text-sm",
-    "font-medium",
-    "text-gray-800",
-    "odd:bg-white",
-    "even:bg-blue",
-  ];
   tr.classList.add(...tableRowClasses);
 
   const fieldMap = {
+    id: newItem.id,
     name: newItem.name,
     meta: newItem.meta,
     category: newItem.category,
@@ -122,6 +117,12 @@ const addNewRow = (tbody, newItem) => {
     td.classList.add("px-6");
     tr.appendChild(td);
   });
+
+  const td = document.createElement("td");
+  const deleteAction = generateDeleteAction(`/packages/${newItem.id}`);
+  td.appendChild(deleteAction);
+  td.classList.add("px-6");
+  tr.appendChild(td);
 
   tbody.appendChild(tr);
 
