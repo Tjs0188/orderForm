@@ -7,7 +7,7 @@ mixin tableHeader(columns, actions, withSort, withFilter, tableId)
           - thAttributes = {...thAttributes, onclick: `sortTable('#${tableId}','${column.selector}')`, 'data-key': column.selector}
         th(class=`${column.class || ''}`)
           div(class=`text-left `)
-            span(class="hover:cursor-pointer text-xs text-left px-4 flex gap-2")&attributes(thAttributes)
+            span(class=`${withSort ? 'hover:cursor-pointer' : ''} text-xs text-left px-4 flex gap-2`)&attributes(thAttributes)
               = column.name
               span.sort-icon
             if withFilter
