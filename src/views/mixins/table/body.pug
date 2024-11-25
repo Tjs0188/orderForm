@@ -27,7 +27,7 @@ mixin tableBody(columns, rows, actions)
                   span.text-black
                     = row[col.selector]
           if actions
-            td(class="px-4 py-2 whitespace-nowrap text-sm font-medium text-gray-800 items-center")
+            td(class="px-4 py-2 whitespace-nowrap text-sm font-medium text-gray-800 items-center text-center")
               each action in actions
                 if action.method === 'POST'
                   form(action=action.link, method="POST", class="flex justify-center")
@@ -39,12 +39,14 @@ mixin tableBody(columns, rows, actions)
                       svg(class="shrink-0 size-4 self-center" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round")
                         path(d="m9 18 6-6-6-6")
                 else if action.method === 'DELETE'
-                    a(href=`${action.link}/${row[action.dataSelector]}` class=`${action.class} flex justify-center px-2 gap-2 py-1 rounded-lg border border-transparent text-blue-600 decoration-2 hover:text-blue-700 hover:underline focus:underline focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none` data-method="delete")
-                      = action.name
-                      svg(class="shrink-0 size-4 self-center" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round")
-                        path(d="m9 18 6-6-6-6")
+                  include ../icons/trashCan
+                  .flex.justify-center
+                    a(href=`${action.link}/${row[action.dataSelector]}` class=`items-center flex justify-center px-2 gap-2 py-1 rounded-lg border border-transparent decoration-2 disabled:opacity-50 disabled:pointer-events-none` data-method="delete")
+                      span(class=`${action.class} hover:text-rose-500 hover:underline focus:underline focus:outline-none focus:text-rose-500` )
+                        = action.name
+                      +trashCanSVG({color: "rose-500"})
                 else
-                  a(href=`${action.link}/${row[action.dataSelector] || null}`, class=`${action.class} flex gap-2 px-2 py-1 rounded-lg border border-transparent text-blue-600 decoration-2 hover:text-blue-700 hover:underline focus:underline focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none`)
+                  a(href=`${action.link}/${row[action.dataSelector] || null}`, class=`${action.class} justify-center flex gap-2 px-2 py-1 rounded-lg border border-transparent text-blue-600 decoration-2 hover:text-blue-700 hover:underline focus:underline focus:outline-none focus:text-blue-700 disabled:opacity-50 disabled:pointer-events-none`)
                     = action.name
                     svg(class="shrink-0 size-4 self-center" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round")
                       path(d="m9 18 6-6-6-6")

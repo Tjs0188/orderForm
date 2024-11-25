@@ -1,5 +1,5 @@
 mixin card({cardTitle, cardSubTitle, cardLink, className})
-  div(class=`flex flex-col print:flex-row bg-white border shadow-sm rounded-xl print:rounded-none p-4 md:p-5 gap-4 flex-1 ${className ? className : null} `)
+  div(class=`flex flex-col print:flex-row bg-white border shadow rounded-xl print:rounded-none p-4 md:p-5 gap-4 flex-1 transition-shadow duration-1000 ease-in-out hover:shadow-2xl ${className ? className : null}`)
     h2
       = cardTitle || "Card title"
     if cardSubTitle

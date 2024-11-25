@@ -1,4 +1,7 @@
+mixin hoverClasses()
+  - hoverClasses = " shadow transition-shadow duration-500 ease-in-out hover:shadow-xl"
 mixin input({label, placeholder, type="text", size="full", name, value, className, disabled: inputDisabled, data, tabIndex, oninput, inputPadding="px-4"})
+  +hoverClasses()
   div(class=`${className} max-w-xl print:max-w-full`)
     if label
       label(
@@ -11,7 +14,7 @@ mixin input({label, placeholder, type="text", size="full", name, value, classNam
       name=name
       value=value
       id=`${name}-input${data && data.rowId ? `-${data.rowId}` : ""}`
-      class=`w-${size} ${inputPadding} block border print:border-0 rounded-lg text-slate-800 text-sm print:text-xs focus:border-blue-500 focus:ring-blue-500 print:read-only:opacity-100 read-only:opacity-50 read-only:pointer-events-none print:hidden` 
+      class=`w-${size} ${inputPadding} block border print:border-0 rounded-lg text-slate-800 text-sm print:text-xs focus:border-blue-500 focus:ring-blue-500 print:read-only:opacity-100 read-only:opacity-50 read-only:pointer-events-none print:hidden ${hoverClasses}` 
       placeholder=placeholder || label
       readonly=inputDisabled
       tabIndex=tabIndex
@@ -21,13 +24,14 @@ mixin input({label, placeholder, type="text", size="full", name, value, classNam
       = value
 
 mixin select({label, placeholder, name, id, value})
+  +hoverClasses()
   div(class="print:max-w-full")
     = inputDisabled
     label(for=name class="block text-sm font-medium mb-2 text-gray-200")
       =label
     select(
       id=`${id || name}-select`
-    class="py-2 px-4 pe-9 block bg-white w-full border rounded-lg text-sm  focus:border-blue-500 focus:ring-blue-500 "
+    class=`py-2 px-4 pe-9 block bg-white w-full border rounded-lg text-sm  focus:border-blue-500 focus:ring-blue-500 ${hoverClasses}`
     name=name
     disabled=inputDisabled
     )
@@ -36,6 +40,7 @@ mixin select({label, placeholder, name, id, value})
       block
 
 mixin searchSelect({label, placeholder, name, id, value})
+  +hoverClasses()
   div(class="print:max-w-full w-full")
     label(for=`${id || name}-select` class="block text-sm font-medium mb-2 text-gray-200")
       =label
@@ -62,6 +67,7 @@ mixin searchSelect({label, placeholder, name, id, value})
       block
 
 mixin singleFile({name, id, accept})
+  +hoverClasses()
   label(for=id class="sr-only")
     | Choose file
   input(type="file" name=id id=id class="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none file:bg-blue file:text-white file:border-0 file:me-4 file:py-2 file:px-4 file:cursor-pointer" accept=accept)

@@ -23,5 +23,9 @@ mixin tableHeader(columns, actions, withSort, withFilter, tableId)
           span(class="text-xs text-left px-4")
             | Actions
           if withFilter
+            include ../icons/trashCan
             div.p-4
-              a(class="text-xs" href="#" onclick=`clearFilters('#${tableId}')`) Clear Filters
+              a(class="text-xs items-center flex justify-center gap-2" href="#" onclick=`clearFilters('#${tableId}')`) 
+                | Clear Filters
+                +trashCanSVG({})
+                
