@@ -17,10 +17,11 @@ const initializeTableActions = () => {
 
 export const deleteEventHandler = async (event) => {
   event.preventDefault();
-  const deleteLink = event.target;
+  const deleteLink = event.target.closest("a") || event.target;
+
   const url = deleteLink.getAttribute("href");
   const confirmDelete = confirm("Are you sure you want to delete?");
-
+  console.log(deleteLink);
   if (!confirmDelete) {
     return;
   }
