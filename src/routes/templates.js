@@ -2,20 +2,10 @@ import express from "express";
 import prisma from "../config/prisma.js";
 import multer from "multer";
 import logger from "../config/logger.js";
-import odbc from "odbc";
 import { getUserTemplates } from "../services/templateService.js";
 
 const router = express.Router();
 const upload = multer(); // Initialize multer
-
-const readAccdbTable = async (filePath, tableName) => {
-  const connectionString = `Driver={Microsoft Access Driver (*.mdb, *.accdb)};Dbq=${filePath};`;
-  const connection = await odbc.connect(connectionString);
-
-  const result = await connection.query(`SELECT * FROM ${tableName}`);
-  await connection.close();
-  return result;
-};
 
 router.post("/", upload.none(), async (req, res, next) => {
   try {

@@ -27,7 +27,7 @@ COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile --production=false
 
 # Generate Prisma Client
-COPY prisma .
+COPY src/prisma ./src/prisma
 RUN npx prisma generate
 
 # Copy application code
